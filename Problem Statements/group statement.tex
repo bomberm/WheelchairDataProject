@@ -1,0 +1,124 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		Project Chiron}
+\def \CapstoneTeamNumber{		4}
+\def \GroupMemberOne{			Marie Bomber}
+\def \GroupMemberTwo{			Aaron Leondar}
+\def \GroupMemberThree{			Hadi Rahal-Arabi}
+\def \CapstoneProjectName{			Robotic Wheelchair Data Collection and Analysis}
+\def \CapstoneSponsorCompany{	Oregon State University}
+\def \CapstoneSponsorPerson{	Matthew William Shuman	}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		Problem Statement
+				%Requirements Document
+				%Technology Review
+				%Design Document
+				%Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large 9 October 2017}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+        % 6. Fill in your abstract    
+For people that have extreme physical disabilities such as ALS, or for people who are paraplegic or even quadriplegic, the use of wheelchairs is necessary for even basic maneuverability. However, even with a wheelchair it is still marginally difficult to operate one while afflicted by these extremely serious conditions. Therefore, having a wheelchair able to perform tasks autonomously, such as moving from point to point, would help those kinds of people tremendously. This project involves collecting data from users using a wheelchair to determine the wheelchair users' proficiency in driving it.  The ways that the users' proficiency will be tested are how cleanly they are able to make tight turns, slow down, and in general maneuver around a tight space in a limited amount of time. The end result of this project will be an interface for researchers to generate and analyze trial data on the robotic wheelchairs.
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\section{Problem Definition}
+Project Chiron, an OSU venture, has developed a prototype kit for allowing those with extreme disabilities to interact with Permobil wheelchairs. While the software and hardware is existing, Project Chiron lacks an interface for data collection and analysis. Our project aims to allow for simple recording of trial data, as well as organizing the data for analysis. Furthermore, there is little documentation on the custom kit that can be mounted on wheelchairs, so it is necessary to document the applications and usage instructions of the kit as we interact with it.
+\\\\
+The prototype hardware has several sets of sensors that have the capability of constantly collecting data. It will be necessary to develop an understanding of the value of the data collected from each sensor; the data may need to be truncated, or collected at set intervals.
+\\\\
+Presenting the data in a usable format for analysis provides an entirely different challenge. While data collection will require some understanding of what each sensor is measuring, data analysis and formatting will require an intimate understanding of the purpose of each measurement, as well as the implications of those measurements.
+
+
+\section{Proposed Solution}
+This project will be best executed if divided into stages, with each stage building a core base for other stages to build out from. While the initial project proposal does lay out in a waterfall-like method, the team is planning on using an agile approach to development, including a kanban board either via trello or waffle.io (to be decided) to manage individual assignments of project components.\\
+\begin{enumerate}
+	\item [0)]\setcounter{enumi}{0} \large{Get Acquainted with ROS}\\
+	\normalsize This step will be fairly trivial and should not take longer than 2-3 days.
+	\item \large{Create Data Collection Protocol }\\
+	\normalsize Perhaps the most involved stage of the project, after measurement definitions and storage is designed, is implementing the planned structures. The data will be stored in bags, which are essentially sensor data dumps. Analysis of this data can then be done in ROSbag, a command line tool for the analysis of these bags. The current goal is for coding of the data collection mechanism to be at a testable state by the beginning of winter term, in order to allow the client time to begin writing their research results. Care will be taken to make each test modular, so if new tests need to be added, it will not be at the expense of the entire system.
+	\item \large{Proof of Concept}\\
+	\normalsize After the testable software is complete, we can begin running assessments with wheelchair users in order to confirm the software is running as expected. This could be done with only one or two users of each skill level, in order to avoid time, resources and data from being lost should there be an error in our approach. Keeping with a January time line for testing, this would give up to one month to fix bugs and stabilize the system if needed. 
+	\item \large{Refine and Expand}\\
+	\normalsize After proof of concept testing, we can assess and determine if our current test suite is sufficient to meet the needs of the client. If more tests are needed, they can be added at this time, as well as clearing up any bugs that hinder the data collection efforts. 
+	\item \large {Document and Formalize}\\
+	\normalsize While documentation will be created throughout the development process, at this final stage we can take time to create formal, user-facing documentation to allow our client to not only present their findings to Access and iROS, but also to Perimobile. If this research proves successful, it will allow this assessment software to be commercialized and expanded upon.
+\end{enumerate}
+
+
+
+\section{Performance Metrics}
+	There are three explicit deliverables of the project (copied from the project description): 
+\begin{enumerate}
+	\item \large{“Data collection interface to gather trial information”}
+	\\
+	\normalsize The data collection interface can be considered complete when there is a command line interface for collecting data from each of the sensors in the kit, as well as a repeatable and documented protocol for collecting data into bags during trials. 
+	\\
+	\item \large {“Data presentation interface for analysis of the wheelchair path and actions during the recorded trial”}
+	\\
+	\normalsize The data presentation layer can be considered complete when data stored in bags can be visualized across time.\\
+	\item \large{“Revision and documentation of electrical prototype kit used on the wheelchair.”}
+	\\
+	\normalsize TBD
+\end{enumerate}
+
+
+
+
+\end{document}
