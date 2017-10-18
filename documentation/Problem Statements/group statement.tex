@@ -87,7 +87,7 @@ Presenting the data in a usable format for analysis provides an entirely differe
 
 
 \section{Proposed Solution}
-Currently, the core solution can be broken into three parts, each part representing a layer in a user application that will allow for smooth interaction between a tester and the data a user test creates. 
+Currently, the core solution can be broken into three parts, each part representing a layer in a user application that will allow for smooth interaction between a tester and the data a user test creates. Languages and libraries chosen were chosen due to their scalability and frequency of use, allowing the project to continue even after the project is completed and extended as client needs change.  
 \begin{enumerate}
 	\item \textbf{ROS bag transfer}\\
 	During a user test, a large amount of data will be generated from the LIDAR, wheel data and other sensors. This information will be gathered into a ROS bag for storage and must be organized logically and filtered so only necessary data is kept to keep the storage size down. In an ideal scenario, all user tests will be stored within a 8Gb thumb drive for ease of transfer.\\
