@@ -1,0 +1,83 @@
+\documentclass[letterpaper,10pt,titlepage]{article}
+
+\usepackage{graphicx}                                        
+\usepackage{amssymb}                                         
+\usepackage{amsmath}                                         
+\usepackage{amsthm}                                          
+
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{textheight=8.5in, textwidth=6in}
+
+%random comment
+
+\newcommand{\cred}[1]{{\color{red}#1}}
+\newcommand{\cblue}[1]{{\color{blue}#1}}
+
+\usepackage{hyperref}
+\usepackage{geometry}
+
+
+\def\name{Marie Bomber}
+
+
+%% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {CS461 ``Senior Capstone'', ROS},
+  pdftitle = {CS 461: Project Proposal},
+  pdfsubject = {CS 461 },
+  pdfpagemode = UseNone
+}
+
+
+\begin{document}
+\begin{titlepage}
+	\centering
+	\vspace*{\stretch{1}}
+		\Huge{CS461: Problem Statement}\\
+		\bigskip
+		\large{\name}\\
+		\bigskip
+		\large{Fall Term}\\
+		\bigskip
+		\large{\today}\\
+	\vspace*{\stretch{1}}
+	\raggedright \normalsize Abstract: This project is to assist with the collection, storage and access of data collected during competency trials for users of a modified Perimobile wheelchair. This may allow users of power wheel chairs to be assessed without needing to visit and occupational therapist and may increase the accessibility of competency assessment.
+\end{titlepage}
+\section{Project Description}
+\paragraph{} The intent of this project is to assist users of motorized wheelchairs assess how proficient they are with their wheelchair without having to visit an occupational therapist who could be hours away. This project will be gathering information using a Perimobile M300 wheelchair that has been fitted with several sensors, with a primary goal to design the means to collect, store and access the sensor data (both with and without wheelchair user data attached) from approximately forty users. 
+\paragraph{} Each user would be asked to navigate a course with the Perimobile wheelchair up to three times, with the software collecting information such as sudden stops and starts, collisions or near-collisions and rough turning. These and other 'proficiency skills' will be recorded and organized in such a way that the client can preform Palm DP analysis and attempt to gauge the wheelchair users proficiency and come to a result similar to that of an occupational therapist.
+\paragraph{} In addition to managing the collection, storage and access of individual data points for analysis, our client would like us to add documentation for the sensor suite added to the Perimobile chair so after publication, the means to commercialize this product would be available for the client to present to Perimobile. This would allow the solution to be available for wheelchair users that cannot easily visit an occupational therapist to be assessed as needed. 
+\paragraph{} A successful project would allow the client to present the study this data depends on at the Assets conference in October (paper due in April) as well as publish in iROS in June.
+
+\section{Project Plan}
+\paragraph{} This project will be best executed if divided into five stages, with each stage building a core base for other stages to build out from. While the initial project proposal does lay out in a waterfall-like method, the team is planning on using an agile approach to development, including a kanban board either via trello or waffle.io (to be decided) to manage individual assignments of project pieces.\\
+\begin{enumerate}
+\item [0.]\setcounter{enumi}{0} \large{Get Acquainted with ROS}\\
+\normalsize This step will be fairly trivial and should not take longer than 2-3 days.
+\item \large{Define Metrics for Competency}\\
+\normalsize In order to assess a users competency, competency needs to be broken down into discreet data points. While it is easy for a human to say a user is skilled or unskilled through observation, actions like sudden starts and stops, or inconsistent turning needs to be measurable given the sensors available. Stage one of this project will be observing wheelchair users of various skill levels (through video or through direct observation, which ever is more feasible) and beginning to quantify these behaviors. Are their speed measurements available with the sensor suite and what time range measurement will be reasonable for the types of measurements we need? Each competency behavior needs to be quantified in order to design how they will be stored and assessed. 
+\item \large{Design Storage Space}\\
+\normalsize Once the metrics for competency are established, how the data will be stored will need to be considered. While this stage will likely be smaller in scale, the client's needs regarding accessing data both dependent and independent of wheelchair user (in other words, he should be able to pull the data for an individual user to assess individual competency, then, after assessment, pull the full testing data set for research purposes) as well as ease of use and measurement needs to be accounted for. An interface may be designed at this stage depending on client requirements. 
+\item \large{Build Testing Software}\\
+\normalsize Perhaps the most involved stage of the project, after measurement definitions and storage is designed, is implementing the planned structures. This will be in a mixture of ROS, Python and, if a database solution is selected, the selected database language (likely SQL). Current goal is for coding of the data collection mechanism to be at a testable state by the beginning of winter term, in order to allow the client time to conduct their tests and begin writing their research results. Care will be taken to make each test modular, so if new tests need to be added, it will not be at the expense of the entire system.
+\item \large{Proof of Concept}\\
+\normalsize After the testable software is complete, we can begin running assessments with wheelchair users in order to confirm the software is running as expected. This could be done with only one or two users of each skill level, in order to avoid time, resources and data from being lost should there be an error in our approach. Keeping with a January time line for testing, this would give up to one month to fix bugs and stabilize the system if needed. 
+\item \large{Refine and Expand}\\
+\normalsize After proof of concept testing, we can assess and determine if our current test suite is sufficient to meet the needs of the client. If more tests are needed, they can be added at this time, as well as clearing up any bugs that hinder the data collection efforts. 
+\item \large {Document and Formalize}\\
+\normalsize While documentation will be created throughout the development process, at this final stage we can take time to create formal, user-facing documentation to allow our client to not only present their findings to Access and iROS, but also to Perimobile. If this research proves successful, it will allow this assessment software to be commercialized and expanded upon.
+\end{enumerate}
+\end{document}
