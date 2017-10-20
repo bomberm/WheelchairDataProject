@@ -87,35 +87,44 @@ Presenting the data in a usable format for analysis provides an entirely differe
 
 
 \section{Proposed Solution}
-This project will be best executed if divided into stages, with each stage building a core base for other stages to build out from. While the initial project proposal does lay out in a waterfall-like method, the team is planning on using an agile approach to development, including a kanban board either via trello or waffle.io (to be decided) to manage individual assignments of project components.\\
+Currently, the core solution can be broken into three parts, each part representing a layer in a user application that will allow for smooth interaction between a tester and the data a user test creates. Languages and libraries chosen were chosen due to their scalability and frequency of use, allowing the project to continue even after the project is completed and extended as client needs change.  
 \begin{enumerate}
-	\item [0)]\setcounter{enumi}{0} \large{Get Acquainted with ROS}\\
-	\normalsize This step will be fairly trivial and should not take longer than 2-3 days.
-	\item \large{Create Data Collection Protocol }\\
-	\normalsize Perhaps the most involved stage of the project, after measurement definitions and storage is designed, is implementing the planned structures. The data will be stored in bags, which are essentially sensor data dumps. Analysis of this data can then be done in ROSbag, a command line tool for the analysis of these bags. The current goal is for coding of the data collection mechanism to be at a testable state by the beginning of winter term, in order to allow the client time to begin writing their research results. Care will be taken to make each test modular, so if new tests need to be added, it will not be at the expense of the entire system.
-	\item \large{Proof of Concept}\\
-	\normalsize After the testable software is complete, we can begin running assessments with wheelchair users in order to confirm the software is running as expected. This could be done with only one or two users of each skill level, in order to avoid time, resources and data from being lost should there be an error in our approach. Keeping with a January time line for testing, this would give up to one month to fix bugs and stabilize the system if needed. 
-	\item \large{Refine and Expand}\\
-	\normalsize After proof of concept testing, we can assess and determine if our current test suite is sufficient to meet the needs of the client. If more tests are needed, they can be added at this time, as well as clearing up any bugs that hinder the data collection efforts. 
-	\item \large {Document and Formalize}\\
-	\normalsize While documentation will be created throughout the development process, at this final stage we can take time to create formal, user-facing documentation to allow our client to not only present their findings to Access and iROS, but also to Perimobile. If this research proves successful, it will allow this assessment software to be commercialized and expanded upon.
+	\item \textbf{ROS bag transfer}\\
+	During a user test, a large amount of data will be generated from the LIDAR, wheel data and other sensors. This information will be gathered into a ROS bag for storage and must be organized logically and filtered so only necessary data is kept to keep the storage size down. In an ideal scenario, all user tests  will be stored within a 8Gb thumb drive for ease of transfer.\\
+	Components of this stage will include connecting to the wheelchair using it's wireless network, meaningful error messages if a connection cannot be made and receiving the ROS bag data. All of this information will be filtered to only the relevant data (to be determined once a connection is established and sample ROS bag data can be obtained) and passed to the main storage module of the solution.\\ 
+	This component will be created primarily with ROS and python and will pass information to the storage phase. \\
+	\item \textbf{Storage/Core Control}\\
+	Once data has been collected, it will be passed to the main storage of the program. At this stage, the completed ROS bag data will be linked with the entered user data (adding a unique ID should one not already exist) and stored in the project database.\\
+	This component will also be responsible for managing the fetch and retrieval of user data according to client needs and will provide the backbone of communication between the user interface and core data. Controls for this stage will include fetching and organizing results, auto populating form data, control of user ID's and deletion of said ID's as the client needs. \\
+	Like the previous component, this stage will use python as it's primary language, though SQL will define the database structure. \\ 
+	\item \textbf{User Interface}\\
+	The final component of this project will be a user interface that a tester will use to initiate the data collection, fill out any information that cannot be auto-populated and interface with the data as needed. This interface may be a web application, a graphical user interface, or both as time allows, with preference given to a web interface in order to increase portability. This stage will have different views for different user types, including a researcher/developer view (to be used by the client and project members), tester view (if a third party is needed to run a test) and any other levels of usability needed over the course of the research.\\
+	Currently, three main pages will need to be designed for this component. First, front page/login (password protected) will be needed to control access to the user data and allow for navigation between all other pages. Second a "run new test" page will be used to allow the tester to add a new user or add a test for an existing user and initiate data collection on the wheelchair. Lastly a "view results" page will allow the researcher to view the results for a specific user or for all users depending on the clients needs. \\
+	For this stage, python (likely through the pyjamas library) will be used to define the user interface, with Node.js to fill in any gaps that python cannot provided for a web interface.\\
+	
+
 \end{enumerate}
 
 
 
 \section{Performance Metrics}
-	There are three explicit deliverables of the project (copied from the project description): 
+	The explicit deliverables and understandings of the project will be:
 \begin{enumerate}
-	\item \large{“Data collection interface to gather trial information”}
+	\item \large{“Robot Operating System Understand and Data Collection Organization”}
 	\\
-	\normalsize The data collection interface can be considered complete when there is a command line interface for collecting data from each of the sensors in the kit, as well as a repeatable and documented protocol for collecting data into bags during trials. 
+	\normalsize Understand how messages are formed and how ROSbags collect messages. Know enough about ROS to keep each ROSbag small enough that all ROSbags (approximately 120 bags) can fit on an 8GB flash drive.\\
 	\\
-	\item \large {“Data presentation interface for analysis of the wheelchair path and actions during the recorded trial”}
+	\item \large {“Institutional Review Board Compliance”}
 	\\
-	\normalsize The data presentation layer can be considered complete when data stored in bags can be visualized across time.\\
-	\item \large{“Revision and documentation of electrical prototype kit used on the wheelchair.”}
+	\normalsize Anonymize IDs of participants so a failed trial or potentially embarressing data cannot be traced back to the ID of that participant. The trials must be grouped by participant to show improvement, but the participant cannot be known.\\
 	\\
-	\normalsize TBD
+	\item \large {“Practical GUI”}
+	\\
+	\normalsize Make an application that is able to start and stop trial runs with just a button click. There should be few text fields that information will be entered, and auto-populates with the current time and date. The interface should look good and be able to be run by someone with very little experience.\\
+	\\
+	\item \large{“Documentation of the System”}
+	\\
+	\normalsize Every piece of hardware that that did not come off the shelf should be documented so that the system could be recreated with little difficulty. All software used for the project will be documented.\\
 \end{enumerate}
 
 

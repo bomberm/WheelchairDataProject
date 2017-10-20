@@ -1,0 +1,65 @@
+\documentclass[10pt, onecolumn]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{natbib}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Robotic Wheelchair Data Collection and Analysis: Problem Statement}
+\author{
+    Aaron Leondar\
+}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \maketitle
+    CS 461: Senior Capstone Project\par
+    \vspace{.5cm}
+    Fall 2017\par
+    \vspace{1.5cm}
+    \begin{abstract}
+        For people that have extreme physical disabilities such as ALS, or for people who are paraplegic or even quadriplegic, the use of wheelchairs is necessary for even basic maneuverability. However, even with a wheelchair it is still marginally difficult to operate one while afflicted by these extremely serious conditions. Therefore, having a wheelchair able to perform tasks autonomously, such as moving from point to point, would help those kinds of people tremendously. This project involves collecting data from users using a wheelchair to determine the wheelchair users' proficiency in driving it.  The ways that the users' proficiency will be tested are how cleanly they are able to make tight turns, slow down, and in general maneuver around a tight space in a limited amount of time. The end result of this project will be integration with Permobil through the analysis of the data collected.
+    \end{abstract}
+    \newpage  
+\end{titlepage}
+
+    \section{Problem}
+    
+    The problem at hand is to create a way to accurately test a multitude of users with varying wheelchair knowledge, then store those tests and analyze them in a variety of ways. Through analysis, the users' proficiency of maneuvering the wheelchair can be determined, and be used in developing software to better assist those who are disabled and require a wheelchair to move around. Another problem is to develop software in order to present the test findings, as well as the proficiency indicators by analyzing the path the users took in the wheelchair, as well the actions they took.
+    
+    \vspace{1cm}
+   
+    \section{Solution}
+    
+    To be able to properly analyze the results, several tests using many different participants will be used. The tests will consist of the participant sitting in the wheelchair and using its controls to maneuver around a fairly restricted area, most likely a mid-size public restroom. They will be tasked with using the wheelchair to drive into the stall and back out, then drive to the sink to wash their hands, and finally drive to the paper towel machine to dry their hands before exiting the restroom. This same route will be driven around 3 or 4 times by each participant, and there will be around 30 or 40 participants of hopefully varying driving skill levels, whether it be motor vehicle driving or wheelchair driving. This will result in roughly 120-150 data points to do analysis on, to be able to determine the participants' proficiency with the wheelchair, as well as their improvement with the controls over their multiple trials.
+    
+    \vspace{1cm}
+    
+    \section{Performance Metrics}
+    
+    The performance of this project will be dependent on the tests going smoothly and gathering meaningful data from them. The data that will be gathered will be the participants' path through the course through using GPS sensors, along with any walls or other obstacles they might hit while navigating the course. They will also be measured on the amount of time it takes to complete the course from start to finish. These results will be put into a database and analyzed to determine the general proficiency of the test participants. A preferred end goal of this project is to write two research papers about the test results and submit them, one in April and the other in June of 2018.
+
+\end{document}
