@@ -87,6 +87,19 @@ The ROSbags, when stored, must contain the length of time of the trial, the ID o
 They cannot contain more than strictly required sensor data because all ROSbags must fit on an 8GB flash drive.
 The ROSbags must be able to be sorted by date/time, and also by the participant's ID.
 \subsection{Core Architecture}
+\subsubsection{ROSbag and UI interface}
+\begin{itemize}
+	\item The core system should be able to accept a collected ROSbag and correlate it with input from the user interface to create a data entry.
+	\subitem The system should recognize if the user entered is a new testee or previous testee and link the new test to previous information.
+	\item When passed a request from the user interface, the core system should pass the query to the main storage medium and return from the query in a format that meets the User Interface needs.
+	\item The core system should securely store user logins and accept login requests so the interface only requires to handle pass/no pass scenarios.
+\end{itemize}
+\subsubsection{Data Storage}
+\begin{itemize}
+	\item The data entry must be stored in a secure storage space that complies with the Institutional Review Board as defined by the client.
+	\subitem Testee names must be separate from a unique ID
+	\subitem The reference link between testee names and ID's must be able to be purged at the client's request.
+\end{itemize}
 \subsection{User Interface}
 \subsection{Hardware Documentation}
 All Hardware that was not included in the off-the-shelf wheelchair must be documented.
