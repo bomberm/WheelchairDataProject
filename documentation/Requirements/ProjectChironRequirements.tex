@@ -82,9 +82,14 @@
 \subsection{Overview}
 \section{Overall Description}
 \subsection{Wheelchair to Application Communication}
+The application must connect with the wireless network of the wheelchair and receive ROSbags the robot sends after each trial.
+The ROSbags, when stored, must contain the length of time of the trial, the ID of the participant, as well as any relevant sensor information.
+They cannot contain more than strictly required sensor data because all ROSbags must fit on an 8GB flash drive.
+The ROSbags must be able to be sorted by date/time, and also by the participant's ID.
 \subsection{Core Architecture}
 \subsection{User Interface}
 \subsection{Hardware Documentation}
+All Hardware that was not included in the off-the-shelf wheelchair must be documented.
 \section{Appendixes}
 
 
