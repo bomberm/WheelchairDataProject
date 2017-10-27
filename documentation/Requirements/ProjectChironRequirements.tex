@@ -97,12 +97,22 @@ The ROSbags must be able to be sorted by date/time, and also by the participant'
 \subsubsection{Data Storage}
 \begin{itemize}
 	\item The data entry must be stored in a secure storage space that complies with the Institutional Review Board as defined by the client.
-	\subitem Testee names must be separate from a unique ID
+	\subitem Testee names must be separate from a unique ID.
 	\subitem The reference link between testee names and ID's must be able to be purged at the client's request.
 \end{itemize}
 \subsection{User Interface}
+\begin{itemize}
+	\item The tester should be able to see a list of bags, sortable by trial datetime and name of testee.
+	\item The tester should experience little latency (less than 500ms) when sorting bags in the interface.
+	\item The tester must have a method of exporting bags, or accessing bags outside of the interface.
+	\item The interface must be portable, both capable of running externally on a server, or locally.
+	\item It must be simple to replace names associated with bags with UIDs, to maintain data integrity but provide confidentiality to the testers.
+	\item The interface must not violate IRB compliance.
+	\item The interface will have a presentation layer which provides analytics tools for the bag data [GRANULAR REQUIREMENTS FOR PRESENTATION LAYER TO BE NEGOTIATED WITH CLIENT BEFORE FINAL DRAFT]
+\end{itemize}
 \subsection{Hardware Documentation}
 All Hardware that was not included in the off-the-shelf wheelchair must be documented.
+[GRANULAR REQUIREMENTS FOR HARDWARE DOCUMENTATION TO BE DISCUSSED WITH CLIENT BEFORE FINAL DRAFT]
 \section{Appendixes}
 
 
