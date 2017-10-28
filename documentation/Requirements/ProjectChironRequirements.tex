@@ -82,10 +82,11 @@
 \subsection{Overview}
 \section{Overall Description}
 \subsection{Wheelchair to Application Communication}
-The application must connect with the wireless network of the wheelchair and receive ROSbags the robot sends after each trial.
-The ROSbags, when stored, must contain the length of time of the trial, the ID of the participant, as well as any relevant sensor information.
-They cannot contain more than strictly required sensor data because all ROSbags must fit on an 8GB flash drive.
-The ROSbags must be able to be sorted by date/time, and also by the participant's ID.
+	\item Application must connect with the wireless network of the wheelchair 
+	\subitem Receives bags the robot sends after each trial.
+	\item The bags, when stored, must contain the length of time of the trial, the ID of the participant, as well as any relevant sensor information [To Bet Determined].
+	\item Bags cannot contain more than strictly required data because all bags must fit on an 8GB flash drive.
+	\item The bags must be able to be sorted by date/time, and also by the participant's ID.
 \subsection{Core Architecture}
 \subsubsection{ROSbag and UI interface}
 \begin{itemize}
