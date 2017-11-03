@@ -86,7 +86,7 @@ The intent of this project is to produce a Project Chiron interface to be used t
 This document will use the following definitions:\\
 Bag:\\ Collection of data points created by the ROSbag library during a user test\\
 Researcher:\\ Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)\\
-POMDP:\\ Partially Observable Markov Decision Process. This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more ammendable for solution using optimization techniques. \cite{1}
+POMDP:\\ Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques." \cite{1}\\
 ROS:\\ Robot Operating System\\
 Tester:\\ Mid level user of the Project Chiron Interface. The tester is expected to be able to initiate a user test, but will not be able to retrieve all user data. (May be able to retrieve data via an ID, but will not have access to testee names).\\
 Testee:\\ Individual who has no access to the Project Chiron interface, but will have a name and ID entry and who will run a user test.\\
@@ -120,30 +120,45 @@ User Test:\\ Instance of a single navigation of the testing course. This test wi
 	\item The data entry must be stored in a secure storage space that complies with the Institutional Review Board as defined by the client.
 	\subitem Testee names must be separate from a unique ID.
 	\subitem The reference link between testee names and ID's must be able to be purged at the client's request.
-	\item All user tests (approximately 150 tests) must be able to be stored within an 8GB flash drive.
+	\item All user tests (approximately 100 tests) and any relevant data must be able to be stored within an 16GB flash drive.
+	\item The system must recognize two levels of user access.
+	\subitem Researcher - This level will have full access to user data, including testee name and ID link.
+	\subitem Tester - This level has the ability to enter a testee name and start and end a test, but not have access to bag data.
 \end{itemize}
 \subsection{User Interface}
 \begin{itemize}
-	\item The tester should be able to see a list of bags, sortable by trial date/time and name or ID of testee.
+	\item The researcher should be able to see a list of bags, sortable by trial date/time and name or ID of testee.
 	\item The tester should experience little latency (less than 500ms) when sorting bags in the interface.
-	\item The tester must have a method of exporting bags, or accessing bags outside of the interface.
+	\item The researcher must have a method of exporting bags, or accessing bags outside of the interface.
 	\item The interface must be portable, both capable of running externally on a server, or locally.
-	\item It must be simple to replace names associated with bags with UIDs, to maintain data integrity but provide confidentiality to the testers.
+	\item It must be simple to replace names associated with bags with testee IDs, to maintain data integrity but provide confidentiality to the testers.
 	\item The interface must not violate IRB compliance.
-	\item The interface will have a presentation layer which provides analytics tools for the bag data [GRANULAR REQUIREMENTS FOR PRESENTATION LAYER TO BE NEGOTIATED WITH CLIENT BEFORE FINAL DRAFT]
+	\item The interface will have a presentation layer which provides analytics tools for the bag data.
 \end{itemize}
-\subsection{Hardware Documentation}
+\subsection{System Documentation}
 \begin{itemize}
-	\item All Hardware that was not included in the off-the-shelf wheelchair must be documented.
+	\item All testing hardware must be recorded with part numbers and pricing.
+	\item Wiring for the testing hardware must be diagrammed so that the system could be recreated. 
 	\item Structure of hardware system documentation must be at a level that an electrical engineer can recreate the system
 		\subitem Once documentation is completed, it must meet researcher satisfaction
+	\item All system software must be documented so a software engineer can install and run the application on a new system with no issues. 
+		\subitem To test, software must be installed by 3 senior software engineering students in a new environment without error. 
 \end{itemize}
-[GRANULAR REQUIREMENTS FOR HARDWARE DOCUMENTATION TO BE DISCUSSED WITH CLIENT BEFORE FINAL DRAFT]
+\subsection{Stretch Goals}
+\begin{itemize}
+	\item The application should be able to replay user test data from a researcher tier account.
+	\subitem This will require a 3D model of the wheelchair and test path.
+	\subitem This will allow the developers to demo the application at the capstone expo
+\end{itemize}
 \subsection{Assumptions and Dependencies}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\linewidth, scale=0.7]{PrelimGanttChart.jpg}
 \end{figure}
+\begin{itemize}
+	\item Priority for this project is having a running test system as soon as possible (mid February if possible) to allow researcher time to run user tests prior to ASSET conference paper deadline. 
+	\item System documentation will begin after user testing is started, in order to meet the February deadline. 
+\end{itemize}
 
 \section{Appendixes}
 
