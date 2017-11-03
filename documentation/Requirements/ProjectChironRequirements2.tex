@@ -96,17 +96,21 @@ User Test:\\ Instance of a single navigation of the testing course. This test wi
 \section{Overall Description}
 \subsection{Wheelchair to Application Communication}
 \begin{itemize}
-	\item Application must connect with the wireless network of the wheelchair 
+	\item Application must connect with the wireless network of the wheelchair.
 	\subitem Receives bags the robot sends after each trial.
-	\item The bags, when stored, must contain the length of time of the trial, the ID of the participant, as well as any relevant sensor information [To Be Determined].
-	\item The application must be able to reduce the data collected in the user test to relevant points to manage the size of information needing to be stored
-	\item Bags cannot contain more than strictly required data because all bags must fit on an 8GB flash drive.
+	\item The bags, when stored, must contain:
+	\subitem The length of time of the trial.
+	\subitem The date and time the trial was performed.
+	\subitem the ID of the participant.
+	\subitem Any relevant sensor information.
+	\item Bags cannot contain more than strictly required data because all bags must fit on a moderately-sized flash drive (no more than 16GB).
+	\item Bags should not exceed 20MB each.
 	\item The bags must be able to be sorted by date/time, and also by the participant's ID.
 \end{itemize}
 \subsection{Core Architecture}
-\subsubsection{ROSbag and UI interface}
+\subsubsection{Bag and UI interface}
 \begin{itemize}
-	\item The core system should be able to accept a collected ROSbag and correlate it with input from the user interface to create a data entry.
+	\item The core system should be able to accept a collected bag and correlate it with input from the user interface to create a data entry.
 	\subitem The system should recognize if the user entered is a new testee or previous testee and link the new test to previous information.
 	\item When passed a request from the user interface, the core system should pass the query to the main storage medium and return from the query in a format that meets the User Interface needs.
 	\item The core system should securely store user logins and accept login requests so the interface only requires to handle pass/no pass scenarios.
