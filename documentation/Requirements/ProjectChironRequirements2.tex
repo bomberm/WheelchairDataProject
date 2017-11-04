@@ -1,13 +1,39 @@
 \documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+
+%slightly modified from stackoverflow @ https://tex.stackexchange.com/questions/200437/numbering-sections-subsections-etc-manually
+%code block below allows for references to function as a section instead of a chapter
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\subsection{References}
+	\@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+	\list{\@biblabel{\@arabic\c@enumiv}}%
+	{\settowidth\labelwidth{\@biblabel{#1}}%
+		\leftmargin\labelwidth
+		\advance\leftmargin\labelsep
+		\@openbib@code
+		\usecounter{enumiv}%
+		\let\p@enumiv\@empty
+		\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+%	\sloppy
+	\clubpenalty4000
+	\@clubpenalty \clubpenalty
+	\widowpenalty4000%
+	\sfcode`\.\@m}
+{\def\@noitemerr
+	{\@latex@warning{Empty `thebibliography' environment}}%
+	\endlist}
+\makeatother
+
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{setspace}
 \makeindex
 \usepackage{geometry}
+
 \geometry{textheight=9.5in, textwidth=7in}
 
 % 1. Fill in these details
-\def \CapstoneTeamName{		Project Chiron}
+\def \CapstoneTeamName{		Wheelchair Data Collection Team}
 \def \CapstoneTeamNumber{		4}
 \def \GroupMemberOne{			Marie Bomber}
 \def \GroupMemberTwo{			Aaron Leondar}
@@ -64,7 +90,7 @@
             \vspace{20pt}
                     \begin{abstract}
             	% 6. Fill in your abstract    
-  Filler
+This document will serve to provide the requirements for the Wheelchair Data Collection capstone project under Matthew Shuman. The document provides as a high-level description of the project, but does not discuss design or implementation. Our capstone will inherit constraints from the parent project at Oregon State University, Project Chiron. These constraints include privacy restrictions for wheelchair operators, visual interface requirements for the undergraduate tester, and simple data accessibility for the researcher.
             \end{abstract} 
         }   
     \end{singlespace}
@@ -83,18 +109,28 @@ This requirements document is intended to define the critical features and funct
 \subsection{Scope}
 The intent of this project is to produce a Project Chiron interface to be used to collect user test data when navigating a course using a Perimobile wheelchair. This project will not cover the modifications made to a Perimobile wheelchair and will not include any hardware work with the exception of documenting any already-existing hardware modifications. The goal of this project is to create an easy to use interface to begin and record user tests, and allow testing data to be retrieved so a researcher can run POMDP analysis on the gathered results.
 \subsection{Definitions, Acronyms and Abbreviations}
-This document will use the following definitions:\\
-Bag:\\ Collection of data points created by the ROSbag library during a user test\\
-Researcher:\\ Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)\\
-POMDP:\\ Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques." \cite{1}\\
-ROS:\\ Robot Operating System\\
-Tester:\\ Mid level user of the Project Chiron Interface. The tester is expected to be able to initiate a user test, but will not be able to retrieve all user data. (May be able to retrieve data via an ID, but will not have access to testee names).\\
-Testee:\\ Individual who has no access to the Project Chiron interface, but will have a name and ID entry and who will run a user test.\\
-User Test:\\ Instance of a single navigation of the testing course. This test will produce a bag of testee data that the Chiron interface must be able to store and retrieve.\\
-\subsection{References}
+\begin{description}
+\item [Bag] \hfill \break Collection of data points created by the ROSbag library during a user test
+\item [Researcher] \hfill \break Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)
+\item [POMDP] \hfill \break Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques." \cite{1}
+\item [ROS] \hfill \break Robot Operating System
+\item [Tester] Mid level user of the Project Chiron Interface. The tester is expected to be able to initiate a user test, but will not be able to retrieve all user data. (May be able to retrieve data via an ID, but will not have access to testee names).
+\item [Testee] \hfill \break Individual who has no access to the Project Chiron interface, but will have a name and ID entry and who will run a user test.
+\item [User Test] \hfill \break Instance of a single navigation of the testing course. This test will produce a bag of testee data that the Chiron interface must be able to store and retrieve.
+\end{description}
 \bibliography{Bibliography}
+\subsection{Overview}
+This software requirements specification document contains all of the constraints of the wheelchair data collection project. It can be used as a functional description for the necessary components of the project, without discussion of their design or implementation.
+
+
 \section{Overall Description}
-\subsection{Wheelchair to Application Communication}
+\subsection{Product Perspective}
+\begin{itemize}
+	\item Interactions with sensors in the hardware mounted to the Permobil wheelchairs must be done with ROS, as it is a standard of the parent project.
+	\item There will be no development or addition of hardware, only documentation of existing Project Chiron hardware.
+\end{itemize}
+\subsection{Product Functions}
+\subsubsection{Wheelchair to Application Communication}
 \begin{itemize}
 	\item Application must connect with the wireless network of the wheelchair.
 	\subitem Receives bags the robot sends after each trial.
@@ -103,13 +139,11 @@ User Test:\\ Instance of a single navigation of the testing course. This test wi
 	\subitem The date and time the trial was performed.
 	\subitem the ID of the participant.
 	\subitem Any relevant sensor information.
-	\item Bags cannot contain more than strictly required data because all bags must fit on a moderately-sized flash drive (no more than 16GB).
-	\item Bags should not exceed 20MB each.
-	\item The bags must be able to be sorted by date/time, and also by the participant's ID.
 \end{itemize}
-\subsection{Core Architecture}
 \subsubsection{Bag and UI interface}
 \begin{itemize}
+	\item The researcher should be able to see a list of bags, sortable by trial date/time and name or ID of testee.
+	\item It must be simple to replace names associated with bags with testee IDs, to maintain data integrity but provide confidentiality to the testers.
 	\item The core system should be able to accept a collected bag and correlate it with input from the user interface to create a data entry.
 	\subitem The system should recognize if the user entered is a new testee or previous testee and link the new test to previous information.
 	\item When passed a request from the user interface, the core system should pass the query to the main storage medium and return from the query in a format that meets the User Interface needs.
@@ -117,50 +151,42 @@ User Test:\\ Instance of a single navigation of the testing course. This test wi
 \end{itemize}
 \subsubsection{Data Storage}
 \begin{itemize}
-	\item The data entry must be stored in a secure storage space that complies with the Institutional Review Board as defined by the client.
-	\subitem Testee names must be separate from a unique ID.
-	\subitem The reference link between testee names and ID's must be able to be purged at the client's request.
-	\item All user tests (approximately 100 tests) and any relevant data must be able to be stored within an 16GB flash drive.
 	\item The system must recognize two levels of user access.
 	\subitem Researcher - This level will have full access to user data, including testee name and ID link.
 	\subitem Tester - This level has the ability to enter a testee name and start and end a test, but not have access to bag data.
 \end{itemize}
-\subsection{User Interface}
+\subsubsection{System Documentation}
 \begin{itemize}
-	\item The researcher should be able to see a list of bags, sortable by trial date/time and name or ID of testee.
-	\item The tester should experience little latency (less than 500ms) when sorting bags in the interface.
-	\item The researcher must have a method of exporting bags, or accessing bags outside of the interface.
-	\item The interface must be portable, both capable of running externally on a server, or locally.
-	\item It must be simple to replace names associated with bags with testee IDs, to maintain data integrity but provide confidentiality to the testers.
-	\item The interface must not violate IRB compliance.
-	\item The interface will have a presentation layer which provides analytics tools for the bag data.
-\end{itemize}
-\subsection{System Documentation}
-\begin{itemize}
-	\item All testing hardware must be recorded with part numbers and pricing.
+
 	\item Wiring for the testing hardware must be diagrammed so that the system could be recreated. 
 	\item Structure of hardware system documentation must be at a level that an electrical engineer can recreate the system
 		\subitem Once documentation is completed, it must meet researcher satisfaction
 	\item All system software must be documented so a software engineer can install and run the application on a new system with no issues. 
 		\subitem To test, software must be installed by 3 senior software engineering students in a new environment without error. 
 \end{itemize}
-\subsection{Stretch Goals}
+\subsection{User Characteristics}
 \begin{itemize}
-	\item The application should be able to replay user test data from a researcher tier account.
-	\subitem This will require a 3D model of the wheelchair and test path.
-	\subitem This will allow the developers to demo the application at the capstone expo
+	\item The user of the recording interface will be an unaffiliated paid undergraduate student, as such the collector must have a simple button interface for recording data.
+	\item The users receiving the bag will be researchers affiliated with Project Chiron, as such access to the bags should be trivial, but authenticated
+
+\end{itemize}
+\subsection{Constraints}
+\begin{itemize}
+	\item The data entry must be stored in a secure storage space that complies with the Institutional Review Board as defined by the client.
+		\subitem Testee names must be separate from a unique ID.
+		\subitem The reference link between testee names and ID's must be able to be purged at the client's request.
+	\item All testing hardware must be recorded with part numbers and pricing.
+	\item The tester should experience little latency (less than 500ms) when sorting bags in the interface.
+	\item The researcher must have a method of exporting bags, or accessing bags outside of the interface.
+	\item The interface must be portable, both capable of running externally on a server, or locally.
+	\item Bags cannot contain more than strictly required data because all bags must fit on a moderately-sized flash drive (no more than 16GB).
 \end{itemize}
 \subsection{Assumptions and Dependencies}
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\linewidth, scale=0.7]{PrelimGanttChart.jpg}
-\end{figure}
 \begin{itemize}
-	\item Priority for this project is having a running test system as soon as possible (mid February if possible) to allow researcher time to run user tests prior to ASSET conference paper deadline. 
-	\item System documentation will begin after user testing is started, in order to meet the February deadline. 
+	\item Changes to the parent project may impact requirements of the wheelchair data collection interface.
+	\item The bag files should be appropriately sized to facilitate portable storage of roughly 100 trial runs.
+	
 \end{itemize}
-
-\section{Appendixes}
 
 
 
