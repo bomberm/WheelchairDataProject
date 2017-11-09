@@ -1,0 +1,2 @@
+- Discussed Technology Review document, specifically, scope of document and requirements.
+- Went over pros and cons of various web hosting services, including the benefits and drawbacks of using Flip1 to host.
