@@ -1,0 +1,147 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+
+%slightly modified from stackoverflow @ https://tex.stackexchange.com/questions/200437/numbering-sections-subsections-etc-manually
+%code block below allows for references to function as a section instead of a chapter
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\subsection{References}
+	\@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+	\list{\@biblabel{\@arabic\c@enumiv}}%
+	{\settowidth\labelwidth{\@biblabel{#1}}%
+		\leftmargin\labelwidth
+		\advance\leftmargin\labelsep
+		\@openbib@code
+		\usecounter{enumiv}%
+		\let\p@enumiv\@empty
+		\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+%	\sloppy
+	\clubpenalty4000
+	\@clubpenalty \clubpenalty
+	\widowpenalty4000%
+	\sfcode`\.\@m}
+{\def\@noitemerr
+	{\@latex@warning{Empty `thebibliography' environment}}%
+	\endlist}
+\makeatother
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+\makeindex
+\usepackage{geometry}
+
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		Wheelchair Data Collection Team}
+\def \CapstoneTeamNumber{		4}
+\def \GroupMemberOne{			Marie Bomber}
+\def \GroupMemberTwo{			Aaron Leondar}
+\def \GroupMemberThree{			Hadi Rahal-Arabi}
+\def \CapstoneProjectName{			Robotic Wheelchair Data Collection and Analysis}
+\def \CapstoneSponsorCompany{	Oregon State University}
+\def \CapstoneSponsorPerson{	Matthew William Shuman	}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{	%Problem Statement
+				%Requirements Document
+				Technology Review
+				%Design Document
+				%Progress Report
+				}
+\bibliographystyle{ieeetran}	
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large 27 October 2017}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+                    \begin{abstract}
+            	% 6. Fill in your abstract    
+This document will serve to review components related to the core module of the Wheelchair Data project. Specifically, this document will review the core system language, data storage options and SQL format options.
+            \end{abstract} 
+        }   
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\section{Overview}
+
+The data system for Project Chiron can be split into three distinct layers, each representing a stage from recording and processing a user test, to storing the test results and core architecture, to the interface in which the researcher can use to initiate a test or retrieve the test data. This technical review will focus on the middle layer of the overall application, specifically, how user data will be stored and what the primary language the application will use.
+
+
+\section{Primary Language}
+The first decision to make is the primary language of the system. The language selected will guide any future decisions made in both the core system, and the application as a whole. While the wheelchair itself runs Ubuntu 16.04 (as recommended by ROS\cite{ROSKenetic}), the application itself should be able to connect and run on any OS. With this in mind, any language selected should either be default to Windows, Mac and Linux, or be easily installed. In addition, the application will be used and maintained primarily by electrical engineers after this project is completed. Therefore, any language selected should be easy to use, or familiar to an average electrical engineering student. Per our client, this will be python, but in the interest of thoroughness, other language options will be explored.
+\subsection{C\#}
+C\# is an object-oriented language designed to work with Microsoft's .NET Framework. It is grammatically similar to both C++ and Java, and removes much of the pointer handling that makes C++ difficult to use\cite{MicrosoftCSharp}. It has built in support for designing a graphical user interface via Visual Studio \cite{CSharpGraphics} which would provide an easy-to-use system. Furthermore, while C\# was designed for Windows applications, with .NET Core, the application could run on Linux with only a small performance penalty \cite{CSharpLinux}. 
+\subsection{Java}
+Java is another object-oriented language and is designed to run on any platform \cite{WhatIsJava}. It is free to download, and can be used to create graphical user interfaces via SWT or Swing \cite{JavaGraphics}. Java is similar to C and C++ in grammar, and has several IDE's to streamline testing and develop \cite{JavaIDE}. While Java is relatively simple to learn, it does not have the same readability and ease of use as Python \cite{JavaVPython}, and would require a separate installation of the JDK on most systems \cite{JavaGettingStarted}.
+\subsection{Python}
+Python is the preferred language by our client. It also has many advantages over C\# and Java in terms of portability and readability \cite{JavaVPython}. In addition, ROS is designed to work smoothly with Python via the rospy package \cite{ROSpy}. While python is not typically used for GUIs, there are packages that enable GUI development, such as Tkinter \cite{Tkinter}. 
+\subsection{Conclusion of Primary Language}
+While both C\# and Java are designed for GUI application development, they both present a learning curve that does not meet the needs of our client. In addition, ROS, the primary language used by the client and his development team, is built within and on top of the standard Python libraries. Adding a secondary language to manage the handling and storage of the information gathered in ROS could over-complicate the system, especially when changes need to be made after the end of the project scope. For these reasons, we have selected Python as the primary language for our application.
+
+
+\section{Storage Medium}
+The second component in the core system is deciding how ROSbags and their corresponding user data are stored. The ability to link and unlink testee information is a key requirement of this component. While the researcher will need to be able to correlate a user test with another test by the same user during the initial research phase, once this phase is complete, this link must be removed for IRB compliance. 
+\subsection{Flat File Structure}
+The first option for storage medium is to use a flat file structure. On the equipment running the application we could have a folder designated for storing user test data. Each user test could be linked via an encrypted version of their names. Once the testing is complete, the encryption key could be deleted in order to abide with IRB requirements and the user data would be still be accessible in it's encrypted form. Because we only need to store approximately one hundred to one hundred fifty files, this would be a bit more light weight. Unfortunately, using a flat file system makes retrieving information to be a bit more involved as a very strict naming structure to prevent lookup errors. In addition, the amount of information that can be stored will be limited to the name of the file and the ROS bag it describes. This method would also severely limit the security of the information stored, which could risk taking us out of IRB compliance. 
+\subsection{Custom File Type}
+Similar to the Flat File Structure, we could create a custom file type for use in the system, This would allow us to customize the user ID and name link, and add more information than a simple filename would give. It would add a layer of security to the user name and test data, but would limit the re-usability of the system. 
+\subsection{SQL Database}
+Lastly, we could use some form of SQL database. This will allow relations between a user test and a user name to be linked via a secondary table. This secondary table can be deleted (or the testee's name to simply be replaced with a null entry) once the primary phase of testing is completed. As a SQL-type database is a standard means of storing relational data, this will also enable the application to be re-used in any further research experiments with little to no re-work. While encryption and export of the entire table may be more involved, this database can also contain user login information for access to the application, reducing the number of components necessary for the system.
+\subsection{Conclusion of Storage Medium}
+We have decided to create a SQL database to store user data as well as login and password information. While using a flat file structure is likely easier, and creating a custom file type to store within the structure will give us the information flexibility we would need, neither solution balances the same flexibility and re-usability of a SQL database. Nor does the flat file structure or custom file type addresses the need of creating and storing the logins and passwords of testers or the researchers. Finally, neither option A or B adequately address the need to disassociate user test data with their names to meet IRB requirements. As the flat file structures essentially duplicate the efforts a SQL database is designed to do, we have opted to create a SQL database to store test information.
+
+\section{Database Language}
+The second decision to make in terms of the file structure is what type of SQL to use. While there are many variations of the SQL language to use in this system, certain factors much be weighed. Because so little information needs to be stored, the system should be lightweight, not adding more than 5\% to the overall storage of the application. In addition, it should include encryption and password protection, in order to comply with IRB requirements. Lastly, the language selected should be free to use, as the target application is intended to be re-used for future studies, and an added cost would limit re-usability.
+\subsection{SQLite}
+SQLite is a library implementation of SQL that supports a serverless database \cite{AboutSQLite}. A version of SQLite, SQLite3 is built into python\cite{SQLitePython}, so it would integrate easily into the application and not require a secondary installation. SQLite is public domain, so there is no cost for use. Unfortunately, it does not come with built in encryption and password protection options, therefore any protection would have to be built in separately. In addition, the single file that stores the database information is also human-readable, therefore additional security measures would have to be added to comply with IRB requirements\cite{AboutSQLite, SQLiteTutorial}.
+\subsection{MySQL}
+MySQL is an open source version of the SQL database management system \cite{WhatIsMySQL}. Unlike SQLite, MySQL does require a separate installation, as does the MySQL connector for python \cite{MySQLForPython}. Any device that would run the application would require this separate installation, and this installation would be platform dependent, adding complexity to the system. While the installation options are limiting, MySQL does support a built-in root password access, which would mean increased security for the stored data.
+\subsection{NoSQL}
+NoSQL is a non-relational open source database management solution. There are currently over 200 forms of NoSQL available that could be selected to fit the needs of this application \cite{WhatisNoSQL}. While NoSQL would require a secondary installation as MySQL did, forms of NoSQL like MongoDB or BerkleyDB integrate well with python \cite{MongoDB, BerkleyDB}. NoSQL also offers serverless versions like Berkley DB and UnQLite so a single file could be generated for system storage \cite{BerkleyDB, UnQLite}. In addition, most NoSQL databases support root passwords, increasing system security, giving the best of both worlds.
+\subsection{Conclusion of Database Language}
+We have decided to use a NoSQL database for ROS Bag storage. While many NoSQL languages exist, we have opted for BerkleyDB. As a serverless database, all storage will be contained in a single file and no secondary process will need to be run. While a secondary installation will be required with BerkleyDB, the increased security provided outweighs the cost of adding manual protection to a SQLite database.  
+
+\bibliography{TechReview}
+
+\end{document}
