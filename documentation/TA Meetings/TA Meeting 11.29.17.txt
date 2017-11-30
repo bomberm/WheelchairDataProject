@@ -1,0 +1,5 @@
+-Design document due on Friday
+	- Each member is responsible for 500 words including viewpoint into the system based on the components they are responsible for
+-Progress Report due Monday
+	- Use weekly blogs to help fill out document
+	- Yes, record you presenting your slides and link all pieces. 
