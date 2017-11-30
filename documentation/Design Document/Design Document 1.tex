@@ -110,24 +110,28 @@ ABSTRACT!
 \begin{description}
 	\item [Bag] \hfill \break Collection of data points created by the ROSbag library during a user test
 	\item [Researcher] \hfill \break Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)
-	\item [POMDP] \hfill \break Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques." \cite{POMDP}
+	\item [POMDP] \hfill \break Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques."  \cite{POMDP}
 	\item [ROS] \hfill \break Robot Operating System
 	\item [Tester] \hfil \break Mid level user of the Project Chiron Interface. The tester is expected to be able to initiate a user test, but will not be able to retrieve all user data. (May be able to retrieve data via an ID, but will not have access to research participant names or prior test results).
 	\item [Research Participant] \hfill \break Individual who has no access to the Project Chiron interface, but will have a name and ID entry and who will run a user test.
 	\item [User Test] \hfill \break Instance of a single navigation of the testing course. This test will produce a bag of testee data that the Chiron interface must be able to store and retrieve.
 \end{description}
 \section{Organization and Project Management}
+\subsection{Overview}
+Because the project includes three distinct design layers that will need to interact with complex ways, we have decided to include a project manager role to manage system design and delegation of tasks. This section will focus on the technologies to aid in project management.
+\subsection{Design Concerns}
+
+\subsection{Design Elements}
 
 \section{Communication Layer}
 
 \section{Storage Layer}
 \subsection{Overview}
-Once the ROSbag is received and processed by the system, it needs to be stored. This test information and the associated metadata, such as research participants name, time and date of trial and test instance, must be kept in such a way that the tester cannot retrieve the information, but the researcher can.
+Once the ROSbag is received and processed by the system, it needs to be stored. This test information and the associated metadata, such as research participants name, time and date of trial and test instance, must be kept in such a way that the tester cannot retrieve the information, but the researcher can. This section will focus on the design concerns and decisions related to ROSbag storage. 
 \subsection{Design Concerns}
 The storage layer must be able to keep all test participant information secure. The researcher (and therefore, the application) has two competing needs in this regard. First, they need the test participants name as part of the initial research, this allows them to assess the test participants competency using the robotic wheelchair. Second, once the research is complete, this link between the test participant and the test data must be able to be severed completely once the initial stage of the research is complete. In addition, the researcher will not be the individual initiating and running the participant tests, so the ROSbag information must be stored securely so the tester cannot view the test information once the test is complete, but this must not interfere with the researchers access. Lastly, our client has stated a preference for a locally run application which excludes a externally hosted server.
 \subsection{Design Elements}
 To meet these competing design goals, we have selected a serverless database solution. This gives the flexibility of a relational database, but without the overhead of running a database server, as serverless database formats contain all data in a single file. In addition, we will be able to encrypt test and test participant information and give the researcher the ability to remove the test participants name to their test data at the end of the first stage of research. 
-
 
 \section{UI Layer}
   
