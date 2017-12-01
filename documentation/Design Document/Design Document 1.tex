@@ -88,10 +88,9 @@
                 \NameSigPair{\GroupMemberThree}\par
             }
             \vspace{20pt}
-                    \begin{abstract}
-            	% 6. Fill in your abstract    
-ABSTRACT!
-            \end{abstract} 
+				\begin{abstract}
+This document serves to provide the overall design of the entire project. It includes the communication between the wheelchair computer and the personal computer, the methods used to store and present the data, and the interface that brings the entire process together. All of the technologies talked about in this document are the technologies that were chosen by our team to use with our project because they were determined to be the most advantageous to the goals of our project. This document does not contain the alternative technologies that our team looked at and researched, but ultimately did not choose.
+				\end{abstract} 
         }   
     \end{singlespace}
 \end{titlepage}
@@ -108,7 +107,7 @@ ABSTRACT!
 
 \subsection{Glossary}
 \begin{description}
-	\item [Bag] \hfill \break Collection of data points created by the ROSbag library during a user test
+	\item [Bag] \hfill \break File format used in ROS for storing ROS message data
 	\item [Researcher] \hfill \break Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)
 	\item [POMDP] \hfill \break Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques."  \cite{POMDP}
 	\item [ROS] \hfill \break Robot Operating System
@@ -124,6 +123,15 @@ Because the project includes three distinct design layers that will need to inte
 \subsection{Design Elements}
 
 \section{Communication Layer}
+
+\subsection{Overview}
+The Communication Layer represents the interaction between the controllable wheelchair and the computer that the researcher is handling.  ROS, other than being used to communicate between the wheelchair and the local computer, also will be used to gather data when the wheelchair is run. The data collected will be stored in files called bags. These bags will contain the time from start to finish that the wheelchair was run, as well as any relevant sensor data. After the wheelchair is run and the bag collected, it is then transferred from the raspberry pi to the local computer, and stored on the computer.
+
+\subsection{Design Concerns}
+The bags must contains only relevant data. By default, bags store quite a lot of data that is completely unnecessary to our project, so all unnecessary data must not be gathered by the bag. If superfluous data is gathered, it causes the bag filesize to increase, which ia a concern since dozens of bags must fit on a single small 8GB thumb drive. It is also highly important to have a stable wireless connection, or else data will not be able to be properly transferred between the robot and the computer, or will not be transferred at all.
+
+\subsection{Design Elements}
+The wheelchair contains a raspberry pi computer that has ROS installed on it, as well as a wireless router that allows a local computer with Wi-Fi capabilities to connect to it. The local computer will be any computer that can run Linux, as Linux is required to run ROS on the wheelchair, and is Wi-Fi enabled to be able to communicate with the wheelchair. The computer will have to start out connected to the internet in order to connect to the robot. The computer will also need to stay connected while the robot performs its trial. Then once the trial ends, the bag with all the data collected from the trial will be transferred to the computer and stored.
 
 \section{Storage Layer}
 \subsection{Overview}
