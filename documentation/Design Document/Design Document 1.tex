@@ -108,20 +108,34 @@ This document serves to provide the overall design of the entire project. It inc
 \subsection{Glossary}
 \begin{description}
 	\item [Bag] \hfill \break File format used in ROS for storing ROS message data
-	\item [Researcher] \hfill \break Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)
 	\item [POMDP] \hfill \break Partially Observable Markov Decision Process. Per POMDP.org "This is a mathematical model that can capture the domain dynamics that include uncertainty in action effects and uncertainty in perceptual stimuli. Once a problem is captured as POMDP, it them becomes more amendable for solution using optimization techniques."  \cite{POMDP}
+	\item Project Chiron \hfill \break A research project from Oregon State University's Personal Robotics Group focused on increasing the mobility of people with extreme disabilities\cite{Chiron}. 
+	\item [Raspberry Pi] \hfill \break A credit card sized single-board computer. Project Chiron uses the Raspberry Pi to manage the wheelchair sensors and ROS installed.
+	\item [Research Participant] \hfill \break Individual who has no access to the Project Chiron interface, but will have a name and ID entry and who will run a user test.
+	\item [Researcher] \hfill \break Admin level user of the Project Chiron Interface. The researcher is expected to have full access to all user testing data (including names)
 	\item [ROS] \hfill \break Robot Operating System
 	\item [Tester] \hfil \break Mid level user of the Project Chiron Interface. The tester is expected to be able to initiate a user test, but will not be able to retrieve all user data. (May be able to retrieve data via an ID, but will not have access to research participant names or prior test results).
-	\item [Research Participant] \hfill \break Individual who has no access to the Project Chiron interface, but will have a name and ID entry and who will run a user test.
 	\item [User Test] \hfill \break Instance of a single navigation of the testing course. This test will produce a bag of testee data that the Chiron interface must be able to store and retrieve.
-	\item [Raspberry Pi] \hfill \break Small computer attached to the wheelchair. The one used for our project's purposes has ROS installed on it
+
+\end{description}
+\subsection{Design Stakeholders}
+The stakeholders for this project are as follows:
+\begin{description}
+	\item Professor Matthew Shuman - Client and primary researcher of Project Chiron.
+	\item Benjamin Nathan Narin - Graduate Student and additional researcher of Project Chiron.
+	\item Marie Bomber - Member of the Robotic Wheelchair Data Collection and Analysis Senior Capstone Team
+	\item Aaron Leondar - Member of the Robotic Wheelchair Data Collection and Analysis Senior Capstone Team 
+	\item Hadi Rahal-Arabi - Member of the Robotic Wheelchair Data Collection and Analysis Senior Capstone Team
+	\item Testers - Student employee running the Project Chiron interface once completed
+	\item Research Participants - Student research participant who will be using Project Chiron to navigate a predefined test course.
 \end{description}
 \section{Organization and Project Management}
 \subsection{Overview}
-Because the project includes three distinct design layers that will need to interact with complex ways, we have decided to include a project manager role to manage system design and delegation of tasks. This section will focus on the technologies to aid in project management.
+Because the project includes three distinct design layers that will need to interact with complex ways, we have decided to include a project manager role to manage system design and delegation of tasks. This section will focus on the technologies to aid in project management as well as outlining responsibilities of the project manager's role. 
 \subsection{Design Concerns}
-
+When defining and delegating tasks, any tools used must allow for both high level and detailed explanation of the task. Integration between tools is also required, to help track project flow and proactively identify design issues. The project manager will need to be able to break down requirements into reasonable chunks and prioritize tasks with respect to application dependencies. The team is using an agile approach and therefore will need a project 'scrum' board, a version control system and a communication channel. 
 \subsection{Design Elements}
+To manage delegation of tasks, we have selected the waffle.io as our scrum board. It will allow the program manager to quickly create and delegate tasks, as well as add issue notes to either add user stories (to define a component in the system) or clarify the requirements of the task. Waffle.io was chosen because it integrates smoothly with public github repos so as components are added, their code can be stored on a separate branch and the task will be automatically moved to complete once the code is merged. Similarly, slack has been selected as the primary project communication channel, it integrates with waffle.io so updates are posted as tasks are moved, and files can easily be uploaded to store client meeting notes or share project information that does not easily store in git (such as PDFs). The project manager will be responsible for creating and delegating project tasks, whether they be related to development or classroom assignments. In addition, they will be responsible for ensuring the initial version of the application is available to the client in February so he can begin the first phase of testing. 
 
 \section{Communication Layer}
 
@@ -129,7 +143,7 @@ Because the project includes three distinct design layers that will need to inte
 The Communication Layer represents the interaction between the controllable wheelchair and the computer that the researcher is handling.  ROS, other than being used to communicate between the wheelchair and the local computer, also will be used to gather data when the wheelchair is run. The data collected will be stored in files called bags. These bags will contain the time from start to finish that the wheelchair was run, as well as any relevant sensor data. After the wheelchair is run and the bag collected, it is then transferred from the raspberry pi to the local computer, and stored on the computer.
 
 \subsection{Design Concerns}
-The bags must contains only relevant data. By default, bags store quite a lot of data that is completely unnecessary to our project, so all unnecessary data must not be gathered by the bag. If superfluous data is gathered, it causes the bag filesize to increase, which ia a concern since dozens of bags must fit on a single small 8GB thumb drive. It is also highly important to have a stable wireless connection, or else data will not be able to be properly transferred between the robot and the computer, or will not be transferred at all.
+The bags must contains only relevant data. By default, bags store quite a lot of data that is completely unnecessary to our project, so all unnecessary data must not be gathered by the bag. If superfluous data is gathered, it causes the bag filesize to increase, which is a concern since dozens of bags must fit on a single small 16GB thumb drive. It is also highly important to have a stable wireless connection, or else data will not be able to be properly transferred between the robot and the computer, or will not be transferred at all.
 
 \subsection{Design Elements}
 The wheelchair contains a raspberry pi computer that has ROS installed on it, as well as a wireless router that allows a local computer with Wi-Fi capabilities to connect to it. The local computer will be any computer that can run Linux, as Linux is required to run ROS on the wheelchair, and is Wi-Fi enabled to be able to communicate with the wheelchair. The computer will have to start out connected to the internet in order to connect to the robot. The computer will also need to stay connected while the robot performs its trial. Then once the trial ends, the bag with all the data collected from the trial will be transferred to the computer and stored.
@@ -138,9 +152,11 @@ The wheelchair contains a raspberry pi computer that has ROS installed on it, as
 \subsection{Overview}
 Once the ROSbag is received and processed by the system, it needs to be stored. This test information and the associated metadata, such as research participants name, time and date of trial and test instance, must be kept in such a way that the tester cannot retrieve the information, but the researcher can. This section will focus on the design concerns and decisions related to ROSbag storage. 
 \subsection{Design Concerns}
-The storage layer must be able to keep all test participant information secure. The researcher (and therefore, the application) has two competing needs in this regard. First, they need the test participants name as part of the initial research, this allows them to assess the test participants competency using the robotic wheelchair. Second, once the research is complete, this link between the test participant and the test data must be able to be severed completely once the initial stage of the research is complete. In addition, the researcher will not be the individual initiating and running the participant tests, so the ROSbag information must be stored securely so the tester cannot view the test information once the test is complete, but this must not interfere with the researchers access. Lastly, our client has stated a preference for a locally run application which excludes a externally hosted server.
+The storage layer must be able to keep all test participant information secure. The researcher (and therefore, the application) has two competing needs in this regard. First, they need the test participants name as part of the initial research, this allows them to assess the test participants competency using the robotic wheelchair. Second, once the research is complete, this link between the test participant and the test data must be able to be severed completely once the initial stage of the research is complete. In addition, the researcher will not be the individual initiating and running the participant tests, so the ROSbag information must be stored securely so the tester cannot view the test information once the test is complete, but this must not interfere with the researchers access. Lastly, while our client would prefer test information be stored on the ENGR server, the test location may have unreliable access to wifi which may exclude this option. 
 \subsection{Design Elements}
-To meet these competing design goals, we have selected a serverless database solution. This gives the flexibility of a relational database, but without the overhead of running a database server, as serverless database formats contain all data in a single file. In addition, we will be able to encrypt test and test participant information and give the researcher the ability to remove the test participants name to their test data at the end of the first stage of research. 
+To meet these competing design goals, we have two possibilities, depending on the wifi availability at the test location. The first option is a serverless database solution. This gives the flexibility of a relational database, but without the overhead of running a database server, as serverless database formats contain all data in a single file. In addition, we will be able to encrypt test and test participant information and give the researcher the ability to remove the test participants name to their test data at the end of the first stage of research.
+
+Should wifi be reliable, we will instead create a NoSQL database on the ENGR server. This will add more security to the stored test information, both from unauthorized access and server backups. The test data will still allow for a separate table to associate research participant data to individual tests and then remove the association after the first phase of research as well as increase the flexibility of the application in terms of individual test retrieval. 
 
 \section{UI Layer}
   
