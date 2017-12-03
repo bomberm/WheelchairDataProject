@@ -104,7 +104,15 @@ This document outlines the progress that has been made during the Fall 2017 term
 
 \section{Introduction}
 %Project purposes and goals go here
+\subsection{Background}
+Project Chiron is a research project with the goal of designing a kit that can adapt to a motorized wheelchair (specifically a perimobil wheelchair) that will assist people with extremely limited mobility to interact with the world. For this project to become a reality, extensive testing must be done to assess how well someone who is using the Project Chiron interface is using the wheelchair. In order to assess wheelchair competency, typically a wheelchair user would need to schedule an appointment with an Occupational Therapist who is trained to perform a Power-Mobility Indoor Driving
+Assessment (PIDA). Such occupational therapists can often be hundreds of miles away (in this case, the closest is in Portland). To that end, our client Professor Matthew Shuman is researching using POM-DP analysis to assess the competency of a wheelchair user using tools built into Project Chiron, specifically, LIDAR sensors tracking wheel movement. 
+\subsection{Project Goals}
+While Project Chiron is already built and is ready for assessment, gathering research data from the chair is difficult. The chair is running the Robot Operating System (ROS) and can record sensor data, but it takes extensive training to connect to the wheelchair, begin a user trial, and access that information at a later time. This learning curve limits the amount of research that can be done, whereas a easier, point and click interface could allow a paid student worker with relatively low skill to run research tests while the primary researcher is working on other things.
 
+To that end, we are creating a user interface that can signal the beginning of a user test, collect and store the relevant research data and then retrieve it at a later time. As the user tests need to be completed in time for our client to conduct his research and publish for two specific conferences, the interface must be completed by mid February. After the interface is completed, the project will shift focus to documenting the hardware that was added to the wheelchair, so that future developers can recreate the system.
+
+Beyond the scope of Project Chiron, needing a skilled worker to run tests is a common limiting factor to how much testing is done in the Robotics Lab. If our interface succeeds in creating an easy, click-to-run interface using ROS, it may be expanded to be used in future robotics projects at OSU. While developing the interface for Project Chiron, we will need to ensure that the system is not too specialized, to aid future robotics research. 
 
 \section{Project Status}
 %Be sure to mention work on Wednesday
