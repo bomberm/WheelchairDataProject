@@ -1,10 +1,11 @@
 import os, errno, shutil
 
-def makeFilesystem(testFile, participantFile):
+def createFilesystem(testFile, participantFile):
 	if not hasattr(testFile, 'readline'): #check if passed variable is file-like
 		return False
 	
 	#get directory name
+	testFile.seek(0) #ensure we are at top of file
 	dirName = testFile.readline()
 	dirName = dirName.split(": ")[1].rstrip()
 
@@ -20,7 +21,7 @@ def makeFilesystem(testFile, participantFile):
 	
 
 	#Test Participant Data
-	if not hasattr(testFile, 'readline'):
+	if not hasattr(participantFile, 'readline'):
 		return False
 	
 	#Create subDirs for each participant
