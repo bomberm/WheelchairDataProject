@@ -1,0 +1,8 @@
+Name: Test Name
+IP: localhost
+port: 1131
+Secure: 1
+Salt: 9c796c06618e40ec8b9d02faa532e691 
+Topics: transform, lidar, joystick
+Metadata: name, testNumber, dateTime, duration
+Participant Data: participant.list 
