@@ -1,0 +1,3 @@
+- Make sure to get docs up to date and signed
+- Alpha is due week 6
+- Make sure you know what you should be working on.
