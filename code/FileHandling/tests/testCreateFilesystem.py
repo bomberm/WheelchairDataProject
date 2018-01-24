@@ -1,6 +1,7 @@
 import sys, os, shutil
 sys.path.append("../")
 import createFilesystem as create
+import readTestFile
 
 testFile = "../../Templates/TestFileTemplate.test"
 participantFile = "../../Templates/participant.list"
@@ -25,7 +26,7 @@ if(create.createFilesystem(f, g)):
 	print "Failed to detect empty inputs"
 	exit(-1)
 
-f = open(testFile, "r")
+f = readTestFile.readFile(testFile)
 
 if(create.createFilesystem(f,g)):
 	print "Failed to detect empty particpant list"
@@ -40,4 +41,4 @@ if(not create.createFilesystem(f, g)):
 	exit(-1)
 
 print "Pass"
-#cleanup()
+cleanup()

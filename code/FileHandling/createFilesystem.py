@@ -1,13 +1,12 @@
 import os, errno, shutil
 
 def createFilesystem(testFile, participantFile):
-	if not hasattr(testFile, 'readline'): #check if passed variable is file-like
-		return False
-	
 	#get directory name
-	testFile.seek(0) #ensure we are at top of file
-	dirName = testFile.readline()
-	dirName = dirName.split(": ")[1].rstrip()
+	if not type(testFile) is dict:
+		return False 
+
+	dirName = testFile['Name']
+	dirName = dirName.strip()
 
 	#Create 'root' of test storage
 	if not os.path.exists(dirName):
@@ -17,12 +16,19 @@ def createFilesystem(testFile, participantFile):
 		print 'Filesystem exists' #remove print once real functionality is added
 
 	#Begin populating storage directory
-	shutil.copy(testFile.name, './'+dirName+'/')	
+	shutil.copy(testFile['FileName'], './'+dirName+'/')	
 	
 
-	#Test Participant Data
+	#Test Participant Data - This will need to be updated to include logic for IDs
+	if not 'Participant Data' in testFile:
+		return False
+	
 	if not hasattr(participantFile, 'readline'):
 		return False
+
+	#Set up for security
+	if int(testFile['Secure']) == 1:
+		secure = True
 	
 	#Create subDirs for each participant
 	for name in participantFile:
