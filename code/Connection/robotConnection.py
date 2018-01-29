@@ -2,20 +2,32 @@
 
 import readTestFile
 import re
-import ftplib
 import socket
 
+#function to connect to the IP given in the test file on the port given
 def connectToIP():
-        with open(readTestFile.testFile) as f:
-                for line in f:
-                        if re.match("(.*)IP(.*)", line):
-                                print("" + re.sub('IP: ','',line))
-                                FtpIP = re.sub('IP: ','',line).strip("' \n")
-                                print("IP = " + repr(FtpIP))
-        ftp = ftplib.FTP()
-        print(FtpIP)
-        try:
-                ftp.connect(FtpIP)
-                print("Connection Successful! \n")
-        except socket.error:
-                print("Unable to connect to IP \n")
+	testData = readTestFile.readFile("TestFileTemplate.test")
+	FtpIP = str(testData['IP'])
+	FtpPort = int(testData['port'])
+
+	print FtpIP
+	print FtpPort
+
+	client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+	client_socket.connect((FtpIP, FtpPort))
+
+	#Connection run until q is inputted, then connection stops
+	while 1:
+			data = client_socket.recv(512)
+			if ( data == 'q' or data == 'Q'):
+					client_socket.close()
+					break;
+			else:
+					print "Received:" , data
+					data = raw_input("Type q and hit enter to quit: " )
+					if (data <> 'Q' and data <> 'q'):
+							client_socket.send(data)
+					else:
+							client_socket.send(data)
+							client_socket.close()
