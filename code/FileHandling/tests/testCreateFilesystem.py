@@ -35,13 +35,11 @@ if(create.createFilesystem(f,g)):
 
 g = open(participantFile, "r")
 
-try:
-	if(not create.createFilesystem(f, g)):
-		print ("Failed with loaded files. Check file names and if correct," 
-		" algorithm has errors.")
-		exit(-1)
-except:
+if(not create.createFilesystem(f, g)):
+	print ("Failed with loaded files. Check file names and if correct," 
+	" algorithm has errors.")
 	cleanup()
+	exit(-1)
 
 print "Pass"
 cleanup()

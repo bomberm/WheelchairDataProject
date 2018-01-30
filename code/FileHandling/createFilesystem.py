@@ -3,7 +3,7 @@ import hashlib
 
 def secureName(name, testFile):
 	salt = testFile['Salt']
-	return str(hashlib.sha256(salt.encode()+name.rstrip().encode()))
+	return hashlib.sha256(salt.encode()+name.rstrip().encode()).hexdigest()
 
 def createFilesystem(testFile, participantFile):
 	#get directory name
@@ -38,7 +38,7 @@ def createFilesystem(testFile, participantFile):
 	#Create subDirs for each participant
 	for name in participantFile:
 		if secure:
-			workName = secureName(name, testFile)
+			workName = secureName(name, testFile).decode()
 		else:
 			workName = name
 		if not os.path.exists(workName):
