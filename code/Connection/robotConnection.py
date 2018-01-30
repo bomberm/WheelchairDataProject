@@ -17,17 +17,5 @@ def connectToIP():
 
 	client_socket.connect((FtpIP, FtpPort))
 
-	#Connection run until q is inputted, then connection stops
-	while 1:
-			data = client_socket.recv(512)
-			if ( data == 'q' or data == 'Q'):
-					client_socket.close()
-					break;
-			else:
-					print "Received:" , data
-					data = raw_input("Type q and hit enter to quit: " )
-					if (data <> 'Q' and data <> 'q'):
-							client_socket.send(data)
-					else:
-							client_socket.send(data)
-							client_socket.close()
+def disconnectFromIP():
+	client_socket.close()
