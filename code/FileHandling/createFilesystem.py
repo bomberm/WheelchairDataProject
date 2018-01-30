@@ -5,7 +5,13 @@ def secureName(name, testFile):
 	salt = testFile['Salt']
 	return hashlib.sha256(salt.encode()+name.rstrip().encode()).hexdigest()
 
-def createFilesystem(testFile, participantFile):
+def createIDFiles(numIDs, dirName):
+	for i in range(0, numIDs):
+		if not os.path.exists(str(i)):
+			os.makedirs(dirName+'/'+str(i)+'/')
+	return	
+
+def createFilesystem(testFile):
 	#get directory name
 	if not type(testFile) is dict:
 		return False 
@@ -26,11 +32,17 @@ def createFilesystem(testFile, participantFile):
 
 	#Test Participant Data - This will need to be updated to include logic for IDs
 	if not 'Participant Data' in testFile:
-		return False
+		try:
+			numIDs = int(testFile['IDs'])
+			createIDFiles(numIDs, dirName)
+			return True
+		except:
+			raise
+			return False
+	else:
+		shutil.copy(testFile['Participant Data'], './'+dirName+'/')	
+		participantFile = open(testFile['Participant Data'], 'r')	
 	
-	if not hasattr(participantFile, 'readline'):
-		return False
-
 	#Set up for security
 	if int(testFile['Secure']) == 1:
 		secure = True

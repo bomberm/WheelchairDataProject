@@ -7,4 +7,4 @@ Password: Password1
 Salt: 9c796c06618e40ec8b9d02faa532e691 
 Topics: transform, lidar, joystick
 Metadata: name, testNumber, dateTime, duration
-Participant Data: participant.list 
+Participant Data: ../../Templates/participant.list 
