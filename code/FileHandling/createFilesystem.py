@@ -1,4 +1,9 @@
 import os, errno, shutil
+import hashlib
+
+def secureName(name, testFile):
+	salt = testFile['Salt']
+	return str(hashlib.sha256(salt.encode()+name.rstrip().encode()))
 
 def createFilesystem(testFile, participantFile):
 	#get directory name
@@ -32,7 +37,11 @@ def createFilesystem(testFile, participantFile):
 	
 	#Create subDirs for each participant
 	for name in participantFile:
-		if not os.path.exists(name.rstrip()):
-			os.makedirs(dirName+'/'+name.rstrip()+'/')
+		if secure:
+			workName = secureName(name, testFile)
+		else:
+			workName = name
+		if not os.path.exists(workName):
+			os.makedirs(dirName+'/'+workName+'/')
 
 	return True	
