@@ -6,6 +6,7 @@ import sys
 import roslaunch
 import subprocess
 import rosbag
+import signal
 from std_msgs.msg import Int32, String
 
 path1 = "../wheelchair_description/launch/wheelchair_bringup.launch"
@@ -36,6 +37,7 @@ def rosScriptsEnd():
 
 def recordBag():
 	rosbag = subprocess.Popen(['rosbag', 'record', 'tf', 'scan_multi', 'pose_stamped'], preexec_fn=os.setsid)
+	return rosbag
 	
-def stopRecordBag():
-	rosbag.send_signal(subprocess.signal.SIGINT)
+def stopRecordBag(rosbag):
+	os.killpg(rosbag.pid, signal.SIGINT)

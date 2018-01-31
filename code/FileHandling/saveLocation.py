@@ -1,5 +1,7 @@
 import os
 from createFilesystem import secureName
+sys.path.append('../Connection')
+import rosConnect
 
 def startSave(theID, testFile):
 	if 'IDs' in testFile:
@@ -12,6 +14,6 @@ def startSave(theID, testFile):
 
 	if not os.path.exists(fileLocation):
 		print "File not found!"
-		return False
+		return (-1)
 	else:
-		return True
+		return rosConnect.recordBag()
