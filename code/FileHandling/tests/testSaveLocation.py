@@ -13,8 +13,10 @@ g = readFile(IDFile)
 createFilesystem(f)
 createFilesystem(g)
 
-startSave('Joe Schmo', f)
-startSave(14, g)
+if not startSave('Joe Schmo', f):
+	print "Could not locate secure name"
+if not startSave(14, g):
+	print "Could not locate ID"
 
 cleanup('./Test Name/')
 cleanup('./TestIDs/')
