@@ -2,7 +2,7 @@
 
 import rospy
 import os
-import sys
+import sys:q
 import roslaunch
 import subprocess
 import rosbag
@@ -34,6 +34,12 @@ def rosScriptsEnd():
 	launch1.shutdown()
 	launch2.shutdown()
 	launch3.shutdown()
+
+def writePidFile():
+    pid = str(os.getpid())
+    f = open('rosbag.pid', 'w')
+    f.write(pid)
+    f.close()	
 
 def recordBag():
 	rosbag = subprocess.Popen(['rosbag', 'record', 'tf', 'scan_multi', 'pose_stamped'], preexec_fn=os.setsid)
