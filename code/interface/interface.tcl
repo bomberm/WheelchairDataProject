@@ -63,7 +63,7 @@ proc vTclWindow.top37 {base} {
         -menu "$top.m40" -background {#d9d9d9} -highlightbackground {#d9d9d9} \
         -highlightcolor black 
     wm focusmodel $top passive
-    wm geometry $top 576x261+578+67
+    wm geometry $top 394x109+728+316
     update
     # set in toplevel.wgt.
     global vTcl
@@ -75,21 +75,11 @@ proc vTclWindow.top37 {base} {
     wm deiconify $top
     wm title $top "ROS Test Controller"
     vTcl:DefineAlias "$top" "Toplevel1" vTcl:Toplevel:WidgetProc "" 1
-    ttk::style configure Button -background #d9d9d9
-    ttk::style configure Button -foreground #000000
-    ttk::style configure Button -font TkDefaultFont
     button $top.but38 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
-        -background {#d9d9d9} -disabledforeground {#a3a3a3} \
+        -background {#d9d9d9} -command record -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Record Bag} 
-    vTcl:DefineAlias "$top.but38" "Button1" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but39 \
-        -activebackground {#d9d9d9} -activeforeground {#000000} \
-        -background {#d9d9d9} -disabledforeground {#a3a3a3} \
-        -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -pady 0 -text Initialize 
-    vTcl:DefineAlias "$top.but39" "Button2" vTcl:WidgetProc "Toplevel1" 1
     menu $top.m40 \
         -activebackground {#d8d8d8} -activeforeground {#000000} \
         -background {#d9d9d9} -font TkMenuFont -foreground {#000000} \
@@ -97,78 +87,34 @@ proc vTclWindow.top37 {base} {
     message $top.mes41 \
         -background {#d9d9d9} -foreground {#000000} \
         -highlightbackground {#d9d9d9} -highlightcolor black \
-        -text {Connection Status: Good
-} -width 140 
-    vTcl:DefineAlias "$top.mes41" "Message1" vTcl:WidgetProc "Toplevel1" 1
+        -text {Connection Status: Good} -width 370 
+    vTcl:DefineAlias "$top.mes41" "connectionStatus" vTcl:WidgetProc "Toplevel1" 1
     entry $top.ent47 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -insertbackground black \
         -selectbackground {#c4c4c4} -selectforeground black 
-    vTcl:DefineAlias "$top.ent47" "Entry1" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$top.ent47" "idEntry" vTcl:WidgetProc "Toplevel1" 1
     label $top.lab48 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -text Participant 
+        -highlightcolor black -text ID 
     vTcl:DefineAlias "$top.lab48" "Label1" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab49 \
-        -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -disabledforeground {#a3a3a3} \
-        -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -text {Test Number} 
-    vTcl:DefineAlias "$top.lab49" "Label2" vTcl:WidgetProc "Toplevel1" 1
-    entry $top.ent50 \
-        -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -insertbackground black \
-        -selectbackground {#c4c4c4} -selectforeground black 
-    vTcl:DefineAlias "$top.ent50" "Entry2" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but51 \
-        -activebackground {#d9d9d9} -activeforeground {#000000} \
-        -background {#d9d9d9} -disabledforeground {#a3a3a3} \
-        -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -pady 0 -text Save 
-    vTcl:DefineAlias "$top.but51" "Button3" vTcl:WidgetProc "Toplevel1" 1
-    message $top.mes52 \
-        -background {#d9d9d9} -foreground {#000000} \
-        -highlightbackground {#d9d9d9} -highlightcolor black \
-        -text {Test Status: Waiting To Start...} -width 180 
-    vTcl:DefineAlias "$top.mes52" "Message2" vTcl:WidgetProc "Toplevel1" 1
-    message $top.mes53 \
-        -background {#d9d9d9} -foreground {#000000} \
-        -highlightbackground {#d9d9d9} -highlightcolor black \
-        -text {Datetime: 01/25/2018 00:00} -width 168 
-    vTcl:DefineAlias "$top.mes53" "Message3" vTcl:WidgetProc "Toplevel1" 1
     ###################
     # SETTING GEOMETRY
     ###################
     place $top.but38 \
-        -in $top -x 280 -y 160 -width 71 -relwidth 0 -height 24 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.but39 \
-        -in $top -x 190 -y 160 -width 71 -relwidth 0 -height 24 -relheight 0 \
+        -in $top -x 250 -y 30 -width 71 -relwidth 0 -height 24 -relheight 0 \
         -anchor nw -bordermode ignore 
     place $top.mes41 \
-        -in $top -x 360 -y 100 -width 140 -relwidth 0 -height 23 -relheight 0 \
+        -in $top -x 10 -y 70 -width 370 -relwidth 0 -height 30 -relheight 0 \
         -anchor nw -bordermode ignore 
     place $top.ent47 \
-        -in $top -x 140 -y 70 -anchor nw -bordermode ignore 
+        -in $top -x 80 -y 30 -width 144 -relwidth 0 -height 24 -relheight 0 \
+        -anchor nw -bordermode ignore 
     place $top.lab48 \
-        -in $top -x 60 -y 70 -anchor nw -bordermode ignore 
-    place $top.lab49 \
-        -in $top -x 60 -y 100 -anchor nw -bordermode ignore 
-    place $top.ent50 \
-        -in $top -x 140 -y 100 -width 44 -relwidth 0 -height 20 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.but51 \
-        -in $top -x 200 -y 100 -anchor nw -bordermode ignore 
-    place $top.mes52 \
-        -in $top -x 200 -y 210 -width 180 -relwidth 0 -height 13 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.mes53 \
-        -in $top -x 350 -y 70 -width 168 -relwidth 0 -height 23 -relheight 0 \
-        -anchor nw -bordermode ignore 
+        -in $top -x 60 -y 30 -height 24 -anchor nw -bordermode ignore 
 
     vTcl:FireEvent $base <<Ready>>
 }
