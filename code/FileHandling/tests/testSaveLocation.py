@@ -1,9 +1,11 @@
 import sys, os, shutil
 sys.path.append("../")
+sys.path.append("../Connection")
 from saveLocation import startSave
 from readTestFile import readFile
 from createFilesystem import createFilesystem
 from testCreateFilesystem import cleanup
+import rosConnect
 
 testFile = "../../Templates/TestFileTemplate.test"
 IDFile = "../../Templates/IDFileTemplate.test"
