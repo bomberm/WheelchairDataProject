@@ -35,9 +35,14 @@ def rosScriptsEnd():
 	launch2.shutdown()
 	launch3.shutdown()
 
-def recordBag():
-	rosbag = subprocess.Popen(['rosbag', 'record', 'tf', 'scan_multi', 'pose_stamped'], preexec_fn=os.setsid)
+def recordBag(location):
+	rosbag = subprocess.Popen(['rosbag', 'record', 'tf', 'scan_multi', 'pose_stamped', '-o', location], preexec_fn=os.setsid)
 	return rosbag
 	
 def stopRecordBag(rosbag):
 	os.killpg(rosbag.pid, signal.SIGINT)
+
+#rosStartup()
+#bag = recordBag('./test/')
+#x = raw_input()
+#stopRecordBag(bag)

@@ -16,4 +16,4 @@ def startSave(theID, testFile):
 		print "File not found!"
 		return (-1)
 	else:
-		return rosConnect.recordBag()
+		return rosConnect.recordBag(fileLocation)
