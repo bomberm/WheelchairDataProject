@@ -89,10 +89,11 @@ def record():
             print fullcommand
             stdin, stdout, stderr = client.exec_command(fullcommand, get_pty=True, environment={'PATH':'/home/chiron/bin:/home/chiron/.local/bin:/opt/ros/kinetic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin',
 'PYTHONPATH':'/opt/ros/kinetic/lib/python2.7/dist-packages',
-'ROS_ETC_DIR': '/opt/ros/kinetic/etc/ros',
-'ROS_MASTER_URI': 'http://localhost:11311',
-'ROS_PACKAGE_PATH': '/opt/ros/kinetic/share',
-'ROS_ROOT': '/opt/ros/kinetic/share/ros'})
+'ROS_ETC_DIR':'/opt/ros/kinetic/etc/ros',
+'ROS_MASTER_URI':'http://localhost:11311',
+'ROS_PACKAGE_PATH':'/opt/ros/kinetic/share',
+'ROS_ROOT':'/opt/ros/kinetic/share/ros',
+'PKG_CONFIG_PATH':'/opt/ros/kinetic/lib/pkgconfig'})
             for line in stdout:
                 print('... ' + line.strip('\n'))
             for line in stderr:
