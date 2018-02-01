@@ -84,10 +84,15 @@ def record():
             client = paramiko.SSHClient()
             client.get_host_keys().add('98.232.186.42', 'ssh-rsa', key)
             client.connect('98.232.186.42', username='chiron', password='3sJng2*7Ac8$')
-            fullcommand = '/usr/bin/python rosConnect.py ' + location
+            fullcommand = '. ./.profile; /usr/bin/python rosConnect.py ' + '/home/chiron/TestChiron/' + ID + ''
             #fullcommand = 'python test.py'
             print fullcommand
-            stdin, stdout, stderr = client.exec_command(fullcommand, get_pty=True)
+            stdin, stdout, stderr = client.exec_command(fullcommand, get_pty=True, environment={'PATH':'/home/chiron/bin:/home/chiron/.local/bin:/opt/ros/kinetic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin',
+'PYTHONPATH':'/opt/ros/kinetic/lib/python2.7/dist-packages',
+'ROS_ETC_DIR': '/opt/ros/kinetic/etc/ros',
+'ROS_MASTER_URI': 'http://localhost:11311',
+'ROS_PACKAGE_PATH': '/opt/ros/kinetic/share',
+'ROS_ROOT': '/opt/ros/kinetic/share/ros'})
             for line in stdout:
                 print('... ' + line.strip('\n'))
             for line in stderr:
