@@ -6,6 +6,7 @@
 
 
 import sys
+import saveLocation
 
 try:
     from Tkinter import *
@@ -19,9 +20,23 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
 
+
+from readTestFile import readFile
+contents = readFile("test.test")
+print contents
+sshIP = str(testFileContents['IP'])
+sshPort = int(testFileContents['port'])
+sshUser = str(testFileContents['User'])
+sshPass = str(testFileContents['Password'])
+baseKey = str(testFileContents['serverKey'])
+key = paramiko.RSAKey(data=base64.b64decode(baseKey))
+client = paramiko.SSHClient()
+client.get_host_keys().add(sshIP, 'ssh-rsa', key)
+client.connect(sshIP, username=sshUser, password=sshPass)
+
 def initializeConnection():
     from readTestFile import readFile
-    contents = readFile("Chiron.test")
+    contents = readFile("test.test")
     print contents
     sshIP = str(testFileContents['IP'])
     sshPort = int(testFileContents['port'])
@@ -52,6 +67,10 @@ def record():
             w.but38.configure(text='''Record Bag''')
         else:
             w.recordingStatus = 1
+            #TODO PULL ID from interface
+            ID = w.idEntry.get()
+            print ID
+            location = saveLocation.startSave(ID, contents)
             w.but38.configure(text='''Stop''')
 
 

@@ -37,7 +37,7 @@ def rosScriptsEnd():
 
 def recordBag(location):
 	rosbag = subprocess.Popen(['rosbag', 'record', 'tf', 'scan_multi', 'pose_stamped', '-o', location], preexec_fn=os.setsid)
-	with f as open('.rosbag.pid', 'w+'):
+	with open('.rosbag.pid', 'w+') as f:
 		f.write(rosbag.pid)
 	return 1
 

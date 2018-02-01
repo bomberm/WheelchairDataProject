@@ -1,10 +1,10 @@
-Name: ChironResearch
-IP: 192.168.1.200
-port: 1131
+Name: TestChiron
+IP: 98.232.186.42
+port: 22
 Secure: 1
-User: artemis
-Password: Robots!
-Salt: 9c796c06618e40ec8b9d02faa532e691 
+User: chiron
+Password: 3sJng2*7Ac8$
+Salt: 9c796c06618e40ec8b9d02faa532e691
 Topics: tf scan_multi pose_stamped
 Metadata: name, duration
 IDs: 50

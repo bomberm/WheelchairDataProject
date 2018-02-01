@@ -1,4 +1,4 @@
-import os
+import os, sys
 from createFilesystem import secureName
 sys.path.append('../Connection')
 import rosConnect
