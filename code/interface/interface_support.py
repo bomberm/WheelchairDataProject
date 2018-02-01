@@ -5,10 +5,12 @@
 #    Feb 01, 2018 01:55:14 AM
 
 
+
 import sys
 import saveLocation
 import paramiko
 import base64
+import time
 
 try:
     from Tkinter import *
@@ -82,7 +84,10 @@ def record():
             client = paramiko.SSHClient()
             client.get_host_keys().add('98.232.186.42', 'ssh-rsa', key)
             client.connect('98.232.186.42', username='chiron', password='3sJng2*7Ac8$')
-            stdin, stdout, stderr = client.exec_command('python rosConnect.py ' + location)
+            fullcommand = '/usr/bin/python rosConnect.py ' + location
+            #fullcommand = 'python test.py'
+            print fullcommand
+            stdin, stdout, stderr = client.exec_command(fullcommand, get_pty=True)
             for line in stdout:
                 print('... ' + line.strip('\n'))
             for line in stderr:
