@@ -24,11 +24,11 @@ except ImportError:
 from readTestFile import readFile
 contents = readFile("test.test")
 print contents
-sshIP = str(testFileContents['IP'])
-sshPort = int(testFileContents['port'])
-sshUser = str(testFileContents['User'])
-sshPass = str(testFileContents['Password'])
-baseKey = str(testFileContents['serverKey'])
+sshIP = str(contents['IP'])
+sshPort = int(contents['port'])
+sshUser = str(contents['User'])
+sshPass = str(contents['Password'])
+baseKey = str(contents['serverKey'])
 key = paramiko.RSAKey(data=base64.b64decode(baseKey))
 client = paramiko.SSHClient()
 client.get_host_keys().add(sshIP, 'ssh-rsa', key)
@@ -38,11 +38,11 @@ def initializeConnection():
     from readTestFile import readFile
     contents = readFile("test.test")
     print contents
-    sshIP = str(testFileContents['IP'])
-    sshPort = int(testFileContents['port'])
-    sshUser = str(testFileContents['User'])
-    sshPass = str(testFileContents['Password'])
-    baseKey = str(testFileContents['serverKey'])
+    sshIP = str(contents['IP'])
+    sshPort = int(contents['port'])
+    sshUser = str(contents['User'])
+    sshPass = str(contents['Password'])
+    baseKey = str(contents['serverKey'])
     key = paramiko.RSAKey(data=base64.b64decode(baseKey))
     client = paramiko.SSHClient()
     client.get_host_keys().add(sshIP, 'ssh-rsa', key)
