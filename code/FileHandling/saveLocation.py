@@ -16,4 +16,5 @@ def startSave(theID, testFile):
 		print "File not found!"
 		return (-1)
 	else:
-		return rosConnect.recordBag(fileLocation)
+		subprocess.Popen(['../Connection/rosConnect.py', fileLocation], preexec_fn=os.setsid)
+		return 
