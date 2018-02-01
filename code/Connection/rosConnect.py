@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import rospy
+#import rospy
 import os
 import sys
-import roslaunch
+#import roslaunch
 import subprocess
 import rosbag
 import signal
