@@ -1,5 +1,5 @@
 Name: ChironResearch
-IP:192.168.1.200 
+IP: 192.168.1.200 
 port: 1131
 Secure: 1
 User: artemis
