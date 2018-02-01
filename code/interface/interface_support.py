@@ -25,32 +25,32 @@ except ImportError:
 
 from readTestFile import readFile
 contents = readFile("test.test")
-print contents
 sshIP = str(contents['IP'])
 sshPort = int(contents['port'])
 sshUser = str(contents['User'])
 sshPass = str(contents['Password'])
-baseKey = b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'
-key = paramiko.RSAKey(data=base64.b64decode(baseKey))
+key = paramiko.RSAKey(data=base64.b64decode(b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'))
 client = paramiko.SSHClient()
 client.get_host_keys().add(sshIP, 'ssh-rsa', key)
 client.connect(sshIP, username=sshUser, password=sshPass)
+stdin, stdout, stderr = client.exec_command('ls -la')
+print stdout
+
 
 def initializeConnection():
     from readTestFile import readFile
     contents = readFile("test.test")
-    print contents
     sshIP = str(contents['IP'])
     sshPort = int(contents['port'])
     sshUser = str(contents['User'])
     sshPass = str(contents['Password'])
-    baseKey = b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'
-    key = paramiko.RSAKey(data=base64.b64decode(baseKey))
+    key = paramiko.RSAKey(data=base64.b64decode(b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'))
     client = paramiko.SSHClient()
     client.get_host_keys().add(sshIP, 'ssh-rsa', key)
     client.connect(sshIP, username=sshUser, password=sshPass)
-    stdin, stdout, stderr = client.exec_command('echo hello?')
-    if("hello?" in stdout):
+    stdin, stdout, stderr = client.exec_command('ls -la')
+    print stdout
+    if("paramiko" in stdout):
         w.connectionStatus.configure(text='''Connected to Wheelchair''')
         sys.stdout.flush()
         return 1
