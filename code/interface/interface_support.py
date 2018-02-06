@@ -5,7 +5,12 @@
 #    Feb 01, 2018 01:55:14 AM
 
 
+
 import sys
+import saveLocation
+import paramiko
+import base64
+import time
 
 try:
     from Tkinter import *
@@ -19,21 +24,36 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
 
+
+from readTestFile import readFile
+contents = readFile("test.test")
+key = paramiko.RSAKey(data=base64.b64decode(b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'))
+client = paramiko.SSHClient()
+client.get_host_keys().add('98.232.186.42', 'ssh-rsa', key)
+client.connect('98.232.186.42', username='chiron', password='3sJng2*7Ac8$')
+stdin, stdout, stderr = client.exec_command('ls -la')
+
+
 def initializeConnection():
     from readTestFile import readFile
-    contents = readFile("Chiron.test")
-    print contents
-    sshIP = str(testFileContents['IP'])
-    sshPort = int(testFileContents['port'])
-    sshUser = str(testFileContents['User'])
-    sshPass = str(testFileContents['Password'])
-    baseKey = str(testFileContents['serverKey'])
-    key = paramiko.RSAKey(data=base64.b64decode(baseKey))
+    contents = readFile("test.test")
+    sshIP = str(contents['IP'])
+    sshPort = int(contents['port'])
+    sshUser = str(contents['User'])
+    sshPass = str(contents['Password'])
+    key = paramiko.RSAKey(data=base64.b64decode(b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'))
     client = paramiko.SSHClient()
     client.get_host_keys().add(sshIP, 'ssh-rsa', key)
     client.connect(sshIP, username=sshUser, password=sshPass)
-    stdin, stdout, stderr = client.exec_command('echo hello?')
-    if("hello?" in stdout):
+    stdin, stdout, stderr = client.exec_command('ls -la')
+    connected = 0
+    for line in stdout:
+        print('... ' + line.strip('\n'))
+        if '.bashrc' in line:
+            connected = 1
+
+    #TODO fix connection status
+    if(connected):
         w.connectionStatus.configure(text='''Connected to Wheelchair''')
         sys.stdout.flush()
         return 1
@@ -41,6 +61,7 @@ def initializeConnection():
         w.connectionStatus.configure(text='''Connection Failed''')
         sys.stdout.flush()
         return 0
+    client.close()
 
 
 def record():
@@ -52,7 +73,33 @@ def record():
             w.but38.configure(text='''Record Bag''')
         else:
             w.recordingStatus = 1
+            #TODO PULL ID from interface
+            ID = w.idEntry.get()
+            print ID
+            print contents
+            location = saveLocation.startSave(ID, contents)
+            print(location)
             w.but38.configure(text='''Stop''')
+            key = paramiko.RSAKey(data=base64.b64decode(b'AAAAB3NzaC1yc2EAAAADAQABAAABAQDThl92K8r7+3XlQHrbB3rOYU9RmfG2hlQU8eHSEByfVcTm0X5IIcwf3PsMR5zt79liVbwyW/XHwNClIG7b0VF+c7JX+K+BDffBg4xjbqi0IQwHXDlmi0LXcK2e/kH43Z1J1ZJACDSMCBH5jCDkuUREYYzlr5ff6h+pA3xomEuIR5pb7Gf3GuWu+8RUi5glmTVmU//qo4WNzz4sJvEWcBnc6aYBDlByhyRZ0koSA+SgV0JFy8mx40903h8NNrHfmO9fVKnxiha5DsWxlNcDfAizcYrv5Qgt1WSpsXXpSVB6kCRsb7aodND85NCAQw4o4gQGADeBwoJjrcgOZ5UxMv3p'))
+            client = paramiko.SSHClient()
+            client.get_host_keys().add('98.232.186.42', 'ssh-rsa', key)
+            client.connect('98.232.186.42', username='chiron', password='3sJng2*7Ac8$')
+            fullcommand = '. ./.profile; /usr/bin/python rosConnect.py ' + '/home/chiron/TestChiron/' + ID + ''
+            #fullcommand = 'python test.py'
+            print fullcommand
+            stdin, stdout, stderr = client.exec_command(fullcommand, get_pty=True, environment={'PATH':'/home/chiron/bin:/home/chiron/.local/bin:/opt/ros/kinetic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin',
+'PYTHONPATH':'/opt/ros/kinetic/lib/python2.7/dist-packages',
+'ROS_ETC_DIR':'/opt/ros/kinetic/etc/ros',
+'ROS_MASTER_URI':'http://localhost:11311',
+'ROS_PACKAGE_PATH':'/opt/ros/kinetic/share',
+'ROS_ROOT':'/opt/ros/kinetic/share/ros',
+'PKG_CONFIG_PATH':'/opt/ros/kinetic/lib/pkgconfig'})
+            for line in stdout:
+                print('... ' + line.strip('\n'))
+            for line in stderr:
+                print('... ' + line.strip('\n'))
+
+
 
 
 

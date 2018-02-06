@@ -1,7 +1,6 @@
 import os
 from createFilesystem import secureName
 sys.path.append('../Connection')
-import rosConnect
 
 def startSave(theID, testFile):
 	if 'IDs' in testFile:
@@ -12,9 +11,8 @@ def startSave(theID, testFile):
 		else:
 			fileLocation = './'+testFile['Name']+'/'+theID
 
-	if not os.path.exists(fileLocation):
-		print "File not found!"
-		return (-1)
-	else:
-		subprocess.Popen(['../Connection/rosConnect.py', fileLocation], preexec_fn=os.setsid)
-		return 
+#	if not os.path.exists(fileLocation):
+#		print "File not found!"
+#		return (-1)
+
+	return fileLocation

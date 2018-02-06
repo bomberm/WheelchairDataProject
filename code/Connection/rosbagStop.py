@@ -10,7 +10,7 @@ import signal
 import rosConnect
 from std_msgs.msg import Int32, String
 
-rosbag = int(open(rosbag.pid).read())
+rosbag = int(open('.rosbag.pid').read())
 
 def stopRecordBag(rosbag):
         os.killpg(rosbag.pid, signal.SIGINT)

@@ -121,4 +121,3 @@ class ROS_Test_Controller:
 
 if __name__ == '__main__':
     vp_start_gui()
-    interface_support.initializeConnection()
