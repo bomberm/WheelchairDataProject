@@ -6,8 +6,7 @@ then
 	exit -1
 fi
 
-echo "$$" > bag.pid
+cho "$$" > bag.pid
 
-where=`which rosbag`
 #source /opt/ros/kinetic/setup.bash
-echo `$where record -o $@`
+echo `/opt/ros/kinetic/bin/rosbag record -o $@`
