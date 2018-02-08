@@ -6,5 +6,8 @@ then
 	exit -1
 fi
 
-source ～/.bashrc
+echo "$$" > bag.pid
+
+which rosbag
+source /opt/ros/kinetic/setup.bash
 echo `rosbag record -o $@`
