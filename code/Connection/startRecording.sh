@@ -8,6 +8,6 @@ fi
 
 echo "$$" > bag.pid
 
-which rosbag
-source /opt/ros/kinetic/setup.bash
-echo `rosbag record -o $@`
+where=`which rosbag`
+#source /opt/ros/kinetic/setup.bash
+echo `$where record -o $@`
