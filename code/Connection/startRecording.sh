@@ -8,5 +8,6 @@ fi
 
 cho "$$" > bag.pid
 
-#source /opt/ros/kinetic/setup.bash
+source /opt/ros/kinetic/setup.bash
+roscore &
 echo `/opt/ros/kinetic/bin/rosbag record -o $@`
