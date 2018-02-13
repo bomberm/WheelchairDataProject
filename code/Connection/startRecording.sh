@@ -6,7 +6,7 @@ then
 	exit -1
 fi
 
-cho "$$" > bag.pid
+echo "$$" > bag.pid
 
 source /opt/ros/kinetic/setup.bash
 roscore &
