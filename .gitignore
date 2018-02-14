@@ -7,3 +7,4 @@
 *.blg
 *.pdf
 *.pyc
+node_modules/
