@@ -29,6 +29,8 @@
 \usepackage{setspace}
 \makeindex
 \usepackage{geometry}
+\usepackage{float}
+\usepackage{caption}
 
 \geometry{textheight=9.5in, textwidth=7in}
 
@@ -109,7 +111,21 @@ Robotic testing, more specifically robot data collection, has been an area that,
 \subsection{Project Goals}
 The goals of this project are to simplify all the ROS connection commands and data collection setup into one simple interface. Doing so allows the entire process to be streamlined and eliminates the need to remember the list of complex commands needed to start recording manually. If the complexity is able to be taken out of the data recording process, then that means an expert in ROS will no longer have to be a requirement in order to set up and record a test. A researcher has the potential to hire a freshman undergraduate who knows little to nothing about robots, ROS, or even Computer Science, and the freshman will be able to create and run tests for the researcher. This allows the researcher to not have to worry about the testing aspect of their research, and can focus their efforts on more complicated research, as well as focusing on using the data that was collected and applying it to their research. If the goal of creating a simplified interface can be met, then the interface can be applied to more than just the project here. It has the potential to be released as open-source software to be used with any robot that runs ROS.
 \section{Project Status}
-INSERT STATUS HERE - Mention struggle with networking/connection but don't go in depth, focus on almost to bare bones/alpha for specific use case to start expanding to general use case. Mention testing switch to Node
+The ROS Test Controller project has evolved quite a bit from the original inception in September 2017. What was originally conceived as a single use application to help meet the needs of our client as he collected testing data for Project Chiron, has evolved into a reusable interface to assist users of ROS design and run robotics tests. In addition, while we initially intended for the interface to run entirely in Python (as we expected the primary users to be more comfortable in Python and therefore, enhance maintainability) we have instead shifted into a NodeJS based web application. This primary shift came about due to Python having limited libraries for using SSH, the primary method of communicating with a robot using ROS. While the specifics of the connection issues will be addressed the next section, suffice to say the shift from a Python solution to a NodeJS solution broke a nearly two week block in project progress. 
+
+As of February 14th, we were able to solve our connection issue by moving to a web application and will be testing the ‘bare-bones’ solution to our client on Monday the 19th. This mini-version of the application will focus on the client’s primary need, an interface that requires only one or two clicks to start, record and end a test.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{BarebonesMockup.jpg}
+	\centering
+	\caption{Mockup of 'Bare-Bones' interface}
+\end{figure}
+
+Currently, the client must have four terminals open and run 3 startup scripts before the robot is prepared to begin a test and then yet another command for the test to begin. This interface will automatically run the startup scripts for the client and transition beginning and ending a test to a single button click. 
+
+Once we have successfully tested the ‘bare-bones’ solution, the client will be able to use the bare-bones solution while we expand the application. Our next stage will add creation of new tests (so that the same interface can be used for multiple robots and test scenarios) as well as the ability to view previous test results. This will mean that the design, recording and viewing of robotics tests will be contained within the interface. Mockups for both new functions and general application flow are included in Section 4. 
+
 
 \section{Aaron's Individual Section}
 
