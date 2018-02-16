@@ -112,7 +112,7 @@ The goals of this project are to simplify all the ROS connection commands and da
 INSERT STATUS HERE - Mention struggle with networking/connection but don't go in depth, focus on almost to bare bones/alpha for specific use case to start expanding to general use case. Mention testing switch to Node
 
 \section{Project Problems}
-INSERT PROJECT PROBLEMS HERE - Go in depth on connection issues, good time to talk about having to dig into how python handles ssh, environment variables and how even bash scripts struggle.Perhaps include some code we've used to try and address.
+Possibly the biggest problem that we've run into since starting this project has been being able to run a ROS environment remotely through ssh. Normally, when setting up and running a ROS environment, it is done within the command line on the same machine that is running the interface. However, because our interface aims to reduce the number of commands that the user has to input, the problem arises that suddenly we have run all of the ROS commands through python code, as opposed to just through the command line, and Python does not like that. Python already does not handle ssh connections well, preferring instead to use ftp, and when python is used to ssh into a robot, the source environment used to run ROS is missing. In short, Python being used to ssh into a robot and run ROS commands does not work well if a command line is not present, which it shouldn't be, otherwise our interface would be completely pointless.
 
 \section{Interface Mockups}
 INSERT BOTH MOCK-UPS AND GENERAL EXPLANATION OF UI RESEARCH DONE HERE - Detail both UI concerns but also code concerns. 
