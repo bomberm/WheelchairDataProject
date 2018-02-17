@@ -91,7 +91,7 @@
             }
             \vspace{20pt}
 				\begin{abstract}
-INSERT ABSTRACT HERE
+This document serves to function as a progress report on the ROS Test Controller. The document is broken up into multiple sections. The first is a re-introduction into the project’s purposes and goals for the uninitiated. Following this introduction, there are several perspectives on the project’s current status, next steps, and issues with development. The document is not independent, and there is some technology referenced that will require the reading of previous specifications documents for the Wheelchair Data Collection Project.
 				\end{abstract} 
         }   
     \end{singlespace}
@@ -164,13 +164,39 @@ What's interesting about our interface is that it is made in Node.js, which is a
 
 \section{Hadi's Individual Section}
 \subsection{Project Status}
+\subsubsection{Alpha Specification}
+The Ros Test Controller Alpha has been developed. 
+The alpha contains only the critical functionality required to allow a user to record a rosbag. The project has pivoted from a python app to a nodejs server, which allows us to develop the application as a series of API endpoints and calls. The http calls are handled by nodejs-express, and This allows us to split the project into a set of conceptual microservices. These API methods interact with ROS by making calls to the node “exec” library, typically by calling a bash script on the system. The inputs to the API methods are not sanitized, meaning the node server host is vulnerable to any user who has access to the interface. However, since this project is intended to operate only on a local network, this security risk is significantly minimized.\\
+Templating for this application is done in express-handlebars, which allows for many different views of the interface to be created under a similar structure, in very limited development time. Visually, the alpha contains only two elements, a text input section for the ID of a data collection test participant, and a “record” button.\\
+The alpha interface includes a single page, in which a tester can enter a participants ID number and record the ROSbag of his trial. The record button simply passes along the relevant information to the node server in a GET request. Although this is less secure than a post request, this is functionally irrelevant in the scope of alpha.
 
+\subsubsection{Project Management}
+Project management and communication in the status quo is largely handled in Slack, although there is a set of tasks in waffle.io. These tasks are intended to be completed with as part of an agile workflow. Marie handles the management of these tasks, by keeping up to date on the status of the project, and notifying the team when a task needs to be completed, or when a task’s priority has changed. While there have been issues with delivery of the alpha, which are discussed below, they are related to failures in architecting the software effectively, and not in the management of the project.
+
+\subsubsection{Shifts in Responsibility}
+The original set of responsibilities was contingent on creating a python application, as Aaron was intended to research methodologies for connecting a remote interface to the Robot Operating System. Since these connections are handled trivially with HTTP/REST calls, Aaron has shifted his focus to interface design and user-experience. This covers my old responsibilities on the python demo, allowing me to shift to writing the API methods for the interface. Marie continues to operate in her role as project manager, and she also works with Aaron on writing the ROS system calls that are passed from the node server.
 
 \subsection{Next Steps}
+
+\subsubsection{Upgrades in Beta}
+The beta will contain input sanitation to prevent hijacking of the node server host. This will allow the project to be safely shared to the ROS community without creating several extremely vulnerable robot hosts. The beta will include a more visually appealing interface that allows for more complicated interactions with the user. This specifications for this visual interface have been provided directly by the client via email. The beta will also contain more methods to anonymize the user data stored with the bag data file.\\
+Beta will need to contain significantly more robust error-reporting, as the alpha only reports issues during a full crash. Beta should notify the user of any issues and contain more unit tests to help guarantee the successful operation of the application.\\
+The Ros Test Controller Beta should contain the necessary documentation for developers to extend the set of services provided by the API hosted by the node server. This will allow future (and current) development to be a more streamlined and standardized process. 
+
+\subsubsection{Expo Preparation}
+The data collection project is not independently visually interesting, as it largely was a project of web-calls and API design. This means that the expo preparation will need to be significant to find ways to keep the interest of the attendees. \\
+The team is considering finding a physical robot that can be tracked during expo, with the results displayed in real-time. However, this would require significant extensions to the alpha, for which the development has not been planned. The client has approved these extensions in a meeting during the fall term, so the team is at liberty to pursue this avenue if given the time and prioritization. \\
+If a robot is not obtained, we must plan another way to engage the attendees at expo, as the interface itself is not visually exciting, and the underlying technology is only relevant and interesting to web developers. A possible method of doing so is to create a simple virtual robot (turtlebot) which can be controlled using an Xbox controller, and recording its’ movements. With the right approach, this can be appealing to the attendees at expo as an experience similar to playing a video game.
 
 
 \subsection{Project Problems}
 
-\bibliography{ProjectBib}
+\subsubsection{Stalling on Python Demo}
+While the capstone alpha was due this week, we had intended to deliver it to the client two weeks ago. However, this was delayed due to architecture issues. The team had planned to develop the alpha in python, using an emulated ssh terminal connection to make calls to ROS on the NUC. However, emulating an SSH connection does not actually create a shell, which contains the necessary environment variables for ROSbag to interact with the ROS core. We scrapped this structure but lost multiple weeks of development time creating it.
+
+\subsubsection{Workflow Issues}
+There have been some issues working under an agile workflow. While the project management has been effective, unanticipated roadblocks stalled our development, which in turn has effectively ended the intended development cycle. We will need to re-write many of our tasks in the upcoming weeks to fit our new understanding of the project and its’ goals.
+
+%\bibliography{ProjectBib}
 
 \end{document}
