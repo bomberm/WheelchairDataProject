@@ -3,6 +3,8 @@ var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var exec = require('exec');
 var child_process = require('child_process');
+var fs = require('fs');
+var crypto = require('crypto');
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -13,16 +15,44 @@ app.get('/',function(req,res){
 });
 
 app.get('/ros',function(req,res){
-  child_process.exec('sh /home/chiron/startRecording.sh /home/chiron/WheelchairDataProject/code/Connection/test/ tf', function(err, out, code) {
+  topics = req.query.topics;
+  console.log(topics);
+  name = req.query.name.replace(' ', '').toLowerCase();
+  const secret = 'chiron';
+  const hash = crypto.createHmac('sha256', secret)
+                   .update(name)
+                   .digest('hex').substr(0, 6);
+  topicString = "";
+  for(elem in topics){
+    topicString += topics[elem];
+    topicString += " ";
+  }
+  var dir = '/home/chiron/bags/' + hash + '/';
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+  child_process.exec('sh /home/chiron/startRecording.sh ' + dir + ' ' + topicString, function(err, out, code) {
+    if (err instanceof Error)
+      throw err;
+    process.stderr.write(err);
+    process.stdout.write(out);
+    process.exit(code);
+  });
+  res.send('command passed');
+});
+
+app.get('/kill',function(req,res){
+  child_process.exec('kill `cat /home/chiron/WheelchairDataProject/code/nodeDemo/bag.pid`', function(err, out, code) {
     if (err instanceof Error)
       res.send('command returned error: ' + err)
       throw err;
     process.stderr.write(err);
     process.stdout.write(out);
     process.exit(code);
-    res.send('command executed. debug response: ' + out);
   });
+  res.send('command passed');
 });
+
 
 app.use(function(req,res){
   res.status(404);
