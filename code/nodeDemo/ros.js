@@ -16,7 +16,7 @@ app.get('/',function(req,res){
 
 app.get('/ros',function(req,res){
   //topics = req.query.topics;
-  console.log(topics);
+  //console.log(topics);
   name = req.query.name.replace(' ', '').toLowerCase();
   const secret = 'chiron';
   const hash = crypto.createHmac('sha256', secret)
