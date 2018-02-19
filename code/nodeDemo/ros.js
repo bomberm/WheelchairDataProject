@@ -20,8 +20,8 @@ app.get('/ros',function(req,res){
     process.stderr.write(err);
     process.stdout.write(out);
     process.exit(code);
+    res.send('command executed. debug response: ' + out);
   });
-  res.send('command executed');
 });
 
 app.use(function(req,res){
