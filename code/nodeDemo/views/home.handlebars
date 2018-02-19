@@ -1,10 +1,24 @@
 <h1>ROS Test Controller</h1>
 <form>
   Full Name:<br>
-  <input type="text" name="name">
-  <button type="button">Record Bag</button>
+  <input type="text" name="name" id="inputName" />
+  <button type="button" onclick="record()" id="theButton">Record Bag</button>
 </form>
 
 <script>
+  var recording = 0;
+  function record(){
+    if(recording){
+      url = "/kill"
+      document.getElementById('theButton').innerHTML = "Record Bag";
+    }
+    else{
+      url = "/ros?name=" + document.getElementById("inputName").value;
+      document.getElementById('theButton').innerHTML = "Stop Recording";
+      $.get(url, function(data){
+        console.log(data);
+      })
+    }
+  }
 
 </script>

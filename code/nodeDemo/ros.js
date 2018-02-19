@@ -15,18 +15,19 @@ app.get('/',function(req,res){
 });
 
 app.get('/ros',function(req,res){
-  topics = req.query.topics;
+  //topics = req.query.topics;
   console.log(topics);
   name = req.query.name.replace(' ', '').toLowerCase();
   const secret = 'chiron';
   const hash = crypto.createHmac('sha256', secret)
                    .update(name)
                    .digest('hex').substr(0, 6);
-  topicString = "";
+  topicString = "tf";
+  /*
   for(elem in topics){
     topicString += topics[elem];
     topicString += " ";
-  }
+  }*/
   var dir = '/home/chiron/bags/' + hash + '/';
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
