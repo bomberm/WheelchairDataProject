@@ -10,4 +10,5 @@ echo "$$" > bag.pid
 
 source /opt/ros/kinetic/setup.bash
 roscore &
+launchScripts.sh
 echo `/opt/ros/kinetic/bin/rosbag record -o $@`
