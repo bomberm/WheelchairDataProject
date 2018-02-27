@@ -9,7 +9,7 @@ fi
 
 source /opt/ros/kinetic/setup.bash
 roscore &
-#launchScripts.sh
+launchScripts.sh
 /opt/ros/kinetic/bin/rosbag record -o $@ &
 pgrep -u $USER roscore > core.pid
 sleep 5
