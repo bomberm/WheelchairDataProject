@@ -5,6 +5,10 @@ var exec = require('exec');
 var child_process = require('child_process');
 var fs = require('fs');
 var crypto = require('crypto');
+var path = require('path')
+
+var cwd = path.dirname(require.main.filename);
+console.log(cwd);
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -22,13 +26,13 @@ app.get('/ros',function(req,res){
   const hash = crypto.createHmac('sha256', secret)
                    .update(name)
                    .digest('hex').substr(0, 6);
-  topicString = "tf";
+  topicString = "tf scan_multi pose_stamped";
   /*
   for(elem in topics){
     topicString += topics[elem];
     topicString += " ";
   }*/
-  var dir = '/home/chiron/bags/' + hash + '/';
+  var dir = cwd + '/' + hash + '/';
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
   }
