@@ -36,7 +36,7 @@ app.get('/ros',function(req,res){
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
   }
-  child_process.exec('sh /home/chiron/startRecording.sh ' + dir + ' ' + topicString, function(err, out, code) {
+  child_process.exec('sh' + cwd + '/startRecording.sh ' + dir + ' ' + topicString, function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);
