@@ -1,5 +1,4 @@
 import subprocess
-import signal
 
 output = subprocess.Popen('roscore', stdin=subprocess.PIPE) 
 store_pid = open("core.pid", 'w')
