@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Create Test - ROS Test Controller</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="table">
+			<ul>
+				<li><a href="createtestRobotInfo.html">Robot Info</a></li>
+				<li><img src="arrow.png"></li>
+				<li><a href="createtestMetadata.html">Metadata</a></li>
+				<li><img src="arrow.png"></li>
+				<li><a href="createtestAddTester.html">Add Testers</a></li>
+				<li><img src="arrow.png"></li>
+				<li><a href="createtestConfirm.html">Confirm</a></li>
+			</ul>
+			</table>
+			<hr>
+			<div align="center">
+				Test Name: <input type="text" name="testname"><br><br>
+			</div>
+			<div class="row">
+				<div class="column">
+					Add Startup Script(s)<br>
+					<input type='text' id='newStartScript' />
+					<button id='addStartScriptButton'>Add</button>
+					<br><br>
+					<ul id='startScripts'>
+						<li>
+						</li>
+					</ul>
+				</div>
+				<div class="column">
+					<div align="center">
+						Select Topics to Include in ROSbag<br><br>
+						<textarea rows="15" cols="75"></textarea>
+					</div>
+				</div>
+			</div>
+		<script src="scripts.js"></script>
+	</body>
+</html>

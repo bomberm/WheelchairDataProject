@@ -3,3 +3,45 @@
 	height: 45px;
 	font-size: 20px;
 }
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+li {
+	display: inline-block; float: none;
+	font-size: 20px;
+}
+
+li a {
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 70px;
+	padding-right: 70px;
+	background-color: #ffffff;
+}
+
+.table {
+	display: table;
+	margin: 0 auto;
+}
+
+.column {
+	float: left;
+	width: 49%;
+	padding: 10px;
+}
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.v1 {
+	height: 3000px;
+}
