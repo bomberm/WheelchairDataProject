@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import subprocess
 
 topics = open('topics.list', 'w')
