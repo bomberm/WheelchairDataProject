@@ -1,3 +1,5 @@
+#/usr/bin/python
+
 import subprocess
 
 corelog = open("core.log", 'w')
