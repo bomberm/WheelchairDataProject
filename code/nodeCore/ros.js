@@ -18,6 +18,34 @@ app.get('/',function(req,res){
   res.render('home');
 });
 
+app.get('/configure',function(req,res){
+  res.render('configure');
+});
+
+app.get('/launch',function(req, res){
+  launchPath = req.query.launch;
+
+  //code for general case overwritten and hardcoded below
+  /*
+  child_process.exec('sh ' + "\"" +  cwd + '/startRecording.sh\" ' + dir + ' ' + topicString, function(err, out, code) {
+    if (err instanceof Error)
+      throw err;
+    process.stderr.write(err);
+    process.stdout.write(out);
+    process.exit(code);
+  });
+  */
+
+  child_process.exec('python ../ROSHandling/launchFiles.py', function(err, out, code) {
+    if (err instanceof Error)
+      throw err;
+    process.stderr.write(err);
+    process.stdout.write(out);
+    process.exit(code);
+  });
+
+});
+
 app.get('/ros',function(req,res){
   //topics = req.query.topics;
   //console.log(topics);
