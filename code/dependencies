@@ -6,5 +6,8 @@ ROSHandling
 NodeCore
 -nodejs
 -express
+-express-handlebars
+-exec
+-crypto
 
 Interface
