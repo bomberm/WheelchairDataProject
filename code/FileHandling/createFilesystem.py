@@ -1,8 +1,11 @@
 import os, errno, shutil
 import hashlib
+import json
+from pathlib2 import Path
+from sys import argv
 
 def secureName(name, testFile):
-	salt = testFile['Salt']
+	salt = testFile['salt']
 	return hashlib.sha256(salt.encode()+name.rstrip().encode()).hexdigest()
 
 def createIDFiles(numIDs, dirName):
@@ -11,49 +14,44 @@ def createIDFiles(numIDs, dirName):
 			os.makedirs(dirName+'/'+str(i)+'/')
 	return	
 
-def createFilesystem(testFile):
-	#get directory name
-	if not type(testFile) is dict:
-		return False 
 
-	dirName = testFile['Name']
-	dirName = dirName.strip()
+#get directory name
+if not len(argv) == 2:
+	raise IOError('Usage: '+argv[0]+' <test.json file>')
 
-	#Create 'root' of test storage
-	if not os.path.exists(dirName):
-		os.makedirs(dirName)
-	else:
-		#handle editing current dir
-		print 'Filesystem exists' #remove print once real functionality is added
+checkIfExists = Path(argv[1])                                   
+if checkIfExists.is_file:
+	testFile = checkIfExists.open()
+else:
+	raise IOError('Usage: '+argv[1]+'must be a .json file')
 
-	#Begin populating storage directory
-	shutil.copy(testFile['FileName'], './'+dirName+'/')	
+data = json.load(testFile)
+dirName = data['name']
+
+if not os.path.exists(dirName):
+	os.makedirs(dirName)
+
+#Begin populating storage directory
+shutil.copy(argv[1], './'+dirName+'/')	
 	
 
-	#Test Participant Data - This will need to be updated to include logic for IDs
-	if not 'Participant Data' in testFile:
-		try:
-			numIDs = int(testFile['IDs'])
-			createIDFiles(numIDs, dirName)
-			return True
-		except:
-			raise
-			return False
-	else:
-		shutil.copy(testFile['Participant Data'], './'+dirName+'/')	
-		participantFile = open(testFile['Participant Data'], 'r')	
+#Test Participant Data - This will need to be updated to include logic for IDs
+if not 'names' in data.keys():
+	try:
+		numIDs = int(data['count_ids'])
+		createIDFiles(numIDs, dirName)
+		exit(0)
+	except:
+		raise
+		exit(-1)
+else:
+	participantFile = data['names']
 	
-	#Set up for security
-	if int(testFile['Secure']) == 1:
-		secure = True
-	
-	#Create subDirs for each participant
-	for name in participantFile:
-		if secure:
-			workName = secureName(name, testFile).decode()
-		else:
-			workName = name
-		if not os.path.exists(workName):
-			os.makedirs(dirName+'/'+workName+'/')
 
-	return True	
+#Create subDirs for each participant
+for name in participantFile:
+	workName = secureName(name, data).decode()
+	workName = name
+	if not os.path.exists(workName):
+		os.makedirs(dirName+'/'+workName+'/')
+

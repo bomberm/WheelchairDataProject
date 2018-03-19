@@ -1,0 +1,9 @@
+{
+  "name":"testIDs",
+  "launch": [
+    ["test_description", "test_description.launch"]
+  ],
+  "ids": true,
+  "count_ids": 50,
+  "topics": ["tf", "scan_multi", "pose_stamped"]
+}
