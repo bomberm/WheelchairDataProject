@@ -64,7 +64,7 @@ app.get('/ros',function(req,res){
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
   }
-  child_process.exec('sh ' + "\"" +  cwd + '/startRecording.sh\" ' + dir + ' ' + topicString, function(err, out, code) {
+  child_process.exec('python ' + "\"" +  cwd + '/../ROSHandling/barebones.py" ' + dir + ' ' + '../Templates/Chiron.json', function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);
@@ -75,7 +75,7 @@ app.get('/ros',function(req,res){
 });
 
 app.get('/kill',function(req,res){
-  child_process.exec('kill `cat \"' + cwd + '/bag.pid\"`', function(err, out, code) {
+  child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py bag', function(err, out, code) {
     if (err instanceof Error)
       res.send('command returned error: ' + err)
       throw err;
@@ -83,7 +83,16 @@ app.get('/kill',function(req,res){
     process.stdout.write(out);
     process.exit(code);
   });
-  res.send('command passed');
+
+  child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
+    if (err instanceof Error)
+      res.send('command returned error: ' + err)
+      throw err;
+    process.stderr.write(err);
+    process.stdout.write(out);
+    process.exit(code);
+  });
+ res.send('command passed');
 });
 
 
