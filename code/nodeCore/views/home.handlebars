@@ -1,8 +1,14 @@
 <h1>ROS Test Controller</h1>
 <form>
+  Test Name:<br>
+  <input type="text" name="testName" id="testInput" />
+  <button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
+</form>
+<hr>
+<form>
   Full Name:<br>
   <input type="text" name="name" id="inputName" />
-  <button type="button" onclick="record()" id="theButton">Record Bag</button>
+  <button type="button" onclick="record()" id="theButton"> &#9899 Record Bag</button>
 </form>
 
 <script>
@@ -10,13 +16,13 @@
   function record(){
     if(recording){
       url = "/kill"
-      document.getElementById('theButton').innerHTML = "Record Bag";
+      document.getElementById('theButton').innerHTML = " &#9899 Record Bag";
       recording  = 0;
     }
     else{
       recording = 1;
       url = "/ros?name=" + document.getElementById("inputName").value;
-      document.getElementById('theButton').innerHTML = "Stop Recording";
+      document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
       $.get(url, function(data){
         console.log(data);
       })
