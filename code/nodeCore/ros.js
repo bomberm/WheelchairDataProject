@@ -46,6 +46,52 @@ app.get('/launch',function(req, res){
 
 });
 
+// Hadi, this is a function I added to initialize a test - Marie
+app.get('/initialize',function(req,res){
+  test = req.query.test.replace(' ', '');
+  var dir = cwd + '/' + test + '/';
+  if (fs.existsSync(dir)){
+    testFile = dir+test+'.json';
+    child_process.exec('python ../ROSHandling/launchFiles.py '+testFile, function(err, out, code) {
+      if (err instanceof Error)
+        throw err;
+      process.stderr.write(err);
+      process.stdout.write(out);
+      process.exit(code);
+    }); 
+  };
+  //else
+  // Hadi, I need an error here to notifiy the user that the system cannot find the test file but I'm not sure how
+});
+ 
+// Added and works great!
+app.get('/rosStartup',function(req,res){
+  child_process.exec('python ../ROSHandling/startup.py', function(err, out, code) {
+    if (err instanceof Error)
+      throw err;
+    process.stderr.write(err);
+    process.stdout.write(out);
+    process.exit(code);
+  });
+});
+
+app.get('/shutdown', function(req, res){
+  test = req.query.test.replace(' ', '');
+  var dir = cwd + '/' + test + '/';
+  if (fs.existsSync(dir)){
+    testFile = dir+test+'.json'
+    child_process.exec('python ../ROSHandling/shutdown.py launch '+testFile; function(err, out, code) {
+      if (err instanceof Error)
+        throw err;
+      process.stderr.write(err);
+      process.stdout.write(out);
+      process.exit(code);
+    });
+  };
+  // else
+  // Need error handling here too Hadi
+});
+
 app.get('/ros',function(req,res){
   //topics = req.query.topics;
   //console.log(topics);
@@ -54,7 +100,6 @@ app.get('/ros',function(req,res){
   const hash = crypto.createHmac('sha256', secret)
                    .update(name)
                    .digest('hex').substr(0, 6);
-  topicString = "tf scan_multi pose_stamped";
   /*
   for(elem in topics){
     topicString += topics[elem];

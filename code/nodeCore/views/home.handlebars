@@ -1,9 +1,31 @@
 <h1>ROS Test Controller</h1>
+<script>
+  url = "/rosStartup"
+  $.get(url, function(data){
+    console.log(data);
+  })
+</script>
+
 <form>
   Test Name:<br>
   <input type="text" name="testName" id="testInput" />
   <button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
 </form>
+<script>
+  var initialized = 0;
+  function initialize(){
+    //if(initialized){
+    //  url = "/shutdown?test="test;
+    // };
+  test = document.getElementById('testInput').value;
+  url = "/initialize?test="+test;
+  initialized = 1;
+  $.get(url, function(data){
+    console.log(data);
+  })
+}
+</script>
+	
 <hr>
 <form>
   Full Name:<br>

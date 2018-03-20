@@ -1,5 +1,5 @@
 {
-  "name":"chiron",
+  "name":"Chiron",
   "launch": [
     ["wheelchair_description", "wheelchair_bringup.launch"],
     ["wheelchair_description", "wheelchair_merger.launch"],
