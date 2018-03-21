@@ -76,7 +76,7 @@ app.get('/rosStartup',function(req,res){
 });
 
 app.get('/shutdown', function(req, res){
-  child_process.exec('python ../ROSHandling/shutdown.py launch'; function(err, out, code) {
+  child_process.exec('python ../ROSHandling/shutdown.py launch', function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);

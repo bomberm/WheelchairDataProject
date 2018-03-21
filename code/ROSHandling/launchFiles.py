@@ -16,6 +16,8 @@ else:
 	raise IOError('Usage: '+argv[1]+'must be a .json file')	
 
 data = json.load(testFile)
+if not 'launch' in data.keys():
+	exit(0)
 scripts = data['launch']
 
 store_pid = open("launch.pid", 'w')
