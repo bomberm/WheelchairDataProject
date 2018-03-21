@@ -83,7 +83,7 @@ app.get('/shutdown', function(req, res){
     process.stdout.write(out);
     process.exit(code);
   });
-};
+});
 
 app.get('/ros',function(req,res){
   //topics = req.query.topics;
