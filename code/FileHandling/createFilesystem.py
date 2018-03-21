@@ -6,7 +6,7 @@ from sys import argv
 
 def secureName(name, testFile):
 	salt = testFile['salt']
-	return hashlib.sha256(salt.encode()+name.rstrip().encode()).hexdigest()
+	return hashlib.sha256(salt.encode()+name.rstrip().encode()).hexdigest()[:6]
 
 def createIDFiles(numIDs, dirName):
 	for i in range(0, numIDs):
@@ -51,7 +51,6 @@ else:
 #Create subDirs for each participant
 for name in participantFile:
 	workName = secureName(name, data).decode()
-	workName = name
 	if not os.path.exists(workName):
 		os.makedirs(dirName+'/'+workName+'/')
 

@@ -76,21 +76,14 @@ app.get('/rosStartup',function(req,res){
 });
 
 app.get('/shutdown', function(req, res){
-  test = req.query.test.replace(' ', '');
-  var dir = cwd + '/' + test + '/';
-  if (fs.existsSync(dir)){
-    testFile = dir+test+'.json'
-    child_process.exec('python ../ROSHandling/shutdown.py launch '+testFile; function(err, out, code) {
-      if (err instanceof Error)
-        throw err;
-      process.stderr.write(err);
-      process.stdout.write(out);
-      process.exit(code);
-    });
-  };
-  // else
-  // Need error handling here too Hadi
-});
+  child_process.exec('python ../ROSHandling/shutdown.py launch'; function(err, out, code) {
+    if (err instanceof Error)
+      throw err;
+    process.stderr.write(err);
+    process.stdout.write(out);
+    process.exit(code);
+  });
+};
 
 app.get('/ros',function(req,res){
   //topics = req.query.topics;
