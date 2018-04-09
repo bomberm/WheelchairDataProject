@@ -1,6 +1,7 @@
 #/usr/bin/python
 
-# Used in Run Test interface when 'start recording' is pushed.
+# Used in Run Test interface when 'start recording' is pushed. Inputs are the location to save the bag and the test filelocation.
+
 import subprocess
 import json
 from sys import argv

@@ -48,7 +48,7 @@ app.get('/launch',function(req, res){
 
 // Hadi, this is a function I added to initialize a test - Marie
 app.get('/initialize',function(req,res){
-  test = req.query.test.replace(' ', '');
+  test = req.query.test.replace(' ', '').toLowerCase();
   var dir = cwd + '/' + test + '/';
   if (fs.existsSync(dir)){
     testFile = dir+test+'.json';
@@ -69,11 +69,15 @@ app.get('/rosStartup',function(req,res){
   child_process.exec('python ../ROSHandling/startup.py', function(err, out, code) {
     if (err instanceof Error)
       throw err;
+    console.log(err);
+    console.log(out);
+    console.log(code);
     process.stderr.write(err);
     process.stdout.write(out);
     process.exit(code);
   });
 });
+
 
 app.get('/shutdown', function(req, res){
   child_process.exec('python ../ROSHandling/shutdown.py launch', function(err, out, code) {
@@ -86,23 +90,22 @@ app.get('/shutdown', function(req, res){
 });
 
 app.get('/ros',function(req,res){
-  //topics = req.query.topics;
-  //console.log(topics);
   name = req.query.name.replace(' ', '').toLowerCase();
-  const secret = 'chiron';
+  test = req.query.test.replace(' ', '').toLowerCase();
+  const secret = test;
   const hash = crypto.createHmac('sha256', secret)
                    .update(name)
                    .digest('hex').substr(0, 6);
-  /*
-  for(elem in topics){
-    topicString += topics[elem];
-    topicString += " ";
-  }*/
-  var dir = cwd + '/' + hash + '/';
-  if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
+  var testdir = cwd + '/' + test + '/';
+  var namedir = testdir + hash + '/';
+
+  if (!fs.existsSync(namedir)){
+    fs.mkdirSync(namedir);
   }
-  child_process.exec('python ' + "\"" +  cwd + '/../ROSHandling/barebones.py" ' + dir + ' ' + '../Templates/Chiron.json', function(err, out, code) {
+
+  if (fs.existsSync(testdir)){
+    testFile = testdir+test+'.json';
+    child_process.exec('python ../ROSHandling/startBag.py ' + namedir + ' ' + testFile , function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);
@@ -110,6 +113,7 @@ app.get('/ros',function(req,res){
     process.exit(code);
   });
   res.send('command passed');
+  }
 });
 
 app.get('/kill',function(req,res){
@@ -133,6 +137,15 @@ app.get('/kill',function(req,res){
  res.send('command passed');
 });
 
+
+function errorOut(err, out, code) {
+  if (err instanceof Error)
+    res.send('command returned error: ' + err)
+    throw err;
+  process.stderr.write(err);
+  process.stdout.write(out);
+  process.exit(code);
+}
 
 app.use(function(req,res){
   res.status(404);

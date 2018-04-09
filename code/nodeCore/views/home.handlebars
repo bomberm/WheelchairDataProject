@@ -14,12 +14,13 @@
 <script>
   var initialized = 0;
   function initialize(){
-    //if(initialized){
-    //  url = "/shutdown?test="test;
-    // };
+    if(initialized){
+      url = "/shutdown?test="test;
+     };
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
   initialized = 1;
+  document.getElementById('initializeButton').innerHTML = "Initialized";
   $.get(url, function(data){
     console.log(data);
   })
@@ -43,7 +44,7 @@
     }
     else{
       recording = 1;
-      url = "/ros?name=" + document.getElementById("inputName").value;
+      url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
       document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
       $.get(url, function(data){
         console.log(data);
