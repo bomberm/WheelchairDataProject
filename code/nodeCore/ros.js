@@ -104,7 +104,10 @@ app.get('/rosStartup',function(req,res){
     process.exit(code);
   });
   */
-  PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
+    var options = {
+      mode: 'text',
+    };
+		PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
     if (err) throw err;
     // results is an array consisting of messages collected during execution
     console.log('results: %j', results);
