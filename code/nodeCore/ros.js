@@ -5,7 +5,16 @@ var exec = require('exec');
 var child_process = require('child_process');
 var fs = require('fs');
 var crypto = require('crypto');
-var path = require('path')
+var path = require('path');
+var PythonShell = require('python-shell');
+
+/**
+Copy the below snipper to add command line options to a python script
+var options = {
+  mode: 'text',
+  args: ['my First Argument', 'My Second Argument', '--option=123']
+};
+**/
 
 var cwd = path.dirname(require.main.filename);
 console.log(cwd);
@@ -23,6 +32,7 @@ app.get('/configure',function(req,res){
 });
 
 app.get('/launch',function(req, res){
+
   launchPath = req.query.launch;
 
   //code for general case overwritten and hardcoded below
@@ -35,7 +45,7 @@ app.get('/launch',function(req, res){
     process.exit(code);
   });
   */
-
+  /**
   child_process.exec('python ../ROSHandling/launchFiles.py', function(err, out, code) {
     if (err instanceof Error)
       throw err;
@@ -43,7 +53,11 @@ app.get('/launch',function(req, res){
     process.stdout.write(out);
     process.exit(code);
   });
-
+  **/
+  PythonShell.run('../ROSHandling/launchFiles.py', function (err) {
+    if (err) throw err;
+    console.log('finished');
+  });
 });
 
 // Hadi, this is a function I added to initialize a test - Marie
@@ -52,18 +66,29 @@ app.get('/initialize',function(req,res){
   var dir = cwd + '/' + test + '/';
   if (fs.existsSync(dir)){
     testFile = dir+test+'.json';
+    var options = {
+      mode: 'text',
+      args: [testFile]
+    };
+    PythonShell.run('../ROSHandling/launchFiles.py', options, function (err, results) {
+      if (err) throw err;
+      // results is an array consisting of messages collected during execution
+      console.log('results: %j', results);
+    });
+    /**
     child_process.exec('python ../ROSHandling/launchFiles.py '+testFile, function(err, out, code) {
       if (err instanceof Error)
         throw err;
       process.stderr.write(err);
       process.stdout.write(out);
       process.exit(code);
-    }); 
-  };
+    });
+    **/
+  }
   //else
   // Hadi, I need an error here to notifiy the user that the system cannot find the test file but I'm not sure how
 });
- 
+
 // Added and works great!
 app.get('/rosStartup',function(req,res){
   child_process.exec('python ../ROSHandling/startup.py', function(err, out, code) {
@@ -105,7 +130,7 @@ app.get('/ros',function(req,res){
 
   if (fs.existsSync(testdir)){
     testFile = testdir+test+'.json';
-    child_process.exec('python ../ROSHandling/startBag.py ' + namedir + ' ' + testFile , function(err, out, code) {
+    child_process.exec('python ../ROSHandling/startUp.py ' + namedir + ' ' + testFile , function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);
