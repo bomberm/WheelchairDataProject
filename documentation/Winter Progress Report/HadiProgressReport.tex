@@ -1,0 +1,164 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+
+%slightly modified from stackoverflow @ https://tex.stackexchange.com/questions/200437/numbering-sections-subsections-etc-manually
+%code block below allows for references to function as a section instead of a chapter
+\makeatletter
+\renewenvironment{thebibliography}[1]
+{\subsection{References}
+	\@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+	\list{\@biblabel{\@arabic\c@enumiv}}%
+	{\settowidth\labelwidth{\@biblabel{#1}}%
+		\leftmargin\labelwidth
+		\advance\leftmargin\labelsep
+		\@openbib@code
+		\usecounter{enumiv}%
+		\let\p@enumiv\@empty
+		\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+%	\sloppy
+	\clubpenalty4000
+	\@clubpenalty \clubpenalty
+	\widowpenalty4000%
+	\sfcode`\.\@m}
+{\def\@noitemerr
+	{\@latex@warning{Empty `thebibliography' environment}}%
+	\endlist}
+\makeatother
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+\makeindex
+\usepackage{geometry}
+
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		Wheelchair Data Collection Team}
+\def \CapstoneTeamNumber{		4}
+\def \GroupMemberOne{			Marie Bomber}
+\def \GroupMemberTwo{			Aaron Leondar}
+\def \GroupMemberThree{			Hadi Rahal-Arabi}
+\def \CapstoneProjectName{			Robotic Wheelchair Data Collection and Analysis}
+\def \CapstoneSponsorCompany{	Oregon State University}
+\def \CapstoneSponsorPerson{	Matthew William Shuman	}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{	%Problem Statement
+				%Requirements Document
+				%Technology Review
+				%Design Document
+					Progress Report
+				}
+\bibliographystyle{ieeetran}	
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large 20 March 2018}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+				\begin{abstract}
+This document outlines the progress that has been made during the Winter 2017 term on the Project Chiron Interface. It will outline the purpose of the project and the current project status, as well as a summary of the progress made on a week by week basis. This document will also outline successes and challenges encountered over the scope of the Fall 2017 term and include plans to improve performance with Winter 2018 and Spring 2018 terms.
+				\end{abstract} 
+        }   
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+%\listoffigures
+%\listoftables
+\clearpage
+
+
+\section{Status}
+\subsection{Goals Recap}
+The purpose of this project is to provide a simple interface for inexperienced users to record ROSbags. Typically, recording such bags requires knowledge of ROS and command-line experience. Our interface will provide Professor Matthew Shuman, and the ROS community with intuitive methods of recording data.
+
+\subsection{Project Status}
+The project is meeting its goals, but the software has much room for improvement. The application is functional, but there are usage edge-cases that cause crashes. The application is visually developed, but could be more intuitive for users without computer experience. Professor Shuman’s timeline for research has been delayed, so we have not yet conducted user-studies, as we would like to conduct these studies on the actual end-users for maximum applicability and relevance.
+
+\section{Team Evaluation}
+
+\subsection{Marie Bomber}
+Marie is the team’s project manager. She has managed deadlines, written development assignments for the team, and written significant amounts of code for the project. Her work has been extremely critical to the development of the ROS test controller, and she has provided significant amounts of supporting python code for the server back-end.
+\subsection{Aaron Leondar}
+Aaron has been designing the GUI and implementing the markup required for the interface. He has consistently met Marie’s set deadlines, and is always volunteering to take on additional work to move the project forward. He has been an effective team-member, and has taken changes to the project and his role in stride as the scope of our requirements changed.
+\subsection{Hadi Rahal-Arabi (myself)}
+I have been writing most of the backend for the node server to work in collaboration with Marie’s python scripts. I believe that I have been an asset in architecting the project, as well as writing much of the controlling logic. I am occasionally slow to respond to team communications, but I always provide my work on time and I think my team-members would be satisfied with my contributions to this project.
+\section{Weekly Summary}
+
+\subsection{Week 1}
+Marie added and closed several tasks on our project management board to prepare for the term. I purchased a surplus desktop and installed ubuntu on it for use as a team development server. The team scheduled term meetings with our TA.
+
+\subsection{Week 2}
+The team installed the necessary dependencies to run ROS on our development server. Marie began sketching out what would be necessary for a barebones version of our application for use by Shuman. Aaron began preparing the server to run a turtlebot, and troubleshooted some network issues with Marie.
+
+\subsection{Week 3}
+The team re-wrote the requirements document to meet the new and changed needs of the client. A simple application for deployment to the ROS community was negotiation with Professor Shuman. We installed updates on the development server.
+
+\subsection{Week 4}
+We developed a mockup of the GUI in python, and developed a script to create the necessary filesystem to store the ROSbags on an ubuntu box. We began preparing to demo the interface to Shuman so he could use it in active testing. This was the week we hit the big roadblocks and considered re-architecting the software.
+
+\subsection{Week 5}
+I began developing a version of our application in node instead of python, with some help from Marie. Shuman hit delays in his research, so he luckily did not need the barebones immediately. 
+
+\subsection{Week 6}
+We began working on our midterm progress report and expo poster. I completed the first iteration of our node demo, and pushed the code to git. We officially transitioned from a python solution to a node solution during the course of this week.
+
+\subsection{Week 7}
+We were to meet with Professor Shuman and show him our node demo, but there were issues with the wheelchair hardware that he had to resolve, so we were unable to show our progress. Development stalled during this week, other than visual upgrades.
+
+\subsection{Week 8}
+Our rescheduled meeting with Shuman was again delayed due to the same hardware issues, so we worked on adding additional error-handling to the application, but still pushed to schedule a meeting as soon as possible. 
+
+\subsection{Week 9}
+Scheduling conflicts with Shuman’s hardware grad student and our team pushed the demo back again. We learned that the delays in the Professor’s research gave us additional padding time before our application was going to be in-use.
+
+\subsection{Week 10}
+We were finally able to meet with Shuman, and tested the interface. Although there were initial failures, after multiple meetings we were able to get a functional product, and run tests on the wheelchair.
+
+\section{Retrospective}
+
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} p{0.3\linewidth}| p{0.3\linewidth}| p{0.3\linewidth}@{}}
+
+	\centering Positives & \centering Deltas & \centering Actions \tabularnewline 
+	\hline 
+	Over the last ten weeks we have been able to meet our base development goals, and have created a usable product, as well as improved our architecture and team structure. & The application needs significantly more robust error handling, as the interface can fail silently without notifying the user in any way. This is far and away the most significant issue we are facing. We would also like to have a more intuitive wizard interface, instead of a single page with several prompts.& We will have to work together to implement error-handling on every layer of the application, and implement logic for our visual interface mockups.
+
+\end{tabular*}
+
+
+
+\end{document}

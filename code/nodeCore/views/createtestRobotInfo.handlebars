@@ -1,0 +1,52 @@
+
+<div class="container">
+	<div class="table">
+		<ul>
+			<li><a href="createtestRobotInfo.html">Robot Info</a></li>
+			<li><img src="arrow.png"></li>
+			<li><a href="createtestMetadata.html">Metadata</a></li>
+			<li><img src="arrow.png"></li>
+			<li><a href="createtestAddTester.html">Add Testers</a></li>
+			<li><img src="arrow.png"></li>
+			<li><a href="createtestConfirm.html">Confirm</a></li>
+		</ul>
+	</table>
+	<hr>
+	<div align="center">
+		Test Name: <input type="text" name="testname"><br><br>
+	</div>
+	<div class="row">
+		<div class="column">
+			Add Startup Script(s)<br>
+			<input type='text' id='newStartScript' />
+			<button id='addStartScriptButton'>Add</button>
+			<br><br>
+			<ul id='startScripts'>
+				<li>
+				</li>
+			</ul>
+		</div>
+		<div class="column">
+			<div align="center">
+				Select Topics to Include in ROSbag<br><br>
+				<textarea rows="15" cols="75"></textarea>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	var startScriptInput = document.getElementById('newStartScript');
+	var addStartScriptButton = document.getElementById('addStartScriptButton');
+	var scriptList = document.getElementById('startScripts');
+
+	var addScript = function () {
+	    var text = startScriptInput.value;
+	    var li = document.createElement('li');
+	    li.innerHTML = "<input type='checkbox'>" +
+	                   "<label>" + text + "</label>" +
+	                   "<button class='delete'>Delete</button>";
+	    scriptList.appendChild(li);
+	}
+
+	addStartScriptButton.onclick = addScript;
+	</script>

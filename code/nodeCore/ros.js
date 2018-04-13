@@ -91,6 +91,8 @@ app.get('/initialize',function(req,res){
 
 // Added and works great!
 app.get('/rosStartup',function(req,res){
+
+  /**
   child_process.exec('python ../ROSHandling/startup.py', function(err, out, code) {
     if (err instanceof Error)
       throw err;
@@ -101,16 +103,33 @@ app.get('/rosStartup',function(req,res){
     process.stdout.write(out);
     process.exit(code);
   });
+  */
+  PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+  });
 });
 
 
 app.get('/shutdown', function(req, res){
+  /**
   child_process.exec('python ../ROSHandling/shutdown.py launch', function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);
     process.stdout.write(out);
     process.exit(code);
+  });
+  */
+  var options = {
+    mode: 'text',
+    args: ["launch"]
+  };
+  PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
   });
 });
 
@@ -129,7 +148,18 @@ app.get('/ros',function(req,res){
   }
 
   if (fs.existsSync(testdir)){
-    testFile = testdir+test+'.json';
+        testFile = testdir+test+'.json';
+    var options = {
+      mode: 'text',
+      args: [namedir, testFile]
+    };
+    PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+      if (err) throw err;
+      // results is an array consisting of messages collected during execution
+      console.log('results: %j', results);
+    });
+
+    /**
     child_process.exec('python ../ROSHandling/startUp.py ' + namedir + ' ' + testFile , function(err, out, code) {
     if (err instanceof Error)
       throw err;
@@ -137,6 +167,8 @@ app.get('/ros',function(req,res){
     process.stdout.write(out);
     process.exit(code);
   });
+  **/
+  
   res.send('command passed');
   }
 });
