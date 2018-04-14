@@ -150,17 +150,16 @@ app.get('/ros',function(req,res){
     fs.mkdirSync(namedir);
   }
 
-  if (fs.existsSync(testdir)){
-        testFile = testdir+test+'.json';
-    var options = {
-      mode: 'text',
-      args: [namedir, testFile]
-    };
-    PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
-      if (err) throw err;
-      // results is an array consisting of messages collected during execution
-      console.log('results: %j', results);
-    });
+  testFile = testdir+test+'.json';
+  var options = {
+    mode: 'text',
+    args: [namedir, testFile]
+  };
+  PythonShell.run('../ROSHandling/startBag.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+  });
 
     /**
     child_process.exec('python ../ROSHandling/startUp.py ' + namedir + ' ' + testFile , function(err, out, code) {
@@ -173,7 +172,6 @@ app.get('/ros',function(req,res){
   **/
   
   res.send('command passed');
-  }
 });
 
 app.get('/kill',function(req,res){
