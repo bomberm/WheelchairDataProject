@@ -1,4 +1,16 @@
-<h1>ROS Test Controller</h1>
+<!DOCTYPE html>
+
+<style>
+.recordButton {
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+}
+</style>
+
+<div align="center">
+  <h1>ROS Test Controller</h1>
+</div>
 <script>
   url = "/rosStartup"
   $.get(url, function(data){
@@ -6,11 +18,16 @@
   })
 </script>
 
-<form>
-  Test Name:<br>
-  <input type="text" name="testName" id="testInput" />
-  <button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
-</form>
+<br><br>
+
+<div align="center">
+	<fieldset style="width:30%"><legend>Run Test</legend>
+		<form>
+			Test Name: <br>
+			<input type="text" name="testName" id="testInput" />
+			<button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
+			<br>
+
 <script>
   var initialized = 0;
   function initialize(){
@@ -27,29 +44,32 @@
 }
 </script>
 	
-<hr>
-<form>
-  Full Name:<br>
-  <input type="text" name="name" id="inputName" />
-  <button type="button" onclick="record()" id="theButton"> &#9899 Record Bag</button>
-</form>
+			Full Name:<br>
+			<input type="text" name="name" id="inputName" />
+			<button type="button" class="recordButton" onclick="record()" id="theButton"> &#9899 Record Bag</button>
+		</form>
+	</fieldset>
+</div>
 
 <script>
-  var recording = 0;
-  function record(){
-    if(recording){
-      url = "/kill"
-      document.getElementById('theButton').innerHTML = " &#9899 Record Bag";
-      recording  = 0;
-    }
-    else{
-      recording = 1;
-      url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
-      document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
-      $.get(url, function(data){
-        console.log(data);
-      })
-    }
-  }
-
+	var recording = 0;
+		function record(){
+			if(recording){
+				url = "/kill";
+				document.getElementById('theButton').innerHTML = " &#9899 Record Bag";
+				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
+				recording  = 0;
+			}
+			else{
+				recording = 1;
+				url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
+				document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
+				document.getElementById('theButton').style.backgroundColor = "#ff3300";
+				$.get(url, function(data){
+					console.log(data);
+				})
+			}
+		}
 </script>
+
+</html>
