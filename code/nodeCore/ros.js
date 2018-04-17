@@ -216,7 +216,7 @@ function onExit(options, err){
   });
 
     if (err) console.log(err.stack);
-    if (options.exit) process.exit();
+    process.exit();
 }
 
 process.on('exit', onExit.bind(null, {exit: true}));
