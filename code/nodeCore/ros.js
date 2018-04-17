@@ -184,26 +184,44 @@ app.get('/kill',function(req,res){
     process.exit(code);
   });
 
-  child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
-    if (err instanceof Error)
-      res.send('command returned error: ' + err)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
+  //child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
+   // if (err instanceof Error)
+    //  res.send('command returned error: ' + err)
+   ///  throw err;
+   // process.stderr.write(err);
+   //  process.stdout.write(out);
+   // process.exit(code);
+  //});
  res.send('command passed');
 });
 
 
-function errorOut(err, out, code) {
-  if (err instanceof Error)
-    res.send('command returned error: ' + err)
-    throw err;
-  process.stderr.write(err);
-  process.stdout.write(out);
-  process.exit(code);
+function onExit(options, err){
+		var options = {
+				mode: 'text',
+				args: 'launch',
+		};
+
+		PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+			if (err) throw err;
+			// results is an array consisting of messages collected during execution
+			console.log('results: %j', results);
+  });
+
+		options.args = 'core',
+		PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+			if (err) throw err;
+			// results is an array consisting of messages collected during execution
+			console.log('results: %j', results);
+  });
+
+    if (err) console.log(err.stack);
+    if (options.exit) process.exit();
 }
+
+process.on('exit', onExit.bind(null, {exit: true}));
+
+process.on('SIGINT', onExit.bind(null, {exit: true}));
 
 app.use(function(req,res){
   res.status(404);

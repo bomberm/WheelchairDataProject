@@ -53,3 +53,13 @@
   }
 
 </script>
+  <script>
+  $(document).ready(function(){
+
+    $(window).bind('beforeunload', function(e){
+    if(out)
+        {return "Do you really want to leave this page now?"}
+    });
+
+  });
+  </script>
