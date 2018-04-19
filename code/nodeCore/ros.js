@@ -91,6 +91,8 @@ app.get('/initialize',function(req,res){
 
 // Added and works great!
 app.get('/rosStartup',function(req,res){
+
+  /**
   child_process.exec('python ../ROSHandling/startup.py', function(err, out, code) {
     if (err instanceof Error)
       throw err;
@@ -101,16 +103,36 @@ app.get('/rosStartup',function(req,res){
     process.stdout.write(out);
     process.exit(code);
   });
+  */
+    var options = {
+      mode: 'text',
+    };
+		PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+  });
 });
 
 
 app.get('/shutdown', function(req, res){
+  /**
   child_process.exec('python ../ROSHandling/shutdown.py launch', function(err, out, code) {
     if (err instanceof Error)
       throw err;
     process.stderr.write(err);
     process.stdout.write(out);
     process.exit(code);
+  });
+  */
+  var options = {
+    mode: 'text',
+    args: ["launch"]
+  };
+  PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
   });
 });
 
@@ -128,8 +150,18 @@ app.get('/ros',function(req,res){
     fs.mkdirSync(namedir);
   }
 
-  if (fs.existsSync(testdir)){
-    testFile = testdir+test+'.json';
+  testFile = testdir+test+'.json';
+  var options = {
+    mode: 'text',
+    args: [namedir, testFile]
+  };
+  PythonShell.run('../ROSHandling/startBag.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+  });
+
+    /**
     child_process.exec('python ../ROSHandling/startUp.py ' + namedir + ' ' + testFile , function(err, out, code) {
     if (err instanceof Error)
       throw err;
@@ -137,8 +169,9 @@ app.get('/ros',function(req,res){
     process.stdout.write(out);
     process.exit(code);
   });
+  **/
+  
   res.send('command passed');
-  }
 });
 
 app.get('/kill',function(req,res){
@@ -151,26 +184,44 @@ app.get('/kill',function(req,res){
     process.exit(code);
   });
 
-  child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
-    if (err instanceof Error)
-      res.send('command returned error: ' + err)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
+  //child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
+   // if (err instanceof Error)
+    //  res.send('command returned error: ' + err)
+   ///  throw err;
+   // process.stderr.write(err);
+   //  process.stdout.write(out);
+   // process.exit(code);
+  //});
  res.send('command passed');
 });
 
 
-function errorOut(err, out, code) {
-  if (err instanceof Error)
-    res.send('command returned error: ' + err)
-    throw err;
-  process.stderr.write(err);
-  process.stdout.write(out);
-  process.exit(code);
+function onExit(options, err){
+		var options = {
+				mode: 'text',
+				args: 'launch',
+		};
+
+		PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+			if (err) throw err;
+			// results is an array consisting of messages collected during execution
+			console.log('results: %j', results);
+  });
+
+		options.args = 'core',
+		PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+			if (err) throw err;
+			// results is an array consisting of messages collected during execution
+			console.log('results: %j', results);
+  });
+
+    if (err) console.log(err.stack);
+    process.exit();
 }
+
+process.on('exit', onExit.bind(null, {exit: true}));
+
+process.on('SIGINT', onExit.bind(null, {exit: true}));
 
 app.use(function(req,res){
   res.status(404);

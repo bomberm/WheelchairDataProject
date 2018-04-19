@@ -1,4 +1,55 @@
-<h1>ROS Test Controller</h1>
+<!DOCTYPE html>
+
+<style>
+.recordButton {
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+}
+
+.fancyForm{
+    width: 750px;
+    padding: 30px;
+    background: #f9f9f9;
+    margin: 50px auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+}
+
+.fancyForm h2{
+    background: #4D4D4D;
+    text-transform: uppercase;
+    color: #797979;
+    font-size: 18px;
+    font-weight: 100;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+}
+<!--.fancyForm input[type="text"], -->
+.fancyForm textarea,
+.fancyForm select 
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 45px;
+}
+.fancyForm textarea{
+    resize:none;
+    overflow: hidden;
+}
+</style>
+
 <script>
   url = "/rosStartup"
   $.get(url, function(data){
@@ -6,11 +57,18 @@
   })
 </script>
 
-<form>
-  Test Name:<br>
-  <input type="text" name="testName" id="testInput" />
-  <button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
-</form>
+<br><br>
+
+<div class="fancyForm">
+	<div align="center">
+		<fieldset style="width:30%"><legend><h3><u>Run Test</u></h3></legend>
+			<form>
+				<hr>
+				Test Name: <br>
+				<input type="text" name="testName" id="testInput" />
+				<button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
+				<br><br>
+
 <script>
   var initialized = 0;
   function initialize(){
@@ -26,30 +84,43 @@
   })
 }
 </script>
-	
-<hr>
-<form>
-  Full Name:<br>
-  <input type="text" name="name" id="inputName" />
-  <button type="button" onclick="record()" id="theButton"> &#9899 Record Bag</button>
-</form>
+				<hr>
+				Full Name:<br>
+				<input type="text" name="name" id="inputName" />
+				<button type="button" class="recordButton" onclick="record()" id="theButton"> &#9899 Record Bag</button>
+			</form>
+		</fieldset>
+	</div>
+</div>
 
 <script>
-  var recording = 0;
-  function record(){
-    if(recording){
-      url = "/kill"
-      document.getElementById('theButton').innerHTML = " &#9899 Record Bag";
-      recording  = 0;
-    }
-    else{
-      recording = 1;
-      url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
-      document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
-      $.get(url, function(data){
-        console.log(data);
-      })
-    }
-  }
-
+	var recording = 0;
+		function record(){
+			if(recording){
+				url = "/kill";
+				document.getElementById('theButton').innerHTML = " &#9899 Record Bag";
+				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
+				recording  = 0;
+			}
+			else{
+				recording = 1;
+				url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
+				document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
+				document.getElementById('theButton').style.backgroundColor = "#ff3300";
+				$.get(url, function(data){
+					console.log(data);
+				})
+			}
+		}
 </script>
+<script>
+  $(document).ready(function(){
+
+    $(window).bind('beforeunload', function(e){
+    if(out)
+        {return "Do you really want to leave this page now?"}
+    });
+
+  });
+  </script>
+</html>
