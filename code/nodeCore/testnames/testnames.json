@@ -1,0 +1,7 @@
+{
+  "name":"testNames",
+  "ids": false,
+  "names": ["Foo Bar", "Foo Baz", "Mario Mario", "Luigi Mario", "Baz Bar", "Arcade Fire"],
+  "salt": "7226805c32924580b5e3621e74f2cc9a",
+  "topics": ["tf", "scan_multi", "pose_stamped"]
+}
