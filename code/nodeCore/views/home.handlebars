@@ -61,7 +61,7 @@
 
 <div class="fancyForm">
 	<div align="center">
-		<fieldset style="width:30%"><legend><h3><u>Run Test</u></h3></legend>
+		<fieldset style="width:30%"><legend><h3><u>Record Test</u></h3></legend>
 			<form>
 				<hr>
 				Test Name: <br>
@@ -73,7 +73,7 @@
   var initialized = 0;
   function initialize(){
     if(initialized){
-      url = "/shutdown?test="+test;
+      url = "/shutdown?test="test;
      };
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
@@ -87,18 +87,21 @@
 				<hr>
 				Full Name:<br>
 				<input type="text" name="name" id="inputName" />
-				<button type="button" class="recordButton" onclick="record()" id="theButton"> &#9899 Record Bag</button>
+				<button type="button" class="recordButton" onclick="record()" id="theButton"> &#128308 Record Bag</button>
 			</form>
 		</fieldset>
+	<br><br><br>
+	<textarea disabled rows="20" cols="75">
+	Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
+	</textarea>
 	</div>
 </div>
-
 <script>
 	var recording = 0;
 		function record(){
 			if(recording){
 				url = "/kill";
-				document.getElementById('theButton').innerHTML = " &#9899 Record Bag";
+				document.getElementById('theButton').innerHTML = " &#128308 Record Bag";
 				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
 				recording  = 0;
 			}
@@ -113,14 +116,5 @@
 			}
 		}
 </script>
-<script>
-  $(document).ready(function(){
 
-    $(window).bind('beforeunload', function(e){
-    if(out)
-        {return "Do you really want to leave this page now?"}
-    });
-
-  });
-  </script>
 </html>
