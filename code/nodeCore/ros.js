@@ -31,35 +31,6 @@ app.get('/configure',function(req,res){
   res.render('configure');
 });
 
-app.get('/launch',function(req, res){
-
-  launchPath = req.query.launch;
-
-  //code for general case overwritten and hardcoded below
-  /*
-  child_process.exec('sh ' + "\"" +  cwd + '/startRecording.sh\" ' + dir + ' ' + topicString, function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  */
-  /**
-  child_process.exec('python ../ROSHandling/launchFiles.py', function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  **/
-  PythonShell.run('../ROSHandling/launchFiles.py', function (err) {
-    if (err) throw err;
-    console.log('finished');
-  });
-});
-
 // Hadi, this is a function I added to initialize a test - Marie
 app.get('/initialize',function(req,res){
   test = req.query.test.replace(' ', '').toLowerCase();
@@ -70,20 +41,20 @@ app.get('/initialize',function(req,res){
       mode: 'text',
       args: [testFile]
     };
-    PythonShell.run('../ROSHandling/launchFiles.py', options, function (err, results) {
+
+    var pyshell = new PythonShell('../ROSHandling/launchFiles.py', options);
+
+    pyshell.on('message', function (message) {
+      // received a message sent from the Python script (a simple "print" statement)
+      console.log(message);
+    });
+    // end the input stream and allow the process to exit
+    pyshell.end(function (err,code,signal) {
       if (err) throw err;
-      // results is an array consisting of messages collected during execution
-      console.log('results: %j', results);
+      console.log('The exit code was: ' + code);
+      console.log('The exit signal was: ' + signal);
+      console.log('finished');
     });
-    /**
-    child_process.exec('python ../ROSHandling/launchFiles.py '+testFile, function(err, out, code) {
-      if (err instanceof Error)
-        throw err;
-      process.stderr.write(err);
-      process.stdout.write(out);
-      process.exit(code);
-    });
-    **/
   }
   //else
   // Hadi, I need an error here to notifiy the user that the system cannot find the test file but I'm not sure how
@@ -92,25 +63,30 @@ app.get('/initialize',function(req,res){
 // Added and works great!
 app.get('/rosStartup',function(req,res){
 
-  /**
-  child_process.exec('python ../ROSHandling/startup.py', function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    console.log(err);
-    console.log(out);
-    console.log(code);
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  */
     var options = {
       mode: 'text',
     };
+
+    /*
 		PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
     if (err) throw err;
     // results is an array consisting of messages collected during execution
     console.log('results: %j', results);
+  });
+  */
+
+  var pyshell = new PythonShell('../ROSHandling/startup.py', options);
+
+  pyshell.on('message', function (message) {
+    // received a message sent from the Python script (a simple "print" statement)
+    console.log(message);
+  });
+  // end the input stream and allow the process to exit
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+    console.log('The exit code was: ' + code);
+    console.log('The exit signal was: ' + signal);
+    console.log('finished');
   });
 });
 
@@ -170,7 +146,7 @@ app.get('/ros',function(req,res){
     process.exit(code);
   });
   **/
-  
+
   res.send('command passed');
 });
 
