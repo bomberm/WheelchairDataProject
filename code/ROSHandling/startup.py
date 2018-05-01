@@ -10,8 +10,7 @@ except Exception:
 	output = False;
 
 if not output: #check if roscore is already running
-	corelog = open("core.log", 'w')
-	output = subprocess.Popen('roscore', stdout = corelog) 
+	output = subprocess.Popen('roscore') 
 	output = output.pid
 store_pid = open("core.pid", 'w')
 store_pid.write(str(output))

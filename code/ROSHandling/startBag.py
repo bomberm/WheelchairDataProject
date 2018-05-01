@@ -26,12 +26,10 @@ else:
 data = json.load(testFile)
 topics = data['topics']
 
-corelog = open("bag.log", 'w')
 process = ['rosbag', 'record', '-o']
 process.append(argv[1])
 process = process+topics
-print str(process)
-output = subprocess.Popen(process, stdout=corelog)
+output = subprocess.Popen(process)
 storePid = open('bag.pid', 'w')
 storePid.write(get_pid('record'))
 storePid.close()
