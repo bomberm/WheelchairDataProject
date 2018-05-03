@@ -67,11 +67,13 @@
 				Test Name: <br>
 				<input type="text" name="testName" id="testInput" />
 				<button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
-				<br><br><br>
-				<textarea disabled rows="20" cols="75">
-					Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
-				</textarea>
-				<br><br><br>
+			</form>
+		</fieldset>
+		<br>
+		<textarea disabled rows="20" cols="75">
+			Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
+		</textarea>
+		<br><br><br>
 <script>
   var initialized = 0;
   function initialize(){
@@ -87,6 +89,9 @@
   })
 }
 </script>
+		<fieldset style="width:30%">
+			<form>
+				<hr>
 				Full Name:<br>
 				<input type="text" name="name" id="inputName" />
 				<button type="button" class="recordButton" onclick="record()" id="theButton"> &#128308 Record Bag</button>
