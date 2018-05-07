@@ -161,8 +161,36 @@ This first interview focused more on our clients desires of the interface and to
 
 The main priorities gleaned from the first interview were as follows:
 \begin{itemize}
-	\item 
+	\item Being able to estimate the size of a test bag
+	\item Keyboard shortcuts are nice but not required
+	\item Initialize robot from interface (no ssh required)
 \end{itemize}
-\bibliography{ProjectBib}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\linewidth]{"Hi-fi mockup of wizard"}
+	\caption{First of four page 'Create a Test' wizard used in second interview}
+	\label{fig:hi-fi-mockup-of-wizard}
+\end{figure}
+
+\subsection{Second Interview}
+Our second study brought a high-fidelity prototype for our client to interact with. While the prototype provided did not exactly match feature for feature what services have been implemented in the final design, it did give our client an idea of the flow of the interface.
+From this interview, our main insight was that our client didn't trust the interface to be performing steps without detailed feedback. His main concern was that because all console output was hidden from the interface, he did not have confidence that the robot was actually recording a bag (though for a prototype, no action on the robot was actually being performed). In addition, we initially intended a 'wizard' interface in order to create a test, after this interview, we realized that it over-complicated the process so it was dropped from our final design. Lastly, he appreciated the 'test launch files' when creating a new test. This gave him feedback that his initialization files were properly defined in his test file prior to running a test for the first time. 
+
+The main priorities added from the second interview were:
+\begin{itemize}
+	\item Feedback when running a test (while still balancing not confusing less experienced users)
+	\item Simplify create test procedure
+	\item Test user-created initialization files to confirm a newly-created test will run
+\end{itemize}
+
+From both interviews, we were able to adjust our interface priorities to better meet our clients needs. Despite not being able to interview and study an interface user that did not have extensive knowledge of ROS, Matt's feedback as well as our own interface struggles helped develop the ROS Test Controller to it's current design. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{"Current Create Test"}
+	\caption{Simplified, single-page 'Create a Test' page}
+	\label{fig:current-create-test}
+\end{figure}
 
 \end{document}
