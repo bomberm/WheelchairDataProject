@@ -152,6 +152,67 @@ With our specific use case just about completed, as the only other feature we ne
 Other challenges we are facing are related to adding in new features, and hoping that we don't end up breaking other features in our interface by doing so. A couple of these features are features that we are working on right now, such as being able to estimate a ROS bag size prior to actually recording it based on the ROS topics that the user selected, as well as a button to initialize launch files to ensure that they are working prior to recording the bag. We don't currently have solutions to these challenges yet, but we hope to have a solution before Expo. Our last challenge is to create an export function that allows the user to transfer the recorded bags to the laptop to be able to view them. This challenge should be very close to being done by accessing the files on the robot server, which is preferable since it is a feature that we need to complete prior to Expo as it is a requirement of our project that we set. The Bag Estimate and launch file initialization functions, while both necessary, are a lower priority for us at the moment.
 
 \section{Code of Note}
+This document showcases two snippets of code from this project, which serves to show how the node.js, python, and ROS components interact with each other.
+\\
+The first is our node.js server receiving a GET request from the user interface, and spawning a python shell.\\
+\begin{verbatim}
+app.get('/initialize',function(req,res){
+  test = req.query.test.replace(' ', '').toLowerCase();
+    var dir = cwd + '/' + test + '/';
+    if (fs.existsSync(dir)){
+      testFile = dir+test+'.json';
+        var options = {
+          mode: 'text',
+          args: [testFile]
+        };
+	
+    var pyshell = new PythonShell('../ROSHandling/launchFiles.py', options);
+		
+    pyshell.on('message', function (message) {
+    // received a message sent from the Python script (a simple "print" statement)
+      console.log(message);
+    });
+    // end the input stream and allow the process to exit
+    pyshell.end(function (err,code,signal) {
+      if (err) throw err;
+      console.log('Launchfiles.py: The exit code was: ' + code);
+      console.log('The exit signal was: ' + signal);
+      console.log('finished');
+      });
+    }
+});
+\end{verbatim}
+The second code snippet shows the aforementioned python script, which interacts directly with ROS.
+\begin{verbatim}
+#!/usr/bin/python
+
+# Used in Run Test interface when 'initialize' button is pushed
+import subprocess #run the launch routines
+import json #json handling
+from sys import argv #access args
+from pathlib2 import Path
+
+if not len(argv) == 2:
+    raise IOError('Usage: '+argv[0]+' <test.json file>')
+
+checkIfExists = Path(argv[1])
+if checkIfExists.is_file:
+    testFile = checkIfExists.open()
+else:
+    raise IOError('Usage: '+argv[1]+'must be a .json file')	
+
+data = json.load(testFile)
+if not 'launch' in data.keys():
+    exit(0)
+scripts = data['launch']
+
+store_pid = open("launch.pid", 'w')
+for script in scripts:
+    command=["roslaunch"]+script
+    output = subprocess.Popen(command) 
+    store_pid.write(str(output.pid))
+store_pid.close()
+\end{verbatim}
 
 \section{User Studies}
 During winter term, two user studies were completed with our client Matthew Shuman. In the rush to get the ROS Test Controller into a beta state, the results of these studies were unfortunately excluded from our last progress report. For completeness, they have been included here, as they greatly influenced the trajectory of our current project goals. 
