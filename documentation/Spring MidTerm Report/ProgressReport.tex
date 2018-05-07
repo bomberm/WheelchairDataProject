@@ -69,7 +69,7 @@
         \centering
         \scshape{
             \huge CS Capstone \DocType \par
-            {\large 27 October 2017}\par
+            {\large 6 May 2018}\par
             \vspace{.5in}
             \textbf{\Huge\CapstoneProjectName}\par
             \vfill
@@ -108,18 +108,53 @@ This document outlines the progress that has been made during the Spring 2018 te
 The purpose of this project is to provide a simple interface for inexperienced users to record ROSbags. Typically, recording such bags requires knowledge of ROS and command-line experience. Our interface will provide Professor Matthew Shuman, and the ROS community with intuitive methods of recording data. The interface will be easy to understand, easy to use, and intuitive enough that an individual with little or even no Computer Science, ROS, or command line experience will be able to use the interface as it is intended to be used.
 
 \subsection{Project Status}
-The project is meeting its goals, but the software has much room for improvement. The application is functional, but there are usage edge-cases that need tweaking. The application is visually developed, but could be more intuitive for users without computer experience. Professor Shuman’s timeline for research had been delayed until about a week prior to this report, so we have not yet conducted user-studies, as we would like to conduct these studies on the actual end-users for maximum applicability and relevance. Unfortunately, due to it being so close to Expo, and Professor Shuman's research only just recently having started, it is unlikely that we will be able to conduct these user studies, or at the very least we will not be able to conduct these studies to a satisfactory degree before the end of our project, much less before Expo.
+The project is meeting its goals, but the software has much room for improvement. The application is functional, but there are usage edge-cases that need tweaking. The application is visually developed, but could be more intuitive for users without computer experience. Professor Shuman’s timeline for research had been delayed until about a week prior to this report, so user studies have been limited to Shuman's feedback alone, as we would like to conduct these studies on the actual end-users for maximum applicability and relevance. Unfortunately, due to it being so close to Expo, and Professor Shuman's research only just recently having started, it is unlikely that we will be able to conduct more extensive user studies, or at the very least we will not be able to conduct these studies to a satisfactory degree before the end of our project, much less before Expo.
 
 \section{Remaining Goals}
+At this point, there are two 'phases' remaining for the ROS Test Interface. The first stage is having the interface in a place what we will be satisfied to present it at expo, the second is having the interface stable enough to deploy on a larger scale. 
 
+For stage one, the following requirements must be met:
+\begin{itemize}
+	\item The interface must be able to load a test file (met)
+	\item The interface must successfully run launch bags (met)
+	\item The interface must start and end test recording without error (met)
+	\item The interface must allow access to console output of load and launch files (nearly complete)
+	\item Users must be able to create a new test file (met)
+	\item Users must be able to run the new test file (minor bugs remain)
+	\item The researcher must be able to export a pre-recorded bag (nearly complete)
+\end{itemize}
+
+Fortunately, only minor debugging and tweaking remains to be completed this week prior to the code cut-off date. Better still, the critical feature (record a test) is fully functional, and our client can use this interface to run his robotics tests. The remaining features are enhancements or debugging already implemented features. Even if these additional goals are not met, we will still have a product to present at Expo.
+
+After expo, we are hoping to stabilize and continue to enhance the interface to meet Matt's expectations. Last term Aaron and Marie completed user studies with our client as part of their Intro to Usability Engineering class last quarter, so while we were not able to study low-level users of the interface, we did get a better understanding of the needs and requirements of our client (see section 5 for details). The result of these studies as well as addressing challenges we had encountered over the course of this development cycle (detailed below) set our goals for the remainder of the term.
+
+Stage two requirements include:
+\begin{itemize}
+	\item Ensure all stage one requirements have been met
+	\item Continue to debug and make run-test less error prone
+	\item Add preemptive error checking functionality to the create test section
+	\item Create an installer for the Test Controller (stretch goal)
+	\item Allow user to export multiple bags simultaneously (stretch goal)
+	\item Add authorization to the test controller (stretch goal)
+	\item Set the test controller to default to always-on, so user never needs to use ssh to begin testing (will enable or abandon based on client request)
+\end{itemize}
+
+Many of these goals are already in progress and some may be implemented prior to Expo, but with 5 days remaining before the code cutoff, we tried to keep our expectations conservative. 
 \section{Project Challenges/Solutions}
 Challenges this term were a lot lighter, and a lot less crippling, but nevertheless they littered development. A lot of problems arose from trying to get our interface working on the wheelchair. We had managed to get it fully functional and had successfully tested it and gotten our desired results on our own development server at the end of the previous term, but still hadn't been able to get everything working on the wheelchair itself by that point. However, at the end of last term we were at a point where having our code ready enough to test on the wheelchair itself wasn't too far off once the term started. By the second week of the term, we were ready to test our code on the wheelchair. However, we ran into additional problems with the wheelchair, most of which were very similar to the problems we had last term. For one, the wheelchair went through power issues a couple of times throughout the first couple of weeks of the term. It is still unknown how this happened, but somehow the wheelchair became unplugged multiple times and had subsequently had its battery drained so that it was unusable, and had to be recharged. However, we eventually were able to use the wheelchair again while it was charged up, and at that point we ran into our second problem. This second problem involved needing to install even more packages onto the robot mounted on the wheelchair. Or, more accurately, we wanted to have our interface install all the required packages for us, similar to an install wizard, and for whatever reason it broke whenever we tried it on the robot itself. Eventually, however, we were able to figure out an alternative way to install the required packages onto the robot and could move forward with testing. That turned out to be the very last major roadblock to finishing our specific use case interface, as we managed to get the interface running on the wheelchair and were successfully able to start up ROScore with the desired launch files, record a bag, stop the bag recording process, and kill ROScore without any process hanging and without any process stopping too soon. With our specific use case just about completed, as the only other feature we needed was an export feature to pull the recorded bags off of the robot onto the connected laptop, we started moving more into our general use case, as well as trying to make our interface more appealing to look at, as well as more functional. Most of our challenges at this point involve either adding in new features and hoping that by doing so we don't break our old features, or adding in additional visuals and hoping that it doesn't break. In regards to visual challenges, one challenge was to make a text box that would hold information that was spit out by the interface, showing the user that their test was being initialized by giving them a visual aid. However, the box kept breaking a lot of other CSS since it was placed within a text field. Though, this was pretty easily fixed by separating the text fields apart and inserting the information text box in the middle of the two input text boxes. Other challenges we are facing are related to adding in new features, and hoping that we don't end up breaking other features in our interface by doing so. A couple of these features are features that we are working on right now, such as being able to estimate a ROS bag size prior to actually recording it based on the ROS topics that the user selected, as well as a button to initialize launch files to ensure that they are working prior to recording the bag. We don't currently have solutions to these challenges yet, but we hope to have a solution before Expo. Our last challenge is to create an export function that allows the user to transfer the recorded bags to the laptop to be able to view them. This challenge should be very close to being done by accessing the files on the robot server, which is preferable since it is a feature that we need to complete prior to Expo as it is a requirement of our project that we set. The Bag Estimate and launch file initialization functions, while both necessary, are a lower priority for us at the moment. Overall, we have much less progress-halting challenges this term as opposed to last term, which is a lot better since the problem is in our own hands and we decide when and how it gets fixed, rather than in someone else's hands.
 
 \section{Code of Note}
 
 \section{User Studies}
+During winter term, two user studies were completed with our client Matthew Shuman. In the rush to get the ROS Test Controller into a beta state, the results of these studies were unfortunately excluded from our last progress report. For completeness, they have been included here, as they greatly influenced the trajectory of our current project goals. 
 
+\subsection{First Interview}
+This first interview focused more on our clients desires of the interface and touched on topics that had been discussed when the general-use case goal (that had shifted the project early Winter term) had been brought up. His primary concern was trying to avoid making a single test bag (which could contain 30-45 minutes of data) too large to export/study. Other items discussed included a scheduling component (quickly discarded) as well as learning that a users name may not necessarily be required to be recorded as part of the testing data. This was due to ROS automatically storing the date and time of a bag, which the user could cross-reference to their own schedule if needing to correlate results.
 
+The main priorities gleaned from the first interview were as follows:
+\begin{itemize}
+	\item 
+\end{itemize}
 \bibliography{ProjectBib}
 
 \end{document}
