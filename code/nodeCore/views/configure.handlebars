@@ -48,25 +48,60 @@
     resize:none;
     overflow: hidden;
 }
+
+.sub1{
+	width: 50%;
+	float: left;
+}
+
+.sub2{
+	width: 50%;
+	float: right;
+}
+
+.testLaunch {
+	background-color: #ff3300;
+	color: white;
+	text-align: center;
+}
+
+.estBag {
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+}
 </style>
 
 <div class="fancyForm">
 	<div align="center">
 		<form>
-			Name of Robot:<br>
-			<input type="text" name="robot" id=inputRobotName" />
-			<br><br>
-			Name of Test:<br>
-			<input type="text" name="test" id=inputTestName" />
-			<br><br>
-			Launch Files (One per line):<br>
-			<textarea name="launch" cols="25" rows="5"></textarea>
-			<br><br>
-			Topic List (One per line):<br>
-			<textarea name="topic" cols="25" rows="5"></textarea>
-			<br><br>
+			<div class="sub1">
+				Name of Robot:<br>
+				<input type="text" name="robot" id="inputRobotName" />
+				<br><br>
+			</div>
+			<div class="sub2">
+				Name of Test:<br>
+				<input type="text" name="test" id="inputTestName" />
+				<br><br>
+			</div>
+			<div class="sub1">
+				Launch Files (One per line):<br>
+				<textarea name="launch" cols="35" rows="7"></textarea>
+				<br>
+				<button type="button" class="testLaunch" value="testLaunchfiles">Test .launch files</button>
+				<br><br>
+			</div>
+			<div class="sub2">
+				Topic List (One per line):<br>
+				<textarea name="topic" cols="35" rows="7"></textarea>
+				<br>
+				<button type="button" class="estBag" value="estimateBag">Estimate Bag Size</button>
+				<br><br>
+			</div>
+			<br>
 			List of IDs (one per line):<br>
-			<textarea name="IDs" cols="25" rows="5"></textarea>
+			<textarea name="IDs" cols="35" rows="7"></textarea>
 			<br>
 			<input type="submit" value="Submit">
 		</form>
