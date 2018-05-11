@@ -67,14 +67,6 @@ app.get('/rosStartup',function(req,res){
       mode: 'text',
     };
 
-    /*
-		PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
-    if (err) throw err;
-    // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
-  });
-  */
-
   var pyshell = new PythonShell('../ROSHandling/startup.py', options);
 
   pyshell.on('message', function (message) {
@@ -92,15 +84,7 @@ app.get('/rosStartup',function(req,res){
 
 
 app.get('/shutdown', function(req, res){
-  /**
-  child_process.exec('python ../ROSHandling/shutdown.py launch', function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  */
+
   var options = {
     mode: 'text',
     args: ["launch"]
@@ -137,37 +121,21 @@ app.get('/ros',function(req,res){
     console.log('results: %j', results);
   });
 
-    /**
-    child_process.exec('python ../ROSHandling/startUp.py ' + namedir + ' ' + testFile , function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  **/
-
   res.send('command passed');
 });
 
 app.get('/kill',function(req,res){
-  child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py bag', function(err, out, code) {
-    if (err instanceof Error)
-      res.send('command returned error: ' + err)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
+	var options = {
+		mode: 'text',
+		args: 'bag',
+	};
+
+	PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+		if (err) throw err;
+		// results is an array consisting of messages collected during execution
+		console.log('results: %j', results);
   });
 
-  //child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
-   // if (err instanceof Error)
-    //  res.send('command returned error: ' + err)
-   ///  throw err;
-   // process.stderr.write(err);
-   //  process.stdout.write(out);
-   // process.exit(code);
-  //});
  res.send('command passed');
 });
 

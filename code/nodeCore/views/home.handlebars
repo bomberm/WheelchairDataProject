@@ -107,6 +107,9 @@
 				document.getElementById('theButton').innerHTML = " &#128308 Record Bag";
 				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
 				recording  = 0;
+				$.get(url, function(data){
+				console.log(data);
+				})
 			}
 			else{
 				recording = 1;
