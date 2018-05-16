@@ -14,13 +14,9 @@ server.deploy(
     {
         port:8080,
         root:'./bags/'
-    },
-    serverReady
+    }
 );
 
-function serverReady(server){
-   console.log( `Server on port ${server.config.port} is now up`);
-}
 
 /**
 Copy the below snipper to add command line options to a python script
