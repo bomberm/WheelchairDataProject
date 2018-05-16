@@ -86,25 +86,40 @@
 				<br><br>
 			</div>
 			<div class="sub1">
-				Launch Files (One per line):<br>
-				<textarea name="launch" cols="35" rows="7"></textarea>
+				Launch Files (comma separated):<br>
+				Example: <i>package_name file.launch, </i>
+				<textarea name="launch" id="inputLaunch" cols="35" rows="7"></textarea>
 				<br>
 				<button type="button" class="testLaunch" value="testLaunchfiles">Test .launch files</button>
 				<br><br>
 			</div>
 			<div class="sub2">
-				Topic List (One per line):<br>
-				<textarea name="topic" cols="35" rows="7"></textarea>
+				Topic List (comma separated):<br>
+				Example: <i>tf, pose_multi </i>
+				<textarea name="topic" id="inputTopic" cols="35" rows="7"></textarea>
 				<br>
-				<button type="button" class="estBag" value="estimateBag">Estimate Bag Size</button>
+				<button type="button" class="testBag" value="estimateBag">Estimate Bag Size</button>
 				<br><br>
 			</div>
 			<br>
-			List of IDs (one per line):<br>
-			<textarea name="IDs" cols="35" rows="7"></textarea>
+			List of IDs (comma separated):<br>
+			<textarea name="IDs" cols="35" id="inputNames" rows="7"></textarea>
 			<br>
-			<input type="submit" value="Submit">
+			<button type="button" onclick="submitForm()" id="submitButton"> Submit Test </button>
 		</form>
+<script>
+  function submitForm(){
+	testName = document.getElementById('inputTestName').value;
+	launchFiles = document.getElementById('inputLaunch').value;
+	topicList = document.getElementById('inputTopic').value;
+	participantNames = document.getElementById('inputNames').value;
+	url = "/submitTest?name="+testName+"&launch="+launchFiles+"&topics="+topicList+"&participants="+participantNames;
+	$.get(url, function(data){
+		console.log(data);
+		console.log(url);
+	})
+}
+</script>
 	</div>
 </div>
 

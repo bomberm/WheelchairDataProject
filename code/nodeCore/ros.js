@@ -96,6 +96,30 @@ app.get('/shutdown', function(req, res){
   });
 });
 
+app.get('/submitTest', function(req,res){
+  const fs = require('fs')
+  console.log(req.query);
+  testName = req.query.name.replace(' ', '').toLowerCase();
+  launchFiles = makeList(req.query.launch);
+  topics = makeList(req.query.topics);
+  names = makeList(req.query.participants);
+
+  testObject = {
+    "name": testName,
+    "ids": false,
+    "names": names,
+    "topics": topics,
+    "launch": launchFiles
+  };
+
+  var testdir = './'+testName;
+  if (!fs.existsSync(testdir)){
+    fs.mkdirSync(testdir);
+  }
+
+  fs.writeFile(testdir+'/'+testName+'.json', JSON.stringify(testObject, null, 2) , 'utf-8');
+  });
+  
 app.get('/ros',function(req,res){
   name = req.query.name.replace(' ', '').toLowerCase();
   test = req.query.test.replace(' ', '').toLowerCase();
@@ -139,6 +163,10 @@ app.get('/kill',function(req,res){
  res.send('command passed');
 });
 
+
+function makeList(input){
+  return input.split(',');
+}
 
 function onExit(options, err){
 		var options = {
