@@ -10,12 +10,7 @@ var PythonShell = require('python-shell');
 const server=require('node-http-server');
 
 //export
-server.deploy(
-    {
-        port:8080,
-        root:'./bags/'
-    }
-);
+server.deploy();
 
 
 /**
