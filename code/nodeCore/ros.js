@@ -7,11 +7,6 @@ var fs = require('fs');
 var crypto = require('crypto');
 var path = require('path');
 var PythonShell = require('python-shell');
-const server=require('node-http-server');
-
-//export
-server.deploy();
-
 
 /**
 Copy the below snipper to add command line options to a python script
