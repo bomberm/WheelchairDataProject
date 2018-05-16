@@ -118,8 +118,18 @@ app.get('/submitTest', function(req,res){
   }
 
   fs.writeFile(testdir+'/'+testName+'.json', JSON.stringify(testObject, null, 2) , 'utf-8');
+});
+
+app.get('/export'){
+  fs.readdir('./', function(err, items) {
+    console.log(items);
+    for (var i=0; i<items.length; i++) {
+        console.log(items[i]);
+    }
+    res.send(items);
   });
-  
+}
+
 app.get('/ros',function(req,res){
   name = req.query.name.replace(' ', '').toLowerCase();
   test = req.query.test.replace(' ', '').toLowerCase();
