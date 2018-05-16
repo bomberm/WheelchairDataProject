@@ -7,6 +7,20 @@ var fs = require('fs');
 var crypto = require('crypto');
 var path = require('path');
 var PythonShell = require('python-shell');
+const server=require('node-http-server');
+
+//export
+server.deploy(
+    {
+        port:8080,
+        root:'./bags/'
+    },
+    serverReady
+);
+
+function serverReady(server){
+   console.log( `Server on port ${server.config.port} is now up`);
+}
 
 /**
 Copy the below snipper to add command line options to a python script
@@ -120,15 +134,6 @@ app.get('/submitTest', function(req,res){
   fs.writeFile(testdir+'/'+testName+'.json', JSON.stringify(testObject, null, 2) , 'utf-8');
 });
 
-app.get('/export', function(req,res){
-  fs.readdir('./', function(err, items) {
-    console.log(items);
-    for (var i=0; i<items.length; i++) {
-        console.log(items[i]);
-    }
-    res.send(items);
-  });
-});
 
 app.get('/ros',function(req,res){
   name = req.query.name.replace(' ', '').toLowerCase();
@@ -137,7 +142,7 @@ app.get('/ros',function(req,res){
   const hash = crypto.createHmac('sha256', secret)
                    .update(name)
                    .digest('hex').substr(0, 6);
-  var testdir = cwd + '/' + test + '/';
+  var testdir = cwd + '/bags/' + test + '/';
   var namedir = testdir + hash + '/';
 
   if (!fs.existsSync(namedir)){
