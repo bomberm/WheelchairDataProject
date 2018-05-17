@@ -98,7 +98,6 @@ app.get('/shutdown', function(req, res){
 
 app.get('/submitTest', function(req,res){
   const fs = require('fs')
-  console.log(req.query);
   testName = req.query.name.replace(' ', '').toLowerCase();
   launchFiles = makeList(req.query.launch);
   topics = makeList(req.query.topics);
@@ -107,17 +106,17 @@ app.get('/submitTest', function(req,res){
   testObject = {
     "name": testName,
     "ids": false,
-    "names": names,
-    "topics": topics,
-    "launch": launchFiles
+    "names": names.map(i=>i.trim()),
+    "topics": topics.map(i=>i.trim()),
+    "launch": launchFiles.map(i=>i.trim()).map(i=>i.split(' '))
   };
 
-  var testdir = './'+testName;
+  var testdir = './bags/'+testName;
   if (!fs.existsSync(testdir)){
     fs.mkdirSync(testdir);
   }
 
-  fs.writeFile(testdir+'/'+testName+'.json', JSON.stringify(testObject, null, 2) , 'utf-8');
+  fs.writeFileSync((testdir+'/'+testName)+'.json', JSON.stringify(testObject, null, 2) , 'utf8');
 });
 
 
