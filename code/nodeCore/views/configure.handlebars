@@ -74,23 +74,16 @@
 
 <div class="fancyForm">
 	<div align="center">
-		<form>
-			<div class="sub1">
-				Name of Robot:<br>
-				<input type="text" name="robot" id="inputRobotName" />
-				<br><br>
-			</div>
-			<div class="sub2">
-				Name of Test:<br>
+		<form onsubmit="return false">
+				Test Name:<br>
 				<input type="text" name="test" id="inputTestName" />
 				<br><br>
-			</div>
 			<div class="sub1">
 				Launch Files (comma separated):<br>
 				Example: <i>package_name file.launch, </i>
 				<textarea name="launch" id="inputLaunch" cols="35" rows="7"></textarea>
 				<br>
-				<button type="button" class="testLaunch" value="testLaunchfiles">Test .launch files</button>
+				<button type="button" id="launchButton" value="testLaunchfiles" onclick="testLaunch()">Test .launch files</button>
 				<br><br>
 			</div>
 			<div class="sub2">
@@ -98,27 +91,46 @@
 				Example: <i>tf, pose_multi </i>
 				<textarea name="topic" id="inputTopic" cols="35" rows="7"></textarea>
 				<br>
-				<button type="button" class="testBag" value="estimateBag">Estimate Bag Size</button>
+				<button type="button" disabled class="testBag" value="estimateBag">Estimate Bag Size</button>
 				<br><br>
 			</div>
+			<!-- Currently commented out because run test participant does not use this field
 			<br>
 			List of IDs (comma separated):<br>
 			<textarea name="IDs" cols="35" id="inputNames" rows="7"></textarea>
-			<br>
+			<br> 
+			-->
 			<button type="button" onclick="submitForm()" id="submitButton"> Submit Test </button>
 		</form>
-<script>
+<script>  
+
+  function testLaunch(){
+	launchFiles = document.getElementById('inputLaunch').value;
+	url = "/testLaunch?files="+launchFiles;
+	$.get(url, function(data){
+		if(data.err){
+			console.log(data.which+" failed");
+			console.log("Error: "+data.err);
+			document.getElementById('launchButton').innerHTML = "Launch failed";
+			document.getElementById('launchButton').style.backgroundColor = "#ff3300";
+			}
+		else{
+			document.getElementById('launchButton').innerHTML = "Succeeded!";
+			document.getElementById('launchButton').style.backgroundColor = "#4CAF50";
+			}
+		})
+	}
+	
   function submitForm(){
 	testName = document.getElementById('inputTestName').value;
 	launchFiles = document.getElementById('inputLaunch').value;
 	topicList = document.getElementById('inputTopic').value;
-	participantNames = document.getElementById('inputNames').value;
-	url = "/submitTest?name="+testName+"&launch="+launchFiles+"&topics="+topicList+"&participants="+participantNames;
+	url = "/submitTest?name="+testName+"&launch="+launchFiles+"&topics="+topicList;
 	$.get(url, function(data){
 		console.log(data);
 		console.log(url);
-	})
-}
+		})
+	}
 </script>
 	</div>
 </div>

@@ -34,7 +34,7 @@ app.get('/configure',function(req,res){
 // Hadi, this is a function I added to initialize a test - Marie
 app.get('/initialize',function(req,res){
   test = req.query.test.replace(' ', '').toLowerCase();
-  var dir = cwd + '/' + test + '/';
+  var dir = './bags/' + test + '/';
   if (fs.existsSync(dir)){
     testFile = dir+test+'.json';
     var options = {
@@ -101,12 +101,12 @@ app.get('/submitTest', function(req,res){
   testName = req.query.name.replace(' ', '').toLowerCase();
   launchFiles = makeList(req.query.launch);
   topics = makeList(req.query.topics);
-  names = makeList(req.query.participants);
+  //names = makeList(req.query.participants);
 
   testObject = {
     "name": testName,
     "ids": false,
-    "names": names.map(i=>i.trim()),
+    //"names": names.map(i=>i.trim()),
     "topics": topics.map(i=>i.trim()),
     "launch": launchFiles.map(i=>i.trim()).map(i=>i.split(' '))
   };
@@ -119,6 +119,54 @@ app.get('/submitTest', function(req,res){
   fs.writeFileSync((testdir+'/'+testName)+'.json', JSON.stringify(testObject, null, 2) , 'utf8');
 });
 
+app.get('/testLaunch', function(req, res)
+{
+
+  files = makeList(req.query.files).map(i=>i.trim()) //split on comma separation
+  
+  resp = 
+    {response: [],
+    which: [], //if there is an error, which script failed?
+    err: false //assume no error, will update if incorrect
+    };
+  
+  var itemsComplete = 0;
+  files.forEach(function(launchFile, index, array){
+	var options = {
+ 	  mode: 'text',
+      	  args: [launchFile]
+    	  }
+  	var pyshell = new PythonShell('../ROSHandling/testLaunch.py', options);
+	
+        pyshell.on('message', function (message) {
+        // received a message sent from the Python script (a simple "print" statement)
+          console.log(message);
+        });
+    
+	// end the input stream and allow the process to exit
+    	pyshell.end(function (err,code,signal) {
+      	if (err){
+          resp.err = true;
+	  resp.which += launchFile;
+          resp.err += err;
+	  }
+      	console.log('The exit code was: ' + code);
+      	console.log('The exit signal was: ' + signal);
+      	console.log('finished');
+	itemsComplete++;
+
+	if(itemsComplete === array.length) {
+	  respond(res, resp);
+	  }
+
+	});
+    }, this);
+});
+
+function respond(res, resp){
+  console.log(resp.err);
+  res.send(resp);
+}
 
 app.get('/ros',function(req,res){
   name = req.query.name.replace(' ', '').toLowerCase();
