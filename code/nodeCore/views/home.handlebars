@@ -136,6 +136,7 @@
 				document.getElementById('theButton').innerHTML = " &#128308 Record Bag";
 				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
 				recording  = 0;
+				document.getElementById('inputName').disabled = false;
 				$.get(url, function(data){
 				console.log(data);
 				})
@@ -145,6 +146,7 @@
 				url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
 				document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
 				document.getElementById('theButton').style.backgroundColor = "#ff3300";
+				document.getElementById('inputName').disabled = true;
 				$.get(url, function(data){
 					console.log(data);
 				})
