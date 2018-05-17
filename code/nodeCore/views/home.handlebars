@@ -81,12 +81,12 @@
   var input = document.getElementById("testInput");
 
   // Execute a function when the user releases a key on the keyboard
-  input.addEventListener("keyup", function(event) {
+  input.addEventListener("keydown", function(event) {
     // Cancel the default action, if needed
-    event.preventDefault();
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
       // Trigger the button element with a click
+      event.preventDefault();
       document.getElementById("initializeButton").click();
     }
   });
@@ -115,7 +115,21 @@
 	</div>
 </div>
 <script>
-	var recording = 0;
+  var recording = 0;
+
+  // Get the input field
+  var input = document.getElementById("inputName");
+
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keydown", function(event) {
+    // Cancel the default action, if needed
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      event.preventDefault();
+      document.getElementById("theButton").click();
+    }
+  });
 		function record(){
 			if(recording){
 				url = "/kill";
