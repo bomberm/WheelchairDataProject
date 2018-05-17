@@ -66,27 +66,42 @@
 				<hr>
 				Test Name: <br>
 				<input type="text" name="testName" id="testInput" />
-				<button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
+				<button type="button" class="initButton" id="initializeButton" onclick="initialize()"> Initialize Test </button>
 			</form>
 		</fieldset>
 		<br>
-		<textarea disabled rows="20" cols="75">
+		<textarea disabled rows="2" cols="75">
 			Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
 		</textarea>
 		<br><br><br>
 <script>
   var initialized = 0;
+
+  // Get the input field
+  var input = document.getElementById("testInput");
+
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keyup", function(event) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      document.getElementById("initializeButton").click();
+    }
+  });
+
   function initialize(){
     if(initialized){
-      url = "/shutdown?test="test;
+      url = "/shutdown?test="+test;
      };
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
-  initialized = 1;
   document.getElementById('initializeButton').innerHTML = "Initialized";
   $.get(url, function(data){
     console.log(data);
   })
+  initialized = 1;
 }
 </script>
 		<fieldset style="width:30%">
