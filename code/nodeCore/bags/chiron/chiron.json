@@ -1,0 +1,11 @@
+{
+  "name":"Chiron",
+  "launch": [
+    ["wheelchair_description", "wheelchair_bringup.launch"],
+    ["wheelchair_description", "wheelchair_merger.launch"],
+    ["wheelchair_navigation", "move_base_local.launch"]
+  ],
+  "ids": true,
+  "count_ids": 50,
+  "topics": ["tf", "scan_multi", "pose_stamped"]
+}

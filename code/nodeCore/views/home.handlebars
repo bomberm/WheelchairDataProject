@@ -66,27 +66,42 @@
 				<hr>
 				Test Name: <br>
 				<input type="text" name="testName" id="testInput" />
-				<button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
+				<button type="button" class="initButton" id="initializeButton" onclick="initialize()"> Initialize Test </button>
 			</form>
 		</fieldset>
 		<br>
-		<textarea disabled rows="20" cols="75">
+		<textarea disabled rows="2" cols="75">
 			Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
 		</textarea>
 		<br><br><br>
 <script>
   var initialized = 0;
+
+  // Get the input field
+  var input = document.getElementById("testInput");
+
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keypress", function(event) {
+    // Cancel the default action, if needed
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      event.preventDefault();
+      document.getElementById("initializeButton").click();
+    }
+  });
+
   function initialize(){
     if(initialized){
-      url = "/shutdown?test="test;
+      url = "/shutdown?test="+test;
      };
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
-  initialized = 1;
   document.getElementById('initializeButton').innerHTML = "Initialized";
   $.get(url, function(data){
     console.log(data);
   })
+  initialized = 1;
 }
 </script>
 		<fieldset style="width:30%">
@@ -100,19 +115,38 @@
 	</div>
 </div>
 <script>
-	var recording = 0;
+  var recording = 0;
+
+  // Get the input field
+  var input = document.getElementById("inputName");
+
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keypress", function(event) {
+    // Cancel the default action, if needed
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      event.preventDefault();
+      document.getElementById("theButton").click();
+    }
+  });
 		function record(){
 			if(recording){
 				url = "/kill";
 				document.getElementById('theButton').innerHTML = " &#128308 Record Bag";
 				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
 				recording  = 0;
+				document.getElementById('inputName').disabled = false;
+				$.get(url, function(data){
+				console.log(data);
+				})
 			}
 			else{
 				recording = 1;
 				url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
 				document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
 				document.getElementById('theButton').style.backgroundColor = "#ff3300";
+				document.getElementById('inputName').disabled = true;
 				$.get(url, function(data){
 					console.log(data);
 				})

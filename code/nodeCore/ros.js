@@ -34,7 +34,7 @@ app.get('/configure',function(req,res){
 // Hadi, this is a function I added to initialize a test - Marie
 app.get('/initialize',function(req,res){
   test = req.query.test.replace(' ', '').toLowerCase();
-  var dir = cwd + '/' + test + '/';
+  var dir = './bags/' + test + '/';
   if (fs.existsSync(dir)){
     testFile = dir+test+'.json';
     var options = {
@@ -67,14 +67,6 @@ app.get('/rosStartup',function(req,res){
       mode: 'text',
     };
 
-    /*
-		PythonShell.run('../ROSHandling/startup.py', options, function (err, results) {
-    if (err) throw err;
-    // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
-  });
-  */
-
   var pyshell = new PythonShell('../ROSHandling/startup.py', options);
 
   pyshell.on('message', function (message) {
@@ -92,15 +84,7 @@ app.get('/rosStartup',function(req,res){
 
 
 app.get('/shutdown', function(req, res){
-  /**
-  child_process.exec('python ../ROSHandling/shutdown.py launch', function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  */
+
   var options = {
     mode: 'text',
     args: ["launch"]
@@ -112,6 +96,78 @@ app.get('/shutdown', function(req, res){
   });
 });
 
+app.get('/submitTest', function(req,res){
+  const fs = require('fs')
+  testName = req.query.name.replace(' ', '').toLowerCase();
+  launchFiles = makeList(req.query.launch);
+  topics = makeList(req.query.topics);
+  //names = makeList(req.query.participants);
+
+  testObject = {
+    "name": testName,
+    "ids": false,
+    //"names": names.map(i=>i.trim()),
+    "topics": topics.map(i=>i.trim()),
+    "launch": launchFiles.map(i=>i.trim()).map(i=>i.split(' '))
+  };
+
+  var testdir = './bags/'+testName;
+  if (!fs.existsSync(testdir)){
+    fs.mkdirSync(testdir);
+  }
+
+  fs.writeFileSync((testdir+'/'+testName)+'.json', JSON.stringify(testObject, null, 2) , 'utf8');
+});
+
+app.get('/testLaunch', function(req, res)
+{
+
+  files = makeList(req.query.files).map(i=>i.trim()) //split on comma separation
+  
+  resp = 
+    {response: [],
+    which: [], //if there is an error, which script failed?
+    err: false //assume no error, will update if incorrect
+    };
+  
+  var itemsComplete = 0;
+  files.forEach(function(launchFile, index, array){
+	var options = {
+ 	  mode: 'text',
+      	  args: [launchFile]
+    	  }
+  	var pyshell = new PythonShell('../ROSHandling/testLaunch.py', options);
+	
+        pyshell.on('message', function (message) {
+        // received a message sent from the Python script (a simple "print" statement)
+          console.log(message);
+        });
+    
+	// end the input stream and allow the process to exit
+    	pyshell.end(function (err,code,signal) {
+      	if (err){
+          resp.err = true;
+	  resp.which += launchFile;
+          resp.err += err;
+	  }
+      	console.log('The exit code was: ' + code);
+      	console.log('The exit signal was: ' + signal);
+      	console.log('finished');
+	itemsComplete++;
+
+	if(itemsComplete === array.length) {
+	  respond(res, resp);
+	  }
+
+	});
+    }, this);
+});
+
+function respond(res, resp){
+  console.log(resp.err);
+  res.send(resp);
+}
+
 app.get('/ros',function(req,res){
   name = req.query.name.replace(' ', '').toLowerCase();
   test = req.query.test.replace(' ', '').toLowerCase();
@@ -119,7 +175,7 @@ app.get('/ros',function(req,res){
   const hash = crypto.createHmac('sha256', secret)
                    .update(name)
                    .digest('hex').substr(0, 6);
-  var testdir = cwd + '/' + test + '/';
+  var testdir = cwd + '/bags/' + test + '/';
   var namedir = testdir + hash + '/';
 
   if (!fs.existsSync(namedir)){
@@ -137,40 +193,28 @@ app.get('/ros',function(req,res){
     console.log('results: %j', results);
   });
 
-    /**
-    child_process.exec('python ../ROSHandling/startUp.py ' + namedir + ' ' + testFile , function(err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
-  });
-  **/
-
   res.send('command passed');
 });
 
 app.get('/kill',function(req,res){
-  child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py bag', function(err, out, code) {
-    if (err instanceof Error)
-      res.send('command returned error: ' + err)
-      throw err;
-    process.stderr.write(err);
-    process.stdout.write(out);
-    process.exit(code);
+	var options = {
+		mode: 'text',
+		args: 'bag',
+	};
+
+	PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+		if (err) throw err;
+		// results is an array consisting of messages collected during execution
+		console.log('results: %j', results);
   });
 
-  //child_process.exec('python '+ cwd + '/../ROSHandling/shutdown.py core', function(err, out, code) {
-   // if (err instanceof Error)
-    //  res.send('command returned error: ' + err)
-   ///  throw err;
-   // process.stderr.write(err);
-   //  process.stdout.write(out);
-   // process.exit(code);
-  //});
  res.send('command passed');
 });
 
+
+function makeList(input){
+  return input.split(',');
+}
 
 function onExit(options, err){
 		var options = {

@@ -4,7 +4,7 @@
   "description": "node demo for wheelchair data project",
   "main": "ros.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "http-server ./bags/ & node ros.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "exec": "^0.2.1",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "ftpd": "^0.2.15",
     "python-shell": "^0.5.0"
   }
 }
