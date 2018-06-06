@@ -51,6 +51,7 @@ app.get('/initialize',function(req,res){
     // end the input stream and allow the process to exit
     pyshell.end(function (err,code,signal) {
       if (err) throw err;
+		  console.log("Initializing...");
       console.log('The exit code was: ' + code);
       console.log('The exit signal was: ' + signal);
       console.log('finished');
@@ -76,6 +77,7 @@ app.get('/rosStartup',function(req,res){
   // end the input stream and allow the process to exit
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
+		console.log("Startup...");
     console.log('The exit code was: ' + code);
     console.log('The exit signal was: ' + signal);
     console.log('finished');
@@ -92,6 +94,7 @@ app.get('/shutdown', function(req, res){
   PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
     if (err) throw err;
     // results is an array consisting of messages collected during execution
+		console.log("Shutdown...");
     console.log('results: %j', results);
   });
 });
@@ -150,6 +153,7 @@ app.get('/testLaunch', function(req, res)
 	  resp.which += launchFile;
           resp.err += err;
 	  }
+				console.log("Launching... ");	
       	console.log('The exit code was: ' + code);
       	console.log('The exit signal was: ' + signal);
       	console.log('finished');
