@@ -91,7 +91,7 @@
 				Example: <i>tf, pose_multi </i>
 				<textarea name="topic" id="inputTopic" cols="35" rows="7"></textarea>
 				<br>
-				<button type="button" disabled class="testBag" onclick="bagEstimate()" value="estimateBag">Estimate Bag Size</button>
+				<button type="button" disabled class="testBag" id="estimateButton" onclick="bagEstimate()" value="estimateBag">Estimate Bag Size</button>
 				<br><br>
 			</div>
 			<!-- Currently commented out because run test participant does not use this field
@@ -108,16 +108,21 @@
 	launchFiles = document.getElementById('inputLaunch').value;
 	url = "/testLaunch?files="+launchFiles;
   console.log(url);
+  document.getElementById('launchButton').innerHTML = "Testing..."
+  document.getElementById('launchButton').disabled = true;
 	$.get(url, function(data){
 		if(data.err){
 			console.log(data.which+" failed");
 			console.log("Error: "+data.err);
 			document.getElementById('launchButton').innerHTML = "Launch failed";
 			document.getElementById('launchButton').style.backgroundColor = "#ff3300";
+		  document.getElementById('launchButton').disabled = false;
 			}
 		else{
 			document.getElementById('launchButton').innerHTML = "Succeeded!";
 			document.getElementById('launchButton').style.backgroundColor = "#4CAF50";
+		  document.getElementById('launchButton').disabled = false;
+		  document.getElementById('estimateButton').disabled = false;
 			}
 		})
 	}
