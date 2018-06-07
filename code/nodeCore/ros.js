@@ -141,8 +141,8 @@ app.get('/estimateBag', function(req,res){
 		
 		pyshell.on('message', function(message) {
 				//do stuff
-		}
-}
+		});
+});
 
 app.get('/submitTest', function(req,res){
   const fs = require('fs')
@@ -157,39 +157,41 @@ app.get('/submitTest', function(req,res){
 app.get('/testLaunch', function(req, res)
 {
 
+	console.log("Launching... ");	
   files = makeList(req.query.files).map(i=>i.trim()) //split on comma separation
   
-  resp = 
-    {response: [],
+  resp = {
+		response: [],
     which: [], //if there is an error, which script failed?
     err: false //assume no error, will update if incorrect
     };
   
   var itemsComplete = 0;
   files.forEach(function(launchFile, index, array){
-	var options = {
- 	  mode: 'text',
-      	  args: [launchFile]
-    	  }
-  	var pyshell = new PythonShell('./ROSHandling/testLaunch.py', options);
+	  var options = {
+	     mode: 'text',
+       args: [launchFile]
+     }
+
+	var pyshell = new PythonShell('./ROSHandling/testLaunch.py', options);
 	
-    pyshell.on('message', function (message) {
+  pyshell.on('message', function (message) {
       // received a message sent from the Python script (a simple "print" statement)
-		  console.log(message);
+		  console.log("Error: "+message);
     });
     
 	// end the input stream and allow the process to exit
-    	pyshell.end(function (err,code,signal) {
-      	if (err){
-          resp.err = true;
-	  resp.which += launchFile;
-          resp.err += err;
+  pyshell.end(function (err,code,signal) {
+    if (err){
+      resp.err = true;
+		  resp.which += launchFile;
+      resp.err += err;
 	  }
-				console.log("Launching... ");	
-      	console.log('The exit code was: ' + code);
-      	console.log('The exit signal was: ' + signal);
-      	console.log('finished');
-	itemsComplete++;
+
+   console.log('The exit code was: ' + code);
+   console.log('The exit signal was: ' + signal);
+   console.log('finished');
+   itemsComplete++;
 
 	if(itemsComplete === array.length) {
 	  respond(res, resp);
