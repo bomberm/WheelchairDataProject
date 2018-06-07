@@ -51,10 +51,14 @@
 </style>
 
 <script>
-  url = "/rosStartup"
-  $.get(url, function(data){
-    console.log(data);
-  })
+  started = 0
+  if(!started){
+    url = "/rosStartup"
+    $.get(url, function(data){
+      console.log(data);
+    });
+		started = 1;
+  }
 </script>
 
 <br><br>
@@ -70,9 +74,9 @@
 			</form>
 		</fieldset>
 		<br>
-		<textarea disabled rows="2" cols="75">
+	<!--	<textarea disabled rows="2" cols="75">
 			Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
-		</textarea>
+		</textarea> -->
 		<br><br><br>
 <script>
   var initialized = 0;
@@ -81,7 +85,7 @@
   var input = document.getElementById("testInput");
 
   // Execute a function when the user releases a key on the keyboard
-  input.addEventListener("keypress", function(event) {
+input.addEventListener("keypress", function(event) {
     // Cancel the default action, if needed
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
@@ -91,7 +95,7 @@
     }
   });
 
-  function initialize(){
+function initialize(){
     if(initialized){
       url = "/shutdown?test="+test;
      };
@@ -102,7 +106,7 @@
     console.log(data);
   })
   initialized = 1;
-}
+};
 </script>
 		<fieldset style="width:30%">
 			<form>

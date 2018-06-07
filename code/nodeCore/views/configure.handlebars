@@ -91,7 +91,7 @@
 				Example: <i>tf, pose_multi </i>
 				<textarea name="topic" id="inputTopic" cols="35" rows="7"></textarea>
 				<br>
-				<button type="button" disabled class="testBag" value="estimateBag">Estimate Bag Size</button>
+				<button type="button" disabled class="testBag" onclick="bagEstimate()" value="estimateBag">Estimate Bag Size</button>
 				<br><br>
 			</div>
 			<!-- Currently commented out because run test participant does not use this field
@@ -122,14 +122,26 @@
 	}
 	
   function submitForm(){
-	testName = document.getElementById('inputTestName').value;
-	launchFiles = document.getElementById('inputLaunch').value;
-	topicList = document.getElementById('inputTopic').value;
-	url = "/submitTest?name="+testName+"&launch="+launchFiles+"&topics="+topicList;
-	$.get(url, function(data){
-		console.log(data);
-		console.log(url);
-		})
+		testName = document.getElementById('inputTestName').value;
+		launchFiles = document.getElementById('inputLaunch').value;
+		topicList = document.getElementById('inputTopic').value;
+		url = "/submitTest?name="+testName+"&launch="+launchFiles+"&topics="+topicList;
+		$.get(url, function(data){
+				console.log(data);
+				console.log(url);
+				})
+		}
+
+  function bagEstimate(){
+		testName = document.getElementById('inputTestName').value;
+		launchFiles = document.getElementById('inputLaunch').value;
+		topicList = document.getElementById('inputTopic').value;
+		url = "/estimateBag?name="+testName+"&launch="+launchFiles+"&topics="+topicList;
+		$get(url, function(data){
+				console.log(data);
+				console.log(url);
+				})
+		}
 	}
 </script>
 	</div>
