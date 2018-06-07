@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 import subprocess
 import os.path
 
@@ -7,7 +7,7 @@ import os.path
 try:
 	output = subprocess.check_output(["pgrep", "roscore"])
 except Exception:
-	output = False;
+	output = False
 
 if not output: #check if roscore is already running
 	output = subprocess.Popen('roscore') 
