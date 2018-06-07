@@ -7,7 +7,7 @@ var fs = require('fs');
 var crypto = require('crypto');
 var path = require('path');
 var PythonShell = require('python-shell');
-
+var INI_JSON = null;
 /**
 Copy the below snipper to add command line options to a python script
 var options = {
@@ -34,29 +34,33 @@ app.get('/configure',function(req,res){
 // Hadi, this is a function I added to initialize a test - Marie
 app.get('/initialize',function(req,res){
   test = req.query.test.replace(' ', '').toLowerCase();
-  var dir = './bags/' + test + '/';
-  if (fs.existsSync(dir)){
-    testFile = dir+test+'.json';
-    var options = {
-      mode: 'text',
-      args: [testFile]
-    };
+  if(test != INI_JSON){
+          console.log("Initializing...", test);
+          console.log("the following values should be different: ", test, " ", INI_JSON);
+	  INI_JSON = test;
+	  var dir = './bags/' + test + '/';
+	  if (fs.existsSync(dir)){
+	    testFile = dir+test+'.json';
+	    var options = {
+	      mode: 'text',
+	      args: [testFile]
+	    };
 
-    var pyshell = new PythonShell('../ROSHandling/launchFiles.py', options);
+	    var pyshell = new PythonShell('../ROSHandling/launchFiles.py', options);
 
-    pyshell.on('message', function (message) {
-      // received a message sent from the Python script (a simple "print" statement)
-      console.log(message);
-    });
-    // end the input stream and allow the process to exit
-    pyshell.end(function (err,code,signal) {
-      if (err) throw err;
-		  console.log("Initializing...");
-      console.log('The exit code was: ' + code);
-      console.log('The exit signal was: ' + signal);
-      console.log('finished');
-    });
-  }
+	    pyshell.on('message', function (message) {
+	      // received a message sent from the Python script (a simple "print" statement)
+	      console.log(message);
+	    });
+	    // end the input stream and allow the process to exit
+	    pyshell.end(function (err,code,signal) {
+	      if (err) throw err;
+	      console.log('The exit code was: ' + code);
+	      console.log('The exit signal was: ' + signal);
+	      console.log('finished');
+	    });
+	  }
+	}
   //else
   // Hadi, I need an error here to notifiy the user that the system cannot find the test file but I'm not sure how
 });
@@ -64,6 +68,7 @@ app.get('/initialize',function(req,res){
 // Added and works great!
 app.get('/rosStartup',function(req,res){
 
+    console.log("Startup...");
     var options = {
       mode: 'text',
     };
@@ -77,7 +82,6 @@ app.get('/rosStartup',function(req,res){
   // end the input stream and allow the process to exit
   pyshell.end(function (err,code,signal) {
     if (err) throw err;
-		console.log("Startup...");
     console.log('The exit code was: ' + code);
     console.log('The exit signal was: ' + signal);
     console.log('finished');
