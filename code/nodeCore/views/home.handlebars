@@ -51,14 +51,10 @@
 </style>
 
 <script>
-  started = 0
-  if(!started){
-    url = "/rosStartup"
-    $.get(url, function(data){
-      console.log(data);
-    });
-		started = 1;
-  }
+  url = "/rosStartup"
+  $.get(url, function(data){
+    console.log(data);
+  })
 </script>
 
 <br><br>
@@ -70,43 +66,28 @@
 				<hr>
 				Test Name: <br>
 				<input type="text" name="testName" id="testInput" />
-				<button type="button" class="initButton" id="initializeButton" onclick="initialize()"> Initialize Test </button>
+				<button type="button" onclick="initialize()" id="initializeButton">Initialize Test</button>
 			</form>
 		</fieldset>
 		<br>
-	<!--	<textarea disabled rows="2" cols="75">
+		<textarea disabled rows="20" cols="75">
 			Placeholder text area where the fancy output will go! Is also disabled so the box cannot be inputted into, only shows output.
-		</textarea> -->
+		</textarea>
 		<br><br><br>
 <script>
   var initialized = 0;
-
-  // Get the input field
-  var input = document.getElementById("testInput");
-
-  // Execute a function when the user releases a key on the keyboard
-input.addEventListener("keypress", function(event) {
-    // Cancel the default action, if needed
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-      // Trigger the button element with a click
-      event.preventDefault();
-      document.getElementById("initializeButton").click();
-    }
-  });
-
-function initialize(){
+  function initialize(){
     if(initialized){
-      url = "/shutdown?test="+test;
+      url = "/shutdown?test="test;
      };
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
+  initialized = 1;
   document.getElementById('initializeButton').innerHTML = "Initialized";
   $.get(url, function(data){
     console.log(data);
   })
-  initialized = 1;
-};
+}
 </script>
 		<fieldset style="width:30%">
 			<form>
@@ -114,43 +95,48 @@ function initialize(){
 				Full Name:<br>
 				<input type="text" name="name" id="inputName" />
 				<button type="button" class="recordButton" onclick="record()" id="theButton"> &#128308 Record Bag</button>
+				<label id="minutes">00</label>:<label id="seconds">00</label>
 			</form>
 		</fieldset>
 	</div>
 </div>
 <script>
-  var recording = 0;
-
-  // Get the input field
-  var input = document.getElementById("inputName");
-
-  // Execute a function when the user releases a key on the keyboard
-  input.addEventListener("keypress", function(event) {
-    // Cancel the default action, if needed
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-      // Trigger the button element with a click
-      event.preventDefault();
-      document.getElementById("theButton").click();
-    }
-  });
+	var recording = 0;
+	var interval;
+	var minutes;
 		function record(){
 			if(recording){
 				url = "/kill";
 				document.getElementById('theButton').innerHTML = " &#128308 Record Bag";
 				document.getElementById('theButton').style.backgroundColor = "#4CAF50";
 				recording  = 0;
-				document.getElementById('inputName').disabled = false;
-				$.get(url, function(data){
-				console.log(data);
-				})
+				clearInterval(interval);
 			}
 			else{
 				recording = 1;
 				url = "/ros?name=" + document.getElementById("inputName").value+"&test=" + document.getElementById('testInput').value;
 				document.getElementById('theButton').innerHTML = "&#9632 Stop Recording";
 				document.getElementById('theButton').style.backgroundColor = "#ff3300";
-				document.getElementById('inputName').disabled = true;
+				var minutesLabel = document.getElementById("minutes");
+				var secondsLabel = document.getElementById("seconds");
+				var totalSeconds = 0;
+				clearInterval(interval);
+				interval = setInterval(setTime, 1000);
+
+				function setTime() {
+					++totalSeconds;
+					secondsLabel.innerHTML = pad(totalSeconds % 60);
+					minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+				}
+
+				function pad(val) {
+					var valString = val + "";
+					if (valString.length < 2) {
+						return "0" + valString;
+					} else {
+						return valString;
+					}
+				}
 				$.get(url, function(data){
 					console.log(data);
 				})
