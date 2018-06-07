@@ -103,14 +103,8 @@ app.get('/shutdown', function(req, res){
   });
 });
 
-app.get('/submitTest', function(req,res){
-  const fs = require('fs')
-  testName = req.query.name.replace(' ', '').toLowerCase();
-  launchFiles = makeList(req.query.launch);
-  topics = makeList(req.query.topics);
-  //names = makeList(req.query.participants);
-
-  testObject = {
+function makeFile(name, launch, topics, test){
+	testObject = {
     "name": testName,
     "ids": false,
     //"names": names.map(i=>i.trim()),
@@ -118,12 +112,46 @@ app.get('/submitTest', function(req,res){
     "launch": launchFiles.map(i=>i.trim()).map(i=>i.split(' '))
   };
 
-  var testdir = './bags/'+testName;
-  if (!fs.existsSync(testdir)){
-    fs.mkdirSync(testdir);
+  if(test == true){
+		testDir = "."
+		}
+  else{
+		var testdir = './bags/'+testName;
+
+		if (!fs.existsSync(testdir)){
+				fs.mkdirSync(testdir);
+		}
   }
 
   fs.writeFileSync((testdir+'/'+testName)+'.json', JSON.stringify(testObject, null, 2) , 'utf8');
+}
+	
+app.get('/estimateBag', function(req,res){
+		testName = req.query.name.replace(' ', '').toLowerCase();
+		launchFiles = makeList(req.query.launch);
+		topics = makeList(req.query.topics);
+
+		makeFile(testName, launchFiles, topics, true);
+
+		var options = {
+				mode: 'text',
+        args: ["./"+testName+".json"]
+    	  }
+  	var pyshell = new PythonShell('./ROSHandling/testBag.py', options);
+		
+		pyshell.on('message', function(message) {
+				//do stuff
+		}
+}
+
+app.get('/submitTest', function(req,res){
+  const fs = require('fs')
+  testName = req.query.name.replace(' ', '').toLowerCase();
+  launchFiles = makeList(req.query.launch);
+  topics = makeList(req.query.topics);
+  //names = makeList(req.query.participants);
+
+  makeFile(testName, launchFiles, topics, false); 
 });
 
 app.get('/testLaunch', function(req, res)
@@ -145,10 +173,10 @@ app.get('/testLaunch', function(req, res)
     	  }
   	var pyshell = new PythonShell('./ROSHandling/testLaunch.py', options);
 	
-        pyshell.on('message', function (message) {
-        // received a message sent from the Python script (a simple "print" statement)
-          console.log(message);
-        });
+    pyshell.on('message', function (message) {
+      // received a message sent from the Python script (a simple "print" statement)
+		  console.log(message);
+    });
     
 	// end the input stream and allow the process to exit
     	pyshell.end(function (err,code,signal) {
