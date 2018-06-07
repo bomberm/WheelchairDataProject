@@ -46,7 +46,7 @@ app.get('/initialize',function(req,res){
 	      args: [testFile]
 	    };
 
-	    var pyshell = new PythonShell('../ROSHandling/launchFiles.py', options);
+	    var pyshell = new PythonShell('./ROSHandling/launchFiles.py', options);
 
 	    pyshell.on('message', function (message) {
 	      // received a message sent from the Python script (a simple "print" statement)
@@ -73,7 +73,7 @@ app.get('/rosStartup',function(req,res){
       mode: 'text',
     };
 
-  var pyshell = new PythonShell('../ROSHandling/startup.py', options);
+  var pyshell = new PythonShell('./ROSHandling/startup.py', options);
 
   pyshell.on('message', function (message) {
     // received a message sent from the Python script (a simple "print" statement)
@@ -95,7 +95,7 @@ app.get('/shutdown', function(req, res){
     mode: 'text',
     args: ["launch"]
   };
-  PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+  PythonShell.run('./ROSHandling/shutdown.py', options, function (err, results) {
     if (err) throw err;
     // results is an array consisting of messages collected during execution
 		console.log("Shutdown...");
@@ -143,7 +143,7 @@ app.get('/testLaunch', function(req, res)
  	  mode: 'text',
       	  args: [launchFile]
     	  }
-  	var pyshell = new PythonShell('../ROSHandling/testLaunch.py', options);
+  	var pyshell = new PythonShell('./ROSHandling/testLaunch.py', options);
 	
         pyshell.on('message', function (message) {
         // received a message sent from the Python script (a simple "print" statement)
@@ -195,7 +195,7 @@ app.get('/ros',function(req,res){
     mode: 'text',
     args: [namedir, testFile]
   };
-  PythonShell.run('../ROSHandling/startBag.py', options, function (err, results) {
+  PythonShell.run('./ROSHandling/startBag.py', options, function (err, results) {
     if (err) throw err;
     // results is an array consisting of messages collected during execution
     console.log('results: %j', results);
@@ -210,7 +210,7 @@ app.get('/kill',function(req,res){
 		args: 'bag',
 	};
 
-	PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+	PythonShell.run('./ROSHandling/shutdown.py', options, function (err, results) {
 		if (err) throw err;
 		// results is an array consisting of messages collected during execution
 		console.log('results: %j', results);
@@ -230,14 +230,14 @@ function onExit(options, err){
 				args: 'launch',
 		};
 
-		PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+		PythonShell.run('./ROSHandling/shutdown.py', options, function (err, results) {
 			if (err) throw err;
 			// results is an array consisting of messages collected during execution
 			console.log('results: %j', results);
   });
 
 		options.args = 'core',
-		PythonShell.run('../ROSHandling/shutdown.py', options, function (err, results) {
+		PythonShell.run('./ROSHandling/shutdown.py', options, function (err, results) {
 			if (err) throw err;
 			// results is an array consisting of messages collected during execution
 			console.log('results: %j', results);
