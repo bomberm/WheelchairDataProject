@@ -51,7 +51,7 @@
 </style>
 
 <script>
-  url = "/rosStartup"
+  url = "/rosStartup";
   $.get(url, function(data){
     console.log(data);
   })
@@ -76,9 +76,23 @@
 		<br><br><br>
 <script>
   var initialized = 0;
+  // Get the input field
+  var input = document.getElementById("testInput");
+
+  // Execute a function when the user releases a key on the keyboard
+input.addEventListener("keypress", function(event) {
+    // Cancel the default action, if needed
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      event.preventDefault();
+      document.getElementById("initializeButton").click();
+    }
+  });
+
   function initialize(){
     if(initialized){
-      url = "/shutdown?test="test;
+      url = "/shutdown?test="+test;
      };
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
@@ -104,6 +118,21 @@
 	var recording = 0;
 	var interval;
 	var minutes;
+
+  // Get the input field
+  var input = document.getElementById("inputName");
+
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keypress", function(event) {
+    // Cancel the default action, if needed
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      event.preventDefault();
+      document.getElementById("theButton").click();
+    }
+  });
+
 		function record(){
 			if(recording){
 				url = "/kill";
