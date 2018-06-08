@@ -11,9 +11,9 @@ if not len(argv) == 2:
 
 checkIfExists = Path(argv[1])
 if checkIfExists.is_file:
-	testFile = checkIfExists.open()
+		testFile = checkIfExists.open()
 else:
-	raise IOError('Usage: '+argv[1]+'must be a .json file')	
+		raise IOError('Usage: '+argv[1]+'must be a .json file')	
 
 data = json.load(testFile)
 if not 'launch' in data.keys():

@@ -48,21 +48,26 @@ app.get('/initialize',function(req,res){
 
 	    var pyshell = new PythonShell('./ROSHandling/launchFiles.py', options);
 
+			res.send("allClear"); //if we reach this point, then all should be well, the rest is messages sent after the fact
 	    pyshell.on('message', function (message) {
 	      // received a message sent from the Python script (a simple "print" statement)
 	      console.log(message);
 	    });
 	    // end the input stream and allow the process to exit
 	    pyshell.end(function (err,code,signal) {
-	      if (err) throw err;
+	      if (err){
+				   res.send("err");
+				   throw err;
+				}
 	      console.log('The exit code was: ' + code);
 	      console.log('The exit signal was: ' + signal);
 	      console.log('finished');
 	    });
-	  }
+	  } else
+		{
+		  res.send("noTest!");
+		}
 	}
-  //else
-  // Hadi, I need an error here to notifiy the user that the system cannot find the test file but I'm not sure how
 });
 
 // Added and works great!
@@ -113,35 +118,55 @@ function makeFile(name, launch, topics, test){
   };
 
   if(test == true){
-		testDir = ".";
+		var testDir = ".";
 		}
-  else{
-		var testdir = './bags/'+testName;
+  else {
+		var testDir = './bags/'+testName;
 
-		if (!fs.existsSync(testdir)){
-				fs.mkdirSync(testdir);
+		if (!fs.existsSync(testDir)){
+				fs.mkdirSync(testDir);
 		}
   }
 
-  fs.writeFileSync((testdir+'/'+testName)+'.json', JSON.stringify(testObject, null, 2) , 'utf8');
+  try {
+  fs.writeFileSync((testDir+'/'+testName)+'.json', JSON.stringify(testObject, null, 2) , 'utf8');
+  return true;
+  }
+  catch(err){
+  return false;
+  }
 }
 	
 app.get('/estimateBag', function(req,res){
 		testName = req.query.name.replace(' ', '').toLowerCase();
 		launchFiles = makeList(req.query.launch);
 		topics = makeList(req.query.topics);
+		
+		var bagSize = 0;
 
 		makeFile(testName, launchFiles, topics, true);
-
+		
+		
 		var options = {
 				mode: 'text',
         args: ["./"+testName+".json"]
     	  }
+
   	var pyshell = new PythonShell('./ROSHandling/testBag.py', options);
 		
 		pyshell.on('message', function(message) {
-				//do stuff
+		  bagSize = parseInt(message,10)*6;	
 		});
+
+		pyshell.end(function (err,code,signal) {
+				res.send(bagSize.toString());
+				console.log("Exiting bag estimator...");
+				console.log('The exit code was: ' + code);
+				console.log('The exit signal was: ' + signal);
+				console.log('finished');
+				fs.unlinkSync('./'+testName+'.json');
+		});
+
 });
 
 app.get('/submitTest', function(req,res){
@@ -151,7 +176,14 @@ app.get('/submitTest', function(req,res){
   topics = makeList(req.query.topics);
   //names = makeList(req.query.participants);
 
-  makeFile(testName, launchFiles, topics, false); 
+  var success = makeFile(testName, launchFiles, topics, false); 
+  if(success){
+		res.send("true");
+  }
+  else {
+		res.send("false");
+  }
+
 });
 
 app.get('/testLaunch', function(req, res)

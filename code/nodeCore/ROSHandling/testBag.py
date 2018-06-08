@@ -5,17 +5,20 @@
 import os
 import subprocess
 from sys import argv
+from sys import path
 from time import sleep
+
+path.append("./ROSHandling/")
 
 if not len(argv) == 2:
 		raise IOError('Usage: '+argv[0]+" <test.json file>")
 
 
-output = subprocess.Popen(["python", "startBag.py", "./", argv[1]], stdout=open(os.devnull, 'w'))
+output = subprocess.Popen(["python", "./ROSHandling/startBag.py", "./", argv[1]], stdout=open(os.devnull, 'w'))
 
 sleep(10)
 
-subprocess.Popen(["python", "shutdown.py", "bag"])
+subprocess.Popen(["python", "./ROSHandling/shutdown.py", "bag"])
 
 sleep(1)
 
@@ -27,3 +30,4 @@ for name in files:
 
 print os.path.getsize(bagfile)
 os.remove(bagfile)
+sleep(1)

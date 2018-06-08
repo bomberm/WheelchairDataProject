@@ -97,8 +97,16 @@ input.addEventListener("keypress", function(event) {
   test = document.getElementById('testInput').value;
   url = "/initialize?test="+test;
   initialized = 1;
-  document.getElementById('initializeButton').innerHTML = "Initialized";
   $.get(url, function(data){
+		if (data != "allClear")
+		{
+				if(data == "noTest!")	document.getElementById('initializeButton').innerHTML = "Test Not Found!";
+				else document.getElementById('initializeButton').innerHTML = "Launch Error!";
+				document.getElementById('initializeButton').style.backgroundColor = "#ff3300";
+		} else
+		{
+		  document.getElementById('initializeButton').innerHTML = "Initialized";
+		}
     console.log(data);
   })
 }
@@ -109,7 +117,8 @@ input.addEventListener("keypress", function(event) {
 				Full Name:<br>
 				<input type="text" name="name" id="inputName" />
 				<button type="button" class="recordButton" onclick="record()" id="theButton"> &#128308 Record Bag</button>
-				<label id="minutes">00</label>:<label id="seconds">00</label>
+				<br>
+        <label id="minutes">00</label>:<label id="seconds">00</label>
 			</form>
 		</fieldset>
 	</div>

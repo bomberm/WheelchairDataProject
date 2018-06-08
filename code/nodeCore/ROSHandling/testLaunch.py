@@ -18,7 +18,7 @@ command.extend(args[0])
 
 try:
 	launch = subprocess.Popen(command, stdout =open(os.devnull, 'w') )
-	sleep(0.5)
+	sleep(1)
 	launch.send_signal(signal.SIGINT)
 	exit(0)
 

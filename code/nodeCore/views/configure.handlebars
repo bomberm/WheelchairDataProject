@@ -72,6 +72,12 @@
 }
 </style>
 
+<script>
+  $.get("/rosStartup", function(data){
+		console.log(data);
+  })
+</script>
+
 <div class="fancyForm">
 	<div align="center">
 		<form onsubmit="return false">
@@ -91,7 +97,7 @@
 				Example: <i>tf, pose_multi </i>
 				<textarea name="topic" id="inputTopic" cols="35" rows="7"></textarea>
 				<br>
-				<button type="button" disabled class="testBag" id="estimateButton" onclick="bagEstimate()" value="estimateBag">Estimate Bag Size</button>
+				<button type="button" class="testBag" id="estimateButton" onclick="bagEstimate()" value="estimateBag">Estimate Bag Size</button>
 				<br><br>
 			</div>
 			<!-- Currently commented out because run test participant does not use this field
@@ -135,15 +141,25 @@
 		$.get(url, function(data){
 				console.log(data);
 				console.log(url);
-				})
+				if(data == "true"){
+				  document.getElementById("submitButton").innerHTML = "Submitted!";
+				} else
+				{
+				  document.getElementById("submitButton").innerHTML = "Something went wrong...";
+				}
+		  })
 		}
 
   function bagEstimate(){
 		testName = document.getElementById('inputTestName').value;
 		launchFiles = document.getElementById('inputLaunch').value;
 		topicList = document.getElementById('inputTopic').value;
+		document.getElementById('estimateButton').innerHTML = "Estimating... (This will take awhile)"
+		document.getElementById('estimateButton').disabled = true;
 		url = "/estimateBag?name="+testName+"&launch="+launchFiles+"&topics="+topicList;
-		$get(url, function(data){
+		$.get(url, function(data){
+				document.getElementById('estimateButton').innerHTML = "Estimated "+data+" bytes/min";
+				document.getElementById('estimateButton').disabled = false;
 				console.log(data);
 				console.log(url);
 				})
