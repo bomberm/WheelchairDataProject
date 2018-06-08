@@ -113,7 +113,7 @@ function makeFile(name, launch, topics, test){
   };
 
   if(test == true){
-		testDir = "."
+		testDir = ".";
 		}
   else{
 		var testdir = './bags/'+testName;
