@@ -1,4 +1,4 @@
-\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{report}
 
 %slightly modified from stackoverflow @ https://tex.stackexchange.com/questions/200437/numbering-sections-subsections-etc-manually
 %code block below allows for references to function as a section instead of a chapter
@@ -29,7 +29,13 @@
 \usepackage{setspace}
 \makeindex
 \usepackage{geometry}
-\usepackage{shorttoc}
+\usepackage{minitoc}
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+{\normalfont\bfseries}{}{0pt}{\Huge}
+
+\setcounter{minitocdepth}{1}
 
 \geometry{textheight=9.5in, textwidth=7in}
 
@@ -70,7 +76,7 @@
         \centering
         \scshape{
             \huge CS Capstone \DocType \par
-            {\large 6 May 2018}\par
+            {\large 12 June 2018}\par
             \vspace{.5in}
             \textbf{\Huge\CapstoneProjectName}\par
             \vfill
@@ -97,23 +103,103 @@
 \end{titlepage}
 \newpage
 \pagenumbering{arabic}
+\dominitoc
 \tableofcontents
 %\listoffigures
 %\listoftables
 \clearpage
 
 
-\section{Introduction to Project}
-\section{Requirements Document}
-\section{Design Document}
-\section{Tech Review}
-\section{Weekly Blog Posts}
-\section{Final Poster}
-\section{Project Documentation}
-\section{Recommended Technical Resources for Learning More}
-\section{Conclusions and Reflections}
+\chapter*{Introduction to Project}
+\chapter*{Requirements Document}
+\chapter*{Design Document}
+\chapter*{Tech Review}
+\chapter*{Weekly Blog Posts}
+\chapter*{Final Poster}
+\chapter{Project Documentation}
+
+\minitoc
+\section{Getting Started}
+
+
+Clone the ROS Test Controller at https://github.com/htrarabi/ROSTestController into a directory on your robot. Ensure your robot has internet access before proceeding with installation.
+
+\section{Prerequisites}
+
+The ROS Test Controller assumes your robot is running Ubuntu 15.10 or higher and has been testing only with ROS Kinetic Kame. While it may work with later ROS distos, it has not been tested and you may get unexpected behavior.
+
+In addition, your robot must have full internet access in order for installation to be successful. After installation, the controller will function without web access, but it's appearance may change slightly.
+
+Because the ROS Test Controller uses both nodeJS and Python 2.7 to control it's behavior, the installer will install these programs if they are not already installed on your robot. In addition, both pip and npm will be installed alongside python and nodeJS.
+\section{Installing}
+
+To install the ROS Test Controller, simply run \texttt{sudo -H ./install.sh} in the top level of the ROSTestController directory. This script will confirm that Python 2.7, pip, nodeJS and npm are installed on your robot and install them if not. In addition, install.sh will install several libraries that the Contoller depends on. Once complete, the Test Controller will be ready to run on your robot.
+\section{Usage}
+
+To run the ROS Test Controller, ssh into your robot, navigate to your /ROSTestController directory and run \texttt{npm start}. At bootup, the controller will advise that the export server has initialized (typically on port 8080) and that the main controller is running on port 3000. Leave this SSH session running while you use the Test Controller. To use the main controller, enter the robot's IP in a browser window and port 3000.
+
+For example:
+
+\texttt{192.168.0.0.1:3000} would run the controller for a robot with an IP of 192.168.0.0.1.
+
+At this time, the controller will check that roscore is running and you will be taken to the "Run Test" screen.
+\subsection{Run a Test}
+
+To run a test, enter the name of the test you wish to run in the "Test Name" field and click "Initialize". Should initialization be successful, you can then enter the name of the test participant and click "Record Bag". Once the test is concluded, click "Stop Bag". While the test is running, a stopwatch will run to advise how long the bag has been recording.
+
+If you wish to change the test that is initialized, simply enter the new test name and click the "Initialize" button again. Similarly, if you wish to record another test, change the test participant name (if needed) and click 'Record Bag' again.
+
+\subsection{Create a test}
+To create a test, click "Create Test" on the top bar of the test controller. Give the test a unique name and list any launch files that are necessary to initialize your robot. List launch files using <package name> <filename> (the same format as is used by roslaunch). If you have multiple launch files, separate each package/launch file pair by commas. 
+
+For example, \texttt{controller\_test turtleSim.launch, controller\_test turtleControls.launch} will specify both the turtleSim.launch and turtleControls.launch files for the test being created.
+
+Once the launch files are specified, the 'Test .launch' button can test that all included launch files will successfully run (both on your robot, as well as with the test controller). If the test fails, any error messages will appear on the ssh console that is running the Test Controller. 
+
+After the launch files have been specified, you can add the topics that you wish to be recorded with your test. Similar to the launch files, separate each topic by a comma. Clicking "Estimate Bag Size" will collect a small bag file using the topics you specified and return an estimated Kb/min for each bag recorded in your test. Note, this feature takes approximately 15 seconds to run, during which any modifications to the topics list will not be included in the estimate. 
+
+Once you are satisfied with the settings for your test, click "Submit Test" and the system will create the setup for your new test. 
+
+\subsection{Export Test Results}
+To download any bags that have been recorded under a test, enter the robots IP and the port number specified at boot-up (typically 8080) into your browser of choice. This will display the top level directory for all the tests stored on the robot. Select the name of your test and there will be a directory for each test participant for your tests. Names \textit{will} be encrypted in order to meet IRB requirements. Select the directory you wish to export, and you will be able to download the test recording you desire.
+
+
+
+
+\section{Known Bugs}
+
+\begin{itemize}
+	\item ROS Test Controller cannot be run as Super User
+
+	\item At this time, there is no checking if a test name has already been used. If a test name is reused, the previous test configuration file will be overwritten.
+
+	\item If the Test Controller crashes, the export server (a separate process) will still run in the background. This process can be killed by using \texttt{pa -a} to get the pid of the server (it will be a node process) and \texttt{sudo kill -2 <pid>} to kill this process. Otherwise, the next instance of Test Controller will use a new port and this can cause multiple file server ports to be open on your robot.
+
+	\item On occasion, the initialize button will become unresponsive. Refresh the page and this behavior will be corrected.
+\end{itemize}
+
+\section{Future Enhancement Possibilities}
+
+\begin{itemize}
+	\item Change the Test Name field to a drop down of current tests to prevent typos for test name confusion from causing "No Test Found" errors when initializing.
+
+	\item There is infrastructure to allow test participant names to be pre-specified when a test is created. If implemented, "Participant Name" field could be a drop down to prevent name typos from causing tests from the same participant to be stored in separate directories.
+
+	\item Move all ROSHandling functionality from Python calls to nodeJS functions. This would allow the Test Controller to be a pure nodeJS solution and possibly simplify the code base.
+
+	\item Refactor ros.js to improve code clarity and eliminate redundancy.
+
+	\item Because a user must log into a robot in order to start ROS Test Controller, the decision was made for the Test Controller to not have a separate authentication system for the Controller. With that said, the addition of a separate authentication system (and heirarchy to support 'test creator' vs 'authorized tester') could improve the security and enhance usability.
+\end{itemize}
+
+\section{Contributing}
+
+Submit pull requests if you have an update that improves the functionality of this Controller and an author or the Project Owner will test and approve changes.
+
+\chapter{Recommended Technical Resources for Learning More}
+\chapter{Conclusions and Reflections}
 \appendix
-\subsection{Essential Code Listings}
+\section{Essential Code Listings}
 
 
 \end{document}
