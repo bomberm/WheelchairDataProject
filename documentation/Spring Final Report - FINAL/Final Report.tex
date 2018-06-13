@@ -254,6 +254,8 @@ Presenting the data in a usable format for analysis provides an entirely differe
 		\end{figure}
 		
 	\end{itemize}
+\section{Changes}
+No significant changes were made to the requirements explicitly, but design changes were discussed with the client.
 	
 \section{New Gantt Chart}
 
@@ -335,6 +337,9 @@ The graphical design of the interface has been given very specific design requir
 
 \section{Conclusion}
 This document has summarized the data collection team's design decisions for the four layers of this project: the project management layer, the communication layer, the storage layer, and the UI layer. While there is some overlap in priorities, each layer has different design concerns and elements. The project management layer is utilizing organizational tools such as waffle.io and slack. The communication layer is comprised of ROS on top of Linux, to maximize compatibility with other projects in the Personal Robotics Group. The storage layer will be handled by a tree directory structure. The UI layer will be written in Python, to provide maintainability and readability to long-term users and developers in the Personal Robotics Group. When combined, the technologies in our four conceptual layers will provide the client with an application that meets all of the previously discussed requirements.
+
+\section{Changes}
+The python server portion of the design document was replaced with an alternative written in Node.js
 
 \chapter{Systems Tech Review}
 \minitoc
@@ -1184,20 +1189,84 @@ I've learned that it's very important to develop a good relationship with your t
 \subsection{If you could do it all over, what would you do differently?}
 I don't think I would change much, honestly. This project went about as well as I could've hoped. Probably the only thing that even comes to mind is our massive project restructure that happened around week 4 of Winter Term. I wouldn't change that per se, since it contributed to our project becoming even better than it would've been had we kept going with our old method, but I would've liked to be on that path from the start, instead of waiting until the time for working on our project was almost half over. However, that is just a minor complaint, and I think having to restructure our project from basically scratch was actually really good for us both individually and as a team.
 \section{Hadi's Reflections}
+
 \subsection{What technical information did you learn?}
-nodejs
+My role was to develop the back-end of our server, which was a nodejs API. I learned a lot about javascript syntax, as well as API router configurations. This was structurally supplemented by CS 493, the API development course.
 \subsection{What non-technical information did you learn?}
-time-management
+I learned time management, and soft-skills related to the presentation and writing required throughout the course-work. I learned how to discuss deliverable with clients, and how to negotiate design and requirements. I also learned several conventions of the English language due to the writing assignments in the course. I learned how to prepare documentation.
 \subsection{What have you learned about project work?}
-I learned that project work is dictated by the will and motivation of the client. In hindsight this is obvious, but it took me time to learn that my individual feelings of how modules should be written or structured were irrelevant if the client preferred an alternative.
+I learned that project work is dictated by the will and motivation of the client. In hindsight this is obvious, but it took me time to learn that my individual feelings of how modules should be written or structured were irrelevant if the client preferred an alternative. I also learned that design mistakes are much harder to fix during the construction of the project than they are to fix during the design phase. I learned to be agile with changing solutions if it becomes necessary.
 \subsection{What have you learned about project management?}
 Project management was handled largely by Marie. I learned that it is stressful, it requires technical expertise even though it is not technical, and that I never want to do it.
 \subsection{What have you learned about working in teams?}
+If everybody is assigned a role and sticks to it, working in teams can actually go smoothly. Prior to this project, I typically avoided group projects as much as possible. However, this capstone team showed me that with competent project management, having a team can make a project significantly more manageable.
 \subsection{If you could do it all over, what would you do differently?}
+I would have made a stronger push for the web solution during my fall-term. I would have asked more questions during the design phase of this course. It would have been beneficial to  do more research during the tech review: not only  to determine languages, but also possibly the dependencies of the languages. Having a better idea of the available node packages from the beginning of the project would have significantly cut down development time.
 
 \appendix
 \chapter{Essential Code Listings}
 \minitoc
+This document showcases two snippets of code from this project, which serves to show how the node.js, python, and ROS components interact with each other.
+\\
+The first is our node.js server receiving a GET request from the user interface, and spawning a python shell.\\
+\begin{verbatim}
+app.get('/initialize',function(req,res){
+test = req.query.test.replace(' ', '').toLowerCase();
+var dir = cwd + '/' + test + '/';
+if (fs.existsSync(dir)){
+testFile = dir+test+'.json';
+var options = {
+mode: 'text',
+args: [testFile]
+};
+
+var pyshell = new PythonShell('../ROSHandling/launchFiles.py', options);
+
+pyshell.on('message', function (message) {
+// received a message sent from the Python script (a simple "print" statement)
+console.log(message);
+});
+// end the input stream and allow the process to exit
+pyshell.end(function (err,code,signal) {
+if (err) throw err;
+console.log('Launchfiles.py: The exit code was: ' + code);
+console.log('The exit signal was: ' + signal);
+console.log('finished');
+});
+}
+});
+\end{verbatim}
+The second code snippet shows the aforementioned python script, which interacts directly with ROS.
+\begin{verbatim}
+#!/usr/bin/python
+
+# Used in Run Test interface when 'initialize' button is pushed
+import subprocess #run the launch routines
+import json #json handling
+from sys import argv #access args
+from pathlib2 import Path
+
+if not len(argv) == 2:
+raise IOError('Usage: '+argv[0]+' <test.json file>')
+
+checkIfExists = Path(argv[1])
+if checkIfExists.is_file:
+testFile = checkIfExists.open()
+else:
+raise IOError('Usage: '+argv[1]+'must be a .json file')	
+
+data = json.load(testFile)
+if not 'launch' in data.keys():
+exit(0)
+scripts = data['launch']
+
+store_pid = open("launch.pid", 'w')
+for script in scripts:
+command=["roslaunch"]+script
+output = subprocess.Popen(command) 
+store_pid.write(str(output.pid))
+store_pid.close()
+\end{verbatim}
 
 
 
