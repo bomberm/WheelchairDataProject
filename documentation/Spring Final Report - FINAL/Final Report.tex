@@ -155,7 +155,7 @@ In addition, your robot must have full internet access in order for installation
 Because the ROS Test Controller uses both nodeJS and Python 2.7 to control it's behavior, the installer will install these programs if they are not already installed on your robot. In addition, both pip and npm will be installed alongside python and nodeJS.
 \section{Installing}
 
-To install the ROS Test Controller, simply run \texttt{sudo -H ./install.sh} in the top level of the ROSTestController directory. This script will confirm that Python 2.7, pip, nodeJS and npm are installed on your robot and install them if not. In addition, install.sh will install several libraries that the Contoller depends on. Once complete, the Test Controller will be ready to run on your robot.
+To install the ROS Test Controller, simply run \texttt{sudo -H ./install.sh} in the top level of the ROSTestController directory. This script will confirm that Python 2.7, pip, nodeJS and npm are installed on your robot and install them if not. In addition, install.sh will install several libraries that the Controller depends on. Once complete, the Test Controller will be ready to run on your robot.
 \section{Usage}
 
 To run the ROS Test Controller, ssh into your robot, navigate to your /ROSTestController directory and run \texttt{npm start}. At bootup, the controller will advise that the export server has initialized (typically on port 8080) and that the main controller is running on port 3000. Leave this SSH session running while you use the Test Controller. To use the main controller, enter the robot's IP in a browser window and port 3000.
@@ -208,7 +208,7 @@ To download any bags that have been recorded under a test, enter the robots IP a
 
 	\item Refactor ros.js to improve code clarity and eliminate redundancy.
 
-	\item Because a user must log into a robot in order to start ROS Test Controller, the decision was made for the Test Controller to not have a separate authentication system for the Controller. With that said, the addition of a separate authentication system (and heirarchy to support 'test creator' vs 'authorized tester') could improve the security and enhance usability.
+	\item Because a user must log into a robot in order to start ROS Test Controller, the decision was made for the Test Controller to not have a separate authentication system for the Controller. With that said, the addition of a separate authentication system (and hierarchy to support 'test creator' vs 'authorized tester') could improve the security and enhance usability.
 \end{itemize}
 
 \section{Contributing}
