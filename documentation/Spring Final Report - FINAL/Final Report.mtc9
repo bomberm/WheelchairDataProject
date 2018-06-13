@@ -1,22 +1,10 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.1}Marie's Reflections}{\reset@font\mtcSfont 12}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.1.1}What technical information did you learn?}{\reset@font\mtcSSfont 12}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.1.2}What non-technical information did you learn?}{\reset@font\mtcSSfont 12}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.1.3}What have you learned about project work?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.1.4}What have you learned about project management?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.1.5}What have you learned about working in teams?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.1.6}If you could do it all over, what would you do differently?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.2}Aaron's Reflections}{\reset@font\mtcSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.2.1}What technical information did you learn?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.2.2}What non-technical information did you learn?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.2.3}What have you learned about project work?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.2.4}What have you learned about project management?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.2.5}What have you learned about working in teams?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.2.6}If you could do it all over, what would you do differently?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.3}Hadi's Reflections}{\reset@font\mtcSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.3.1}What technical information did you learn?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.3.2}What non-technical information did you learn?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.3.3}What have you learned about project work?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.3.4}What have you learned about project management?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.3.5}What have you learned about working in teams?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.3.6}If you could do it all over, what would you do differently?}{\reset@font\mtcSSfont 13}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {.1}Essential Code Listings}{\reset@font\mtcSfont 13}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.1}Getting Started}{\reset@font\mtcSfont 22}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.2}Prerequisites}{\reset@font\mtcSfont 22}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.3}Installing}{\reset@font\mtcSfont 22}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.4}Usage}{\reset@font\mtcSfont 22}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.4.1}Run a Test}{\reset@font\mtcSSfont 23}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.4.2}Create a test}{\reset@font\mtcSSfont 23}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {9.4.3}Export Test Results}{\reset@font\mtcSSfont 23}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.5}Known Bugs}{\reset@font\mtcSfont 23}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.6}Future Enhancement Possibilities}{\reset@font\mtcSfont 24}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {9.7}Contributing}{\reset@font\mtcSfont 24}}
