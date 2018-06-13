@@ -31,6 +31,7 @@
 \usepackage{geometry}
 \usepackage{minitoc}
 \usepackage{titlesec}
+\usepackage{longtable}
 
 \titleformat{\chapter}[display]
 {\normalfont\bfseries}{}{0pt}{\Huge}
@@ -103,7 +104,8 @@
             }
             \vspace{20pt}
 \begin{abstract}
-% Add Abstract
+	\normalsize \normalfont 
+This document is the comprehensive report documenting the "Robotic Wheelchair Data Collection and Analysis" senior capstone project. It contains documentation written throughout the course of the project, as well as retrospectives.
 				\end{abstract} 
         } 
     \end{singlespace}
@@ -550,6 +552,254 @@ a desktop or laptop entirely.
 \section{Marie's Posts}
 \section{Aaron's Posts}
 \section{Hadi's Posts}
+\subsection{Fall Term}
+
+\begin{longtable}{@{\extracolsep{\fill}} p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}@{}}
+
+	Week & Plans & Problems & Progress & Summary \\ \hline
+	1 & & & & 
+
+		We have not yet been assigned groups or projects\\
+		\hline
+
+	2 
+	& 
+
+		Set up recurring meetings with Shuman.
+		Get to know my group. 
+		Begin to understand the scope of our project 
+
+	& &
+	I met both the client and our team 
+	 & This week is the first time I met both my team and the client. Both the team and client seem accommodating, I am looking forward to understanding more about what our role in Shuman's "project Chiron" is going to be. \\
+	 \hline
+	 
+	 3
+	 &Define metrics for documentation 
+	 
+	 
+	 
+	 Complete individual problem statement 
+	 &
+	 It is fundamentally difficult to create performance metrics for a piece of writing without an example. 
+	 &
+	 I completed my individual problem statement. 
+	 
+	 
+	 
+	 We setup slack for group communication 
+	 &
+	 Most of my effort this week was focused on the individual problem statement. We met with Shuman, most of my questions directed at him were about granular requirements for the documentation of the hardware. While we have had the discussion multiple times, I still feel unclear as to what is a sufficient metric for completion of documentation. 
+	 \\
+	 \hline
+	 4
+	 &Combine the problem statements. 
+	 
+	 
+	 
+	 Get more clear metrics for documentation 
+	 &
+	 Our problem statements all had slightly different scopes. 
+	 & &
+	 The group spent this week combining our problem statements into one group problem statement. I did the initial editing before we presented the document to Shuman, pulling from Aaron's abstract, my problem definition, and Marie's proposed solution. We decided not to write the section on performance metrics until we were able to meet with Shuman again to discuss more granular requirements. We then did meet with Shuman, and submitted the negotiated performance metrics in our group statement. \\
+	 \hline
+	 5
+	 &
+	 Write user stories for interface
+	 &
+	 I'm unsure whether the design of the program will be limited by defining traits of the user interface this early 
+	 &
+	 I completed my section of the requirements document. 
+	 &
+	 I was assigned the user-interface section of the requirements document by Marie, who has taken on a role as a project manager. Our initial versions of the requirements had to be re-written as user stories. Aaron and I were both unable to access the submission OneNote due to an issue with our OSU work emails, so Marie handled the submission for our group. Aaron and I emailed Kirsten about getting access for future submissions. \\
+	 \hline
+	 6 &
+	 Meet with Shuman to get the requirements approved  &
+	 We have sensitive data in a public repository &
+	 We made our github private 
+	 
+	 
+	 
+	 We met with Shuman to discuss requirements 
+	 
+	 
+	 
+	 We were able to come to plan for revision after meeting with Kirsten &
+	 We were called into Kirsten's office about our requirements document. The format of the document was apparently very incorrect, but Kirsten seemed happy with our progress after the meeting. We then met with Shuman about our requirements, and I worked on reformatting and re-writing the document for the group, since Marie took the lead on the initial draft of the document. We also made our github private, since we were using it to store recordings of our meetings with Shuman.  
+	 \\ \hline
+	 7 & & & &
+	 TA Meeting and some discussion of design, but there was little tangible progress this week. We are on track to meet our deadlines, so the group is not concerned. \\
+	 \hline
+	 8 &
+	 Remove sensitive data from repo 
+	 
+	 
+	 
+	 Make repo public 
+	 
+	 
+	 
+	 Find storage location for sensitive data 
+	 &
+	 WaffleIO is incompatible with private repositories.
+	 &
+	 We were able to store the data and make our repostiroy public again. 
+	 
+	 
+	 
+	 I completed a basic outline for my tech review. 
+	 &
+	 We discovered that the free version of WaffleIO is incompatible with private repositories on github. We removed all of the sensitive data and made the repository public again. We also started storing all of our meeting notes on a slack channel. I started working on a skeleton of my tech review, but made little progress. Work was mostly independent this week, outside of our TA meetings the group did not meet. 
+	 \\
+	 \hline
+	 
+	 9 &
+	 Start design document 
+	 
+	 
+	 
+	 Share oneNote with TA 
+	 
+	 
+	 
+	 Resolve oneNote authentication issue 
+	 &
+	 We're not sure where Shuman would like the data stored (host-machine [RASPI], client-machine, or third-party system) 
+	 &
+	 Submitted tech review 
+	 &
+	 We individually wrote and submitted our tech reviews. Mine was focused entirely on the user interface. I received an email from our TA that he is unable to access my one-note and that I will need to share it again with him. I will need to move these notes into OneNote online and share them with him ASAP. We ran into a problem where we realized that we don't know what system we'd like to store the data we collect on, and will need to discuss with Shuman before we can make our final decision. \\
+	 \hline
+	 10 & & & & Dead week. We began pulling from our individual tech reviews. \\ \hline
+	 \end{longtable}
+
+
+\subsection{Winter Term}
+\begin{longtable}{@{\extracolsep{\fill}} p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}@{}}
+		Week & Plans & Problems & Progress & Summary \\ \hline
+	1 & 
+	Develop plan of action for term &
+	No group development server &
+	Began to sketch out general plan and got a server &
+	Marie added and closed several tasks on our project management board to prepare for the term. I purchased a surplus desktop and installed ubuntu on it for use as a team development server. The team scheduled term meetings with our TA. \\ \hline
+	2 &
+	Work on dev server 
+	& &
+	Began installing dependencies  &
+	 
+	
+	The team installed the necessary dependencies to run ROS on our development server. Marie began sketching out what would be necessary for a barebones version of our application for use by Shuman. Aaron began preparing the server to run a turtlebot, and troubleshooted some network issues with Marie.  \\ \hline
+	3 & 
+	Update requirements document &
+	Renegotiation with client is happening very late in the dev process. &
+	New requirements document is on git. &
+	The team re-wrote the requirements document to meet the new and changed needs of the client. A simple application for deployment to the ROS community was negotiation with Professor Shuman. We installed updates on the development server. \\ \hline
+	4 &
+	Create gui mockup &
+	Requirements have shifted from the original designs  &
+	Mockup developed &
+	We developed a mockup of the GUI in python, and developed a script to create the necessary filesystem to store the ROSbags on an ubuntu box. We began preparing to demo the interface to Shuman so he could use it in active testing. This was the week we hit the big roadblocks and considered re-architecting the software. \\ \hline
+	5 & 
+	Create node equivalent of python demo &
+	Python demo is undeliverable &
+	Node PoC started &
+	I began developing a version of our application in node instead of python, with some help from Marie. Shuman hit delays in his research, so he luckily did not need the barebones immediately. \\ \hline
+	6 &
+	Work on progress report and expo poster &
+	Python demo is still undeliverable, and we need a PoC to move forward &
+	Python demo officially scrapped, project transitioned to nodejs &
+	We began working on our midterm progress report and expo poster. I completed the first iteration of our node demo, and pushed the code to git. We officially transitioned from a python solution to a node solution during the course of this week. \\ \hline
+	7 &
+	Meet with Shuman &
+	Hardware failures on the wheelchair preventing demo &
+	Very little progress, visual upgrades &
+	We were to meet with Professor Shuman and show him our node demo, but there were issues with the wheelchair hardware that he had to resolve, so we were unable to show our progress. Development stalled during this week, other than visual upgrades. \\ \hline
+	8 &
+	Meet with Shuman &
+	Same hardware issues as last week &
+	Added a little (not nearly enough) error handling to the project &
+	Our rescheduled meeting with Shuman was again delayed due to the same hardware issues, so we worked on adding additional error-handling to the application, but still pushed to schedule a meeting as soon as possible.  \\ \hline
+	9 & Meet with Shuman &
+	Scheduling issues means the critical meeting still has not happened &
+	The hardware issue was resolved! &
+	Scheduling conflicts with Shuman’s hardware grad student and our team pushed the demo back again. We learned that the delays in the Professor’s research gave us additional padding time before our application was going to be in-use. \\ \hline
+	10 &
+	Meet with Shuman &
+	No new problems introduced this week! &
+	We finally met with Professor Shuman! &
+	We were finally able to meet with Shuman, and tested the interface. Although there were initial failures, after multiple meetings we were able to get a functional product, and run tests on the wheelchair. \\ \hline
+	
+	
+\end{longtable}
+\subsection{Spring Term}
+\begin{longtable}{@{\extracolsep{\fill}} p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}| p{0.2\linewidth}@{}}
+		Week & Plans & Problems & Progress & Summary \\ \hline
+		1 &
+		Debug leftover issues from the demo at the end of the previous term &
+		The main page crashes when opened &
+		Pushed a fix to the issue 
+		
+		
+		
+		Signed up for a table at expo &
+		This week was mostly used to resolve issues from the demo at the end of the previous term. The most critical of which was that the main page crashed the server when reloaded. Marie pushed a fix and resolved the issue, then we discussed preparing for expo and registering for a table. \\ \hline
+		2 &
+		Meet with Shuman 
+		
+		Check if roscore is started before initializing &
+		Python crashes if roscore is already running &
+		Python issues were resolved 
+		
+		Registered for expo &
+		The issue from the previous week was not completely resolved as we thought. We pushed a solution to the python issue and scheduled a meeting with Professor Shuman. We also decided to use a module called "python-shell" to start python child-processes from the node server. \\ \hline
+		3 & 
+		Begin work on the "create test" interface &
+		Can't export files in current environment  &
+		Several tested solutions, but no progress &
+		We discovered that implementing a feature to export bags is going to be more difficult than originally anticipated. \\ \hline
+		4 &
+		Create expo poster & &
+		Expo poster created &
+		No development progress. We created our expo poster. \\ \hline
+		5 &
+		Pass output from python to nodejs &
+		No console logging when node crashes &
+		Completed midterm review 
+		
+		Created PoC for export bag &
+		This week my development progress was developing the proof-of-concept for the export bag feature. We also completed our midterm review as a group. \\ \hline
+		6 &
+		Complete midterm presentation 
+		
+		Expo & &
+		Complete midterm presentation &
+		The week started with the completion of the midterm presentation. We also added our export bag feature as part of the startup of the node server, so exporting is now available as a module in our system. We also presented at expo at the end of the week! \\ \hline
+		7 &
+		Debug &
+		There are inexplicable crashes in our software &
+		We planned out the work for the rest of the term &
+		This week was mostly spent planning for how to prepare for the code handoff. \\ \hline
+		8 &
+		Debug &
+		Same as previous week &
+		More minor debugging and handoff prep &
+		Like the previous week, this week was spent preparing for the end-of-term handoff. \\ \hline
+		9 &
+		Resolve python piping issue  &
+		Python does not correctly pipe into nodejs &
+		Eliminated the need for piping rather than the inserting the pipe  &
+		We were having issues in which error-handling in the python would not pass to nodejs. Instead, we just started logging in different locations so no longer need the nodejs -> python pipe. \\ \hline
+		10 &
+		Start final report and presentation & &
+		Completed final presentation 
+		
+		Made progress on final report 
+		
+		Completed hand-off to client  &
+		This was the final week of work for the client. We prepared our final presentation, polished the code, and handed it off to the client. \\ \hline
+\end{longtable}
+
+	
 
 \chapter{Final Poster}
 \minitoc
@@ -694,8 +944,9 @@ Project management was handled largely by Marie. I learned that it is stressful,
 \subsection{If you could do it all over, what would you do differently?}
 
 \appendix
+\chapter{Essential Code Listings}
 \minitoc
-\section{Essential Code Listings}
+
 
 
 \end{document}
