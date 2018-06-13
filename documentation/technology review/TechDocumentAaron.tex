@@ -1,0 +1,146 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage[noadjust]{cite}
+\usepackage{geometry}
+
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		Wheelchair Data Collection Team}
+\def \CapstoneTeamNumber{		4}
+\def \GroupMemberOne{			Marie Bomber}
+\def \GroupMemberTwo{			Aaron Leondar}
+\def \GroupMemberThree{			Hadi Rahal-Arabi}
+\def \CapstoneProjectName{			Robotic Wheelchair Data Collection and Analysis}
+\def \CapstoneSponsorCompany{	Oregon State University}
+\def \CapstoneSponsorPerson{	Matthew William Shuman	}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{	%Problem Statement
+				%Requirements Document
+				Technology Review
+				%Design Document
+				%Progress Report
+				}
+				
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large 21 November 2017}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                %\NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                %\NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+                    \begin{abstract}
+            	% 6. Fill in your abstract    
+This document will serve to provide the Technology Review for the Robot and Application Communication section of the Wheelchair Data Collection capstone project under Matthew Shuman. The document provides a high-level description of the technologies used in the communication between the robot and the computer application, how they compare to alternatives, and why the specific technologies we are using were chosen. This document does not discuss any of the technologies used in any part of the project outside of communication between the robot and the computer application, and the data transferred between the two. 
+            \end{abstract} 
+        }   
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\section{Robotics Middleware}
+\subsection{Overview and Criteria}
+The middleware used in communicating with the robot is one of the most important aspects of the entire project, as it provides a means to send and receive data directly to and from the robot. More generally, the robotics middleware manages the heterogeneity of the hardware, as well as the applications, as well as assisting in the integration of new technologies, and make it easier to maintain the integrity of the robot's architechture.\cite{Robotics_Middleware} Choosing the right middleware allows us to be able to effectively communicate with the robot. To be chosen as the Robotics Middleware that we use, it must be able to effectively communicate and send data between the robotics system on the wheelchair and the application that the tester is running. The middleware that will be chosen must also contain the ability to read sensor inputs, distance inputs, and amount of elapsed time, and be able to store them all in a single data packet, which will then be sent wirelessly to the application on the computer.
+
+\subsection{Potential Choices}
+
+\subsubsection{Choice One: ROS}
+At the most basic of levels, ROS is a system that allows messages to be passed, which provides inter-process communication. It also provides a message passing system that supports recording and playback of messages. It can easily read data from a sensor, send that data to a file, and then be able to access and republish the data in that file at any point in the future. ROS also provides basic robot implementation from the get-go, from Standard Robot Message formats such as vectors, transforms, maps, and odometry, to Sensor Message formats used for cameras and lasers.\cite{ROS_Core}
+
+\subsubsection{Choice Two: OpenRTM-aist}
+OpenRTM exists to integrate a variety of robotic functions as a single software. To do this, it modularizes robot functional elements as software components called RT-Components. These RT-Components are combined on RT-Middleware, then are implemented into the robot. Components have data and service ports to communicate, and contain a common state machine inside of them.\cite{OpenRTM_Info}
+
+\subsubsection{Choice Three: Orocos}
+Orocos is a middleware that is much more advanced and precise than either ROS or OpenRTM. The main applications of Orocos are use in real-time control machines, such as autonomous cars and visual tracking, as well as a real-time logging system that is low-overhead and usable throughout an entire system.\cite{Orocos_Roadmap}
+
+\subsection{Discussion}
+In comparing ROS to Orocos, ROS is better for quick, easy robot control, in contrast to Orocos, which is used for real-time control and not much else. ROS implements its properties in a specific central server, whereas in Orocos, every property is its own separate component.\cite{Orocos_And_ROS} ROS and OpenRTM are very similar in concept, however the main problem with OpenRTM is that documentation of it is very poor in any language outside of Japanese, which means as a result the middleware itself is not popular outside of Japan. It could still be used, but would require quite a bit more research and legwork for roughly the same thing as ROS.\cite{Robot_Middleware}
+
+\subsection{Conclusion}
+We chose ROS, partially due to already having a working ROS implementation that can be used on the wheelchair, and because ROS provides an easy and effective way to read sensor data, store that data to a file, then read and republish that file at a later date. ROS also has a large amount of reference material available, both on the internet and in textbooks, making it a lot more accessible to learn than OpenRTM or Orocos.
+
+\section{Data Storage}
+\subsection{Overview and Criteria}
+Another big part of this project is to be able to read a lot of different data and store it to a place where it can be accessed in the future. The data storage method must be compatible with ROS since ROS is the middleware that has been decided upon. It also must be able to read sensor data such as odometry and touch sensors, and store that data along with time elapsed data in a way so that it can be accessed and republished later.
+
+\subsection{Potential Choices}
+\subsubsection{Choice One: ROSbags}
+The ROSbag, or more simply, just the bag, is a file format that is used within ROS to store, process, analyze and visualize messages. The bags are able to store several different types of messages into one single bag. Each individual bag is contained within its own file, and can be accessed and republished at any time.\cite{Bags}
+
+\subsubsection{Choice Two: OpenRTM Ports}
+OpenRTM uses buffers to send data through ports, and then that data is stored within the buffers. It can utilize basic read and write functions. Additional information regarding data storage using OpenRTM is limited or unavailable.\cite{OpenRTM_Development}
+
+\subsubsection{Choice Three: Orocos Buffer Ports}
+Orocos uses buffers to send data through ports in real-time. It can utilize basic read and write functions. Additional information on data storage using Orocos is extremely limited.\cite{RTT_Data_Ports}
+
+\subsection{Discussion}
+OpenRTM Ports and Orocos Buffer Ports accomplish roughly the same things, in contrast to bags, which accomplish everything that the other two can do, but also can read and store sensor data, which is essential for the project. Also, information regarding sensor reading and storing sensory data is limited or nonexistant for both OpenRTM and Orocos, in contrast to ROS which has an abundance of information for sensor data storage in the form of ROSbags.
+
+\subsection{Conclusion}
+We chose ROSbags, mainly due to them being a part of ROS, but also because they are able to store touch sensor data, odometry sensor data, and time-elapsed data all in one "bag". These "bags" can also be re-accessed at a later date. ROS also is advantageous over the other two because there is already a ROS environment set up on the Permobil wheelchair
+
+\section{Network Communication}
+\subsection{Overview and Criteria}
+In order to send and receive data between the robot and computer application, a network connection must be established between the two. To be a connection that would be considered for use in this project, the network must be reliable and be able to support sending data between the Robot and the application multiple times. The network should also be accessible while the robot is running trials.
+
+\subsection{Potential Choices}
+\subsubsection{Choice One: Wireless}
+Wi-Fi is the leading method of connecting an enabled device to the internet using a wireless connection, usually a wireless network adapter or wireless router. Using a wireless router would allow the computer application to communicate with the network on the robot from a great distance, and could allow the tester to not have to move while the robot moves around during its trials.
+
+\subsubsection{Choice Two: Wired Ethernet}
+The complete opposite of a Wi-Fi connection is a wired network connection, most commonly used with a ethernet cable plugged between the robot and the network router. Using a wired ethernet connection would allow for a faster communication speed between the robot and the application. Using a wired connection would also mean that any kind of wireless interference would be negligible.
+
+\subsubsection{Choice Three: Wireless Bluetooth}
+Bluetooth is an open standard specification for a radio frequency. It specializes in exchanging data over short distances using short-wavelength radio waves. Bluetooth can be used with a mobile device to communicate with a bluetooth-enabled device mounted to the robot that is able to receive data from the mobile device and can transmit data back to the mobile device. However, using bluetooth for anything more powerful than a mobile phone would not be suitable.\cite{Bluetooth_Robot}
+
+\subsection{Discussion}
+In contrast to a wired ethernet connection, a wireless router makes the hassle of dragging around a wire non-existant. Additionally, dragging around an ethernet wire would become problematic, especially if the robot would have to traverse the same paths it had already gone through, as it could end up running over wires and possibly getting them tangled. Another glaring problem with choosing an ethernet solution would be if at any point the ethernet cord became unplugged from either the robot or the computer housing the application, the entire network becomes inaccessible. In comparing Wi-Fi to Bluetooth for wireless communication options, Bluetooth is usually used to communicate over short distances between Bluetooth enabled devices, but doesn't provide any kind of Internet access.\cite{Bluetooth_And_Wifi_Difference}
+
+\subsection{Conclusion}
+We chose to use a Wireless router, mostly because there was already a wireless router installed on the wheelchair that is ready to use. Though another advantage of a wireless router is that it isn't restricted by wires while the robot is moving around, so there is no risk of running over wires or getting them tangled. While not as fast at transferring data as a wired ethernet connection, a wireless router is still more than enough to satisfy the network needs for this project. A bluetooth wireless connection could still be a viable connection, but it would require additional materials to be purchased for no forseeable advantage over just using the Wi-Fi router that is already mounted and integrated into the wheelchair.
+
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
+
+\end{document}
