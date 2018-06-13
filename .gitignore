@@ -7,5 +7,6 @@
 *.blg
 *.pdf
 *.pyc
+*.mtc*
 node_modules/
 code/nodeCore/bags
